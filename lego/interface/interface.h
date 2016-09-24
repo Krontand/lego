@@ -144,6 +144,12 @@ public:
 	Button* button(int ID);
 	//Editfield editfield(int ID);
 	//Text text(int ID);
+
+	/*!
+	Will destroy item with requested ID and free memory
+	*/
+	void remove(int ID);
+
 private:
 	vector<InterfaceItem*> interfaceItemList; /*!< List of all interface items */
 

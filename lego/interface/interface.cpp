@@ -53,3 +53,15 @@ Button* BaseInterface::button(int ID)
 	this->interfaceItemList.push_back(btn);
 	return (Button*)btn->_BaseInterfaceItem;
 }
+
+void BaseInterface::remove(int ID)
+{
+	for (int i = 0; i < this->interfaceItemList.size(); i++)
+	{
+		if (this->interfaceItemList[i]->id == ID)
+		{
+			this->interfaceItemList[i]->_BaseInterfaceItem->remove();
+			this->interfaceItemList.erase(this->interfaceItemList.begin() + i);
+		}
+	}
+}

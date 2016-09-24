@@ -23,7 +23,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		InterfaceItemInit(hWnd, hInst);
 		interface = new BaseInterface;
-		interface->button(888)->create(10,10,100,200,TEXT("OK"));
+		interface->button(888)->create(10, 10, 100, 200, TEXT("OK"));
+		interface->remove(888);
 		
 	}
 	break;
