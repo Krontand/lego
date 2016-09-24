@@ -87,6 +87,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,6 +142,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="interface\button.h" />
+    <ClInclude Include="interface\interface.h" />
     <ClInclude Include="lego.h" />
     <ClInclude Include="listener.h" />
     <ClInclude Include="Resource.h" />
@@ -148,6 +151,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="interface\button.cpp" />
+    <ClCompile Include="interface\interface.cpp" />
     <ClCompile Include="lego.cpp" />
     <ClCompile Include="listener.cpp" />
     <ClCompile Include="stdafx.cpp">

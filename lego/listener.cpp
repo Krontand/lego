@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "listener.h"
+#include "interface\interface.h"
+#include "interface\button.h"
 
 extern HINSTANCE hInst;
-extern HWND hWnd;
-
+BaseInterface* interface;
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -18,6 +19,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
+	case WM_CREATE:
+	{
+		InterfaceItemInit(hWnd, hInst);
+		interface = new BaseInterface;
+		interface->button(888)->create(10,10,100,200,TEXT("OK"));
+		
+	}
+	break;
 	case WM_COMMAND:
 	{
 		int wmId = LOWORD(wParam);
