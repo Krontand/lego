@@ -15,7 +15,7 @@ Provide interface for creating/removing custom text
 /*!
 \class Text text.h "interface/text.h"
 \brief  Button interface class
-Provide interface for creating/removing button
+Provide interface for creating/removing custom text
 
 \todo Customise button style
 */
