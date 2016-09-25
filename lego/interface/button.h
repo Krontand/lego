@@ -59,11 +59,19 @@ public:
 	HWND create(int X, int Y, int HEIGHT, int WIDTH, WCHAR* TEXT) override;
 
 	/*!
+	Set image on button
+	\param[in] rID Resourse ID (in resource.h)
+	\return Value specifies the result of the message processing
+	*/
+	LRESULT setImage(int rID);
+
+	/*!
 	Removes button (Does not free memory)
 	*/
 	void remove() override;
 
+	HWND bhWnd = NULL;	/*!< HWND of created window */
+
 private:
 	int ID;				/*!< Unique identify of button */
-	HWND bhWnd = NULL;	/*!< HWND of created window */
 };

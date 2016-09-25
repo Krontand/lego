@@ -16,6 +16,8 @@
 #define IDC_MYICON				2
 #ifndef IDC_STATIC
 #define IDC_STATIC				-1
+#define BTN_TEST		120
+#define BTN_ADDBRICK	121
 #endif
 // Следующие стандартные значения для новых объектов
 //

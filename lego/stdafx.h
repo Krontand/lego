@@ -21,3 +21,5 @@
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
 #include "Resource.h"
 #include <vector>
+
+#define BTN_OK 888

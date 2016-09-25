@@ -28,11 +28,17 @@ public:
 	BaseInterfaceItem();
 
 	/*!
-	Constructor fills static variables.
+	Constructor fills static variables HWND and HINSTANCE.
 	\param[in] hWnd HWND of main (parent) window
 	\param[in] hInst Global instance
 	*/
 	BaseInterfaceItem(HWND hWnd, HINSTANCE hInst);
+
+	/*!
+	Constructor fills HDC.
+	\param[in] hdc Global HD
+	*/
+	BaseInterfaceItem(HDC hdc);
 
 	/*!
 	Destructor. No action.
@@ -58,13 +64,14 @@ public:
 protected:
 	static HWND hWnd;		/*!< HWND of main (parent) window */
 	static HINSTANCE hInst;	/*!< Global instance */
+	static HDC hdc;			/*!< Global hdc */
 };
 
 /*!
 \class BaseInterfaceItemInit interface.h "interface/interface.h"
 \brief  Initialisation interface class.
 
-Run BaseInterfaceItem constructor to initialise HWND and HINSTANCE variables.
+Run BaseInterfaceItem constructor to initialise HWND, HINSTANCE and HDC variables.
 
 Example of initialisation:
 \code
@@ -77,11 +84,22 @@ class InterfaceItemInit : public BaseInterfaceItem
 {
 public:
 	/*!
+	Empty constructor. No action.
+	*/
+	InterfaceItemInit() {};
+
+	/*!
 	Constructor runs BaseInterfaceItem constructor
 	\param[in] hWnd HWND of main (parent) window
 	\param[in] hInst Global instance
 	*/
 	InterfaceItemInit(HWND hWnd, HINSTANCE hInst) : BaseInterfaceItem(hWnd, hInst) {};
+	
+	/*!
+	Constructor runs BaseInterfaceItem constructor
+	\param[in] hdc global HDC
+	*/
+	InterfaceItemInit(HDC hdc) : BaseInterfaceItem(hdc) {};
 	
 	/*! Overrided emty method. No action. */
 	virtual HWND create(int X = 0, int Y = 0, int HEIGHT = 0, int WIDTH = 0, WCHAR* TEXT = NULL) override { return NULL; };
@@ -152,6 +170,5 @@ public:
 
 private:
 	vector<InterfaceItem*> interfaceItemList; /*!< List of all interface items */
-
 };
 

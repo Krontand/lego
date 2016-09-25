@@ -4,7 +4,10 @@
 #include "interface\button.h"
 
 extern HINSTANCE hInst;
+PAINTSTRUCT ps;
 BaseInterface* interface;
+HDC hdc;
+
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -23,13 +26,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		InterfaceItemInit(hWnd, hInst);
 		interface = new BaseInterface;
-		interface->button(888)->create(10, 10, 100, 200, TEXT("OK"));
-		interface->remove(888);
+		interface->button(BTN_OK)->create(10, 500, 33, 223, TEXT("OK"));
+		interface->button(BTN_OK)->setImage(BTN_ADDBRICK);
+		//interface->remove(888);
 		
 	}
 	break;
 	case WM_COMMAND:
 	{
+		SetFocus(hWnd);
 		int wmId = LOWORD(wParam);
 		// Разобрать выбор в меню:
 		switch (wmId)
@@ -47,8 +52,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_PAINT:
 	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
+		hdc = BeginPaint(hWnd, &ps);
+		InterfaceItemInit(hdc);
 		EndPaint(hWnd, &ps);
 	}
 	break;

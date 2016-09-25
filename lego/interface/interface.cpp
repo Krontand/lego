@@ -5,6 +5,7 @@
 
 HWND BaseInterfaceItem::hWnd;
 HINSTANCE BaseInterfaceItem::hInst;
+HDC BaseInterfaceItem::hdc;
 
 BaseInterfaceItem::BaseInterfaceItem()
 {
@@ -15,6 +16,11 @@ BaseInterfaceItem::BaseInterfaceItem(HWND hWnd, HINSTANCE hInst)
 {
 	this->hWnd = hWnd;
 	this->hInst = hInst;
+}
+
+BaseInterfaceItem::BaseInterfaceItem(HDC hdc)
+{
+	this->hdc = hdc;
 }
 
 BaseInterfaceItem::~BaseInterfaceItem()
@@ -61,6 +67,7 @@ void BaseInterface::remove(int ID)
 		if (this->interfaceItemList[i]->id == ID)
 		{
 			this->interfaceItemList[i]->_BaseInterfaceItem->remove();
+			delete this->interfaceItemList[i]->_BaseInterfaceItem;
 			this->interfaceItemList.erase(this->interfaceItemList.begin() + i);
 		}
 	}
