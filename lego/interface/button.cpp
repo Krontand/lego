@@ -41,6 +41,11 @@ LRESULT Button::setImage(int rID)
 	return SendMessageW(this->bhWnd, BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hBitmap);
 }
 
+HWND Button::getHWND()
+{
+	return this->bhWnd;
+}
+
 void Button::remove()
 {
 	DestroyWindow(GetDlgItem(this->hWnd, this->ID));

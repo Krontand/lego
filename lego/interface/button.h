@@ -20,7 +20,7 @@ Provide interface for creating/removing button
 \todo Customise button style
 */
 
-class Button : public BaseInterfaceItem
+class Button : public BaseInterfaceCtrl
 {
 public:
 	/*! Empty constructor. No action. */
@@ -65,13 +65,14 @@ public:
 	*/
 	LRESULT setImage(int rID);
 
+	HWND getHWND();
+
 	/*!
 	Removes button (Does not free memory)
 	*/
 	void remove() override;
 
-	HWND bhWnd = NULL;	/*!< HWND of created window */
-
 private:
 	int ID;				/*!< Unique identify of button */
+	HWND bhWnd = NULL;	/*!< HWND of created window */
 };

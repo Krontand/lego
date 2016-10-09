@@ -19,31 +19,25 @@ using namespace std;
 Contains HWND of parent (main) window and HINSTANCE.
 Provide interface for children by virtual methods
 */
-class BaseInterfaceItem
+class BaseInterfaceCtrl
 {
 public:
 	/*!
 	Empty constructor. No action.
 	*/
-	BaseInterfaceItem();
+	BaseInterfaceCtrl();
 
 	/*!
 	Constructor fills static variables HWND and HINSTANCE.
 	\param[in] hWnd HWND of main (parent) window
 	\param[in] hInst Global instance
 	*/
-	BaseInterfaceItem(HWND hWnd, HINSTANCE hInst);
-
-	/*!
-	Constructor fills HDC.
-	\param[in] hdc Global HD
-	*/
-	BaseInterfaceItem(HDC hdc);
+	BaseInterfaceCtrl(HWND hWnd, HINSTANCE hInst);
 
 	/*!
 	Destructor. No action.
 	*/
-	~BaseInterfaceItem();
+	~BaseInterfaceCtrl();
 
 	/*!
 	Creating interface element. Virtual.
@@ -64,7 +58,6 @@ public:
 protected:
 	static HWND hWnd;		/*!< HWND of main (parent) window */
 	static HINSTANCE hInst;	/*!< Global instance */
-	static HDC hdc;			/*!< Global hdc */
 };
 
 /*!
@@ -80,26 +73,20 @@ InterfaceItemInit(hWnd, hInst);
 
 \warning Must be placed before creating elements!
 */
-class InterfaceItemInit : public BaseInterfaceItem
+class InterfaceCtrlInit : public BaseInterfaceCtrl
 {
 public:
 	/*!
 	Empty constructor. No action.
 	*/
-	InterfaceItemInit() {};
+	InterfaceCtrlInit() {};
 
 	/*!
-	Constructor runs BaseInterfaceItem constructor
+	Constructor runs BaseInterfaceCtrl constructor
 	\param[in] hWnd HWND of main (parent) window
 	\param[in] hInst Global instance
 	*/
-	InterfaceItemInit(HWND hWnd, HINSTANCE hInst) : BaseInterfaceItem(hWnd, hInst) {};
-	
-	/*!
-	Constructor runs BaseInterfaceItem constructor
-	\param[in] hdc global HDC
-	*/
-	InterfaceItemInit(HDC hdc) : BaseInterfaceItem(hdc) {};
+	InterfaceCtrlInit(HWND hWnd, HINSTANCE hInst) : BaseInterfaceCtrl(hWnd, hInst) {};
 	
 	/*! Overrided emty method. No action. */
 	virtual HWND create(int X = 0, int Y = 0, int HEIGHT = 0, int WIDTH = 0, WCHAR* TEXT = NULL) override { return NULL; };
@@ -109,21 +96,21 @@ public:
 };
 
 /// List of interface elements types
-enum InterfaceItemType { 
+enum InterfaceCtrlType { 
 	EBUTTON,	///< Button
 	EEDITFIELD,	///< Edit field 
 	ETEXT		///< Text
 };
 
 /*!
-\struct BaseInterfaceItem interface.h "interface/interface.h"
+\struct BaseInterfaceCtrl interface.h "interface/interface.h"
 \brief Each element (button, editfield etc) has own structure.
 */
-typedef struct InterfaceItem
+typedef struct InterfaceCtrl
 {
-	enum InterfaceItemType type;			///< Interface Element type
+	enum InterfaceCtrlType type;			///< Interface Element type
 	int id;									///< Unique ID of element
-	BaseInterfaceItem* _BaseInterfaceItem;	///< Pointer to object of item
+	BaseInterfaceCtrl* _BaseInterfaceCtrl;	///< Pointer to object of Ctrl
 };
 
 class Button;
@@ -138,7 +125,7 @@ Example of creating and removing button with ID = 1111:
 \code
 interface = new BaseInterface;
 interface->button(1111)->create(10,10,100,200,TEXT("MY BUTTON")); // created
-interface->button(1111)->remove(); // removed (memory still allocated in interfaceItemLists)
+interface->button(1111)->remove(); // removed (memory still allocated in interfaceCtrlLists)
 \endcode
 */
 class BaseInterface
@@ -150,7 +137,7 @@ public:
 	BaseInterface();
 	/*!
 	Destructor. Removes all interface items and dealocates memory.
-	(Cleans interfaceItemsList)
+	(Cleans interfaceCtrlsList)
 	*/
 	~BaseInterface();
 
@@ -161,7 +148,6 @@ public:
 	*/
 	Button* button(int ID);
 	//Editfield editfield(int ID);
-	//Text text(int ID);
 
 	/*!
 	Will destroy item with requested ID and free memory
@@ -169,6 +155,6 @@ public:
 	void remove(int ID);
 
 private:
-	vector<InterfaceItem*> interfaceItemList; /*!< List of all interface items */
+	vector<InterfaceCtrl*> interfaceCtrlList; /*!< List of all interface items */
 };
 

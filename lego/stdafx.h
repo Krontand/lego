@@ -23,3 +23,5 @@
 #include <vector>
 
 #define BTN_OK 888
+#define TXT_LEGO 889
+#define TXT_DESIGNER 890

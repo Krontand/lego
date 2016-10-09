@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="interface\button.h" />
+    <ClInclude Include="interface\drawinterface.h" />
     <ClInclude Include="interface\interface.h" />
     <ClInclude Include="interface\text.h" />
     <ClInclude Include="lego.h" />
@@ -153,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="interface\button.cpp" />
+    <ClCompile Include="interface\drawinterface.cpp" />
     <ClCompile Include="interface\interface.cpp" />
     <ClCompile Include="interface\text.cpp" />
     <ClCompile Include="lego.cpp" />

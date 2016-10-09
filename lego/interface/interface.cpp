@@ -3,27 +3,21 @@
 #include "button.h"
 #include "interface.h"
 
-HWND BaseInterfaceItem::hWnd;
-HINSTANCE BaseInterfaceItem::hInst;
-HDC BaseInterfaceItem::hdc;
+HWND BaseInterfaceCtrl::hWnd;
+HINSTANCE BaseInterfaceCtrl::hInst;
 
-BaseInterfaceItem::BaseInterfaceItem()
+BaseInterfaceCtrl::BaseInterfaceCtrl()
 {
 
 }
 
-BaseInterfaceItem::BaseInterfaceItem(HWND hWnd, HINSTANCE hInst)
+BaseInterfaceCtrl::BaseInterfaceCtrl(HWND hWnd, HINSTANCE hInst)
 {
 	this->hWnd = hWnd;
 	this->hInst = hInst;
 }
 
-BaseInterfaceItem::BaseInterfaceItem(HDC hdc)
-{
-	this->hdc = hdc;
-}
-
-BaseInterfaceItem::~BaseInterfaceItem()
+BaseInterfaceCtrl::~BaseInterfaceCtrl()
 {
 
 }
@@ -35,40 +29,40 @@ BaseInterface::BaseInterface()
 
 BaseInterface::~BaseInterface()
 {
-	for (int i = 0; i < this->interfaceItemList.size(); i++)
+	for (int i = 0; i < this->interfaceCtrlList.size(); i++)
 	{
-		this->interfaceItemList[i]->_BaseInterfaceItem->remove();
-		delete this->interfaceItemList[i]->_BaseInterfaceItem;
+		this->interfaceCtrlList[i]->_BaseInterfaceCtrl->remove();
+		delete this->interfaceCtrlList[i]->_BaseInterfaceCtrl;
 	}
-	this->interfaceItemList.clear();
+	this->interfaceCtrlList.clear();
 }
 
 Button* BaseInterface::button(int ID)
 {
-	for (int i = 0; i < this->interfaceItemList.size(); i++)
+	for (int i = 0; i < this->interfaceCtrlList.size(); i++)
 	{
-		if ((this->interfaceItemList[i]->id == ID) && (this->interfaceItemList[i]->type == EBUTTON))
+		if ((this->interfaceCtrlList[i]->id == ID) && (this->interfaceCtrlList[i]->type == EBUTTON))
 		{
-			return (Button*)this->interfaceItemList[i]->_BaseInterfaceItem;
+			return (Button*)this->interfaceCtrlList[i]->_BaseInterfaceCtrl;
 		}
 	}
-	InterfaceItem* btn = new InterfaceItem;
+	InterfaceCtrl* btn = new InterfaceCtrl;
 	btn->type = EBUTTON;
 	btn->id = ID;
-	btn->_BaseInterfaceItem = new Button(ID);
-	this->interfaceItemList.push_back(btn);
-	return (Button*)btn->_BaseInterfaceItem;
+	btn->_BaseInterfaceCtrl = new Button(ID);
+	this->interfaceCtrlList.push_back(btn);
+	return (Button*)btn->_BaseInterfaceCtrl;
 }
 
 void BaseInterface::remove(int ID)
 {
-	for (int i = 0; i < this->interfaceItemList.size(); i++)
+	for (int i = 0; i < this->interfaceCtrlList.size(); i++)
 	{
-		if (this->interfaceItemList[i]->id == ID)
+		if (this->interfaceCtrlList[i]->id == ID)
 		{
-			this->interfaceItemList[i]->_BaseInterfaceItem->remove();
-			delete this->interfaceItemList[i]->_BaseInterfaceItem;
-			this->interfaceItemList.erase(this->interfaceItemList.begin() + i);
+			this->interfaceCtrlList[i]->_BaseInterfaceCtrl->remove();
+			delete this->interfaceCtrlList[i]->_BaseInterfaceCtrl;
+			this->interfaceCtrlList.erase(this->interfaceCtrlList.begin() + i);
 		}
 	}
 }
