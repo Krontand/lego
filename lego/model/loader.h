@@ -41,9 +41,10 @@ public:
 
 	/*!
 	Main function. Loading from file into Brick object.
+	\param[in] obj Composite array 
 	\return Pointer to loaded Brick object
 	*/
-	Brick* load();
+	Brick* load(BaseObject* obj);
 
 private:
 	/*!

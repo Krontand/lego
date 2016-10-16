@@ -58,7 +58,7 @@ vector<int> Loader::readFace()
 	return face;
 }
 
-Brick* Loader::load()
+Brick* Loader::load(BaseObject* obj)
 {
 	Brick* brick = new Brick;
 
@@ -90,6 +90,8 @@ Brick* Loader::load()
 				break;
 			}
 		}
+		brick->setID(obj->getID());
+		obj->add(brick);
 	}
 	catch (BaseException& err)
 	{

@@ -28,3 +28,12 @@ public:
 		return "Wrong file structure!";
 	}
 };
+
+class CompositeAddNULLError : public BaseException
+{
+public:
+	virtual const char* what() const
+	{
+		return "Attempting to add NULL item into composite!";
+	}
+};

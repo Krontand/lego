@@ -52,3 +52,8 @@ double Vertex::getZ()
 {
 	return this->Z;
 }
+
+void Vertex::modificate()
+{
+	//todo
+}

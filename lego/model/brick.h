@@ -20,7 +20,7 @@ using namespace std;
 
 Provide interface brick values
 */
-class Brick
+class Brick : public BaseObject
 {
 public:
 	/*!
@@ -82,7 +82,26 @@ public:
 	*/
 	int facesCount();
 
+	/*!
+	Modificate coordinates (rotate/zoom etc)
+	\todo param[in] modification
+	*/
+	virtual void modificate() override;
+
+	/*!
+	Get uniqui ID of brick
+	\return ID of brick
+	*/
+	virtual int getID() override;
+
+	/*!
+	Set uniqui ID of brick
+	\param[in] ID of brick
+	*/
+	void setID(int ID);
+
 private:
+	int ID;
 	vector<Vertex> vertex;		/*!< Vertex array */
 	vector<vector<int>> faces;	/*!< Faces array */
 };

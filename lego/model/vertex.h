@@ -11,13 +11,15 @@ Provide interface for vertex coordinates
 
 #pragma once
 
+#include "baseobject.h"
+
 /*!
 \class Vertex vertex.h "model/vertex.h"
 \brief  Define vertex consisting 3 double coordinates
 
 Provide interface for vertex coordinates
 */
-class Vertex
+class Vertex : public BaseObject
 {
 public:
 	/*!
@@ -73,6 +75,12 @@ public:
 	\return Z value
 	*/
 	double getZ();
+
+	/*!
+	Modificate coordinates (rotate/zoom etc)
+	\todo param[in] modification
+	*/
+	virtual void modificate() override;
 
 private:
 	double X;	/*!< X coordinate of vertex */

@@ -54,3 +54,18 @@ int Brick::facesCount()
 {
 	return this->faces.size();
 }
+
+void Brick::modificate()
+{
+	//todo
+}
+
+int Brick::getID()
+{
+	return this->ID;
+}
+
+void Brick::setID(int ID)
+{
+	this->ID = ID;
+}

@@ -4,6 +4,7 @@
 #include "interface\drawinterface.h"
 #include "interface\button.h"
 #include "interface\text.h"
+#include "model\composite.h"
 #include "model\loader.h"
 
 extern HINSTANCE hInst;
@@ -27,6 +28,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 	{
+		Composite* cobject = new Composite;
 		InterfaceCtrlInit CtrlInit(hWnd, hInst);
 		interface = new BaseInterface;
 		
@@ -49,7 +51,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		try 
 		{
 			Loader test("objs/one.obj");
-			Brick* brk = test.load();
+			Brick* brk = test.load(cobject);
 		}
 		catch (BaseException& err)
 		{

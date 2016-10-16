@@ -72,6 +72,12 @@
     <ClInclude Include="exception.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="model\baseobject.h">
+      <Filter>Заголовочные файлы\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\composite.h">
+      <Filter>Заголовочные файлы\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -102,6 +108,9 @@
       <Filter>Файлы исходного кода\Model</Filter>
     </ClCompile>
     <ClCompile Include="model\loader.cpp">
+      <Filter>Файлы исходного кода\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\composite.cpp">
       <Filter>Файлы исходного кода\Model</Filter>
     </ClCompile>
   </ItemGroup>
