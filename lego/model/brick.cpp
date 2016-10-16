@@ -30,13 +30,9 @@ void Brick::addVertex(Vertex v)
 	this->vertex.push_back(v);
 }
 
-void Brick::addFace(int A, int B, int C)
+void Brick::addFace(vector<int> face)
 {
-	vector<int> tmp(3);
-	tmp[0] = A;
-	tmp[1] = B;
-	tmp[2] = C;
-	this->faces.push_back(tmp);
+	this->faces.push_back(face);
 }
 
 vector<Vertex> Brick::getVertex() const

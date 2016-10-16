@@ -54,11 +54,9 @@ public:
 
 	/*!
 	Adds face in model.
-	\param[in] A First point of face
-	\param[in] B Second point of face
-	\param[in] C Third point of face
+	\param[in] face Vector of 3 links
 	*/
-	void addFace(int A, int B, int C);
+	void addFace(vector<int>);
 
 	/*!
 	Provides access to vertex array

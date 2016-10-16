@@ -4,6 +4,7 @@
 #include "interface\drawinterface.h"
 #include "interface\button.h"
 #include "interface\text.h"
+#include "model\loader.h"
 
 extern HINSTANCE hInst;
 PAINTSTRUCT ps;
@@ -45,7 +46,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			->SetSymbolWidth(11)
 			->display(95, 30, 0, 0, TEXT("DESIGNER"));
 		//interface->remove(888);
-		
+		try 
+		{
+			Loader test("objs/one.obj");
+			Brick* brk = test.load();
+		}
+		catch (BaseException& err)
+		{
+			WCHAR msg[256];
+			MultiByteToWideChar(0, 0, err.what(), 255, msg, 256);
+			MessageBox(NULL, msg, TEXT("ERROR"), MB_OK);
+		}
 	}
 	break;
 	case WM_COMMAND:

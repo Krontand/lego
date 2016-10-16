@@ -19,6 +19,12 @@
     <Filter Include="Файлы исходного кода\Interface">
       <UniqueIdentifier>{fdbbb222-4680-43e7-bb4a-603f284df863}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\Model">
+      <UniqueIdentifier>{4f7246eb-0892-40c0-b2f1-9fd5c444f0e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Model">
+      <UniqueIdentifier>{394c4eae-116f-4bbe-be53-b4dc89956d27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -51,6 +57,21 @@
     <ClInclude Include="interface\text.h">
       <Filter>Заголовочные файлы\Interface</Filter>
     </ClInclude>
+    <ClInclude Include="model\brick.h">
+      <Filter>Заголовочные файлы\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\vertex.h">
+      <Filter>Заголовочные файлы\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\loader.h">
+      <Filter>Заголовочные файлы\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\exception.h">
+      <Filter>Заголовочные файлы\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="exception.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -73,6 +94,15 @@
     </ClCompile>
     <ClCompile Include="interface\text.cpp">
       <Filter>Файлы исходного кода\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="model\brick.cpp">
+      <Filter>Файлы исходного кода\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\vertex.cpp">
+      <Filter>Файлы исходного кода\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\loader.cpp">
+      <Filter>Файлы исходного кода\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
