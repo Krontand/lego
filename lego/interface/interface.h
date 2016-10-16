@@ -99,7 +99,7 @@ public:
 enum InterfaceCtrlType { 
 	EBUTTON,	///< Button
 	EEDITFIELD,	///< Edit field 
-	ETEXT		///< Text
+	EIMAGE		///< Image
 };
 
 /*!

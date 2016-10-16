@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Заголовочные файлы\Interface">
+      <UniqueIdentifier>{ff433054-1a68-4359-8293-09b22769cf38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Interface">
+      <UniqueIdentifier>{fdbbb222-4680-43e7-bb4a-603f284df863}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -34,16 +40,16 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="interface\interface.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Interface</Filter>
     </ClInclude>
     <ClInclude Include="interface\button.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="interface\text.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Interface</Filter>
     </ClInclude>
     <ClInclude Include="interface\drawinterface.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="interface\text.h">
+      <Filter>Заголовочные файлы\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -56,17 +62,17 @@
     <ClCompile Include="listener.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="interface\interface.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
     <ClCompile Include="interface\button.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="interface\text.cpp">
-      <Filter>Файлы исходного кода</Filter>
+      <Filter>Файлы исходного кода\Interface</Filter>
     </ClCompile>
     <ClCompile Include="interface\drawinterface.cpp">
-      <Filter>Файлы исходного кода</Filter>
+      <Filter>Файлы исходного кода\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="interface\interface.cpp">
+      <Filter>Файлы исходного кода\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="interface\text.cpp">
+      <Filter>Файлы исходного кода\Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
