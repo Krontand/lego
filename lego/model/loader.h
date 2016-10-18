@@ -67,7 +67,7 @@ private:
 	Reads line contins face parameters.
 	\return Three ID of vertex
 	*/
-	vector<int> readFace();
+	Face readFace();
 
 	char* filename;	/*!< Name of file to read */
 	FILE* file;		/*!< File to read */

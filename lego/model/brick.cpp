@@ -30,7 +30,7 @@ void Brick::addVertex(Vertex v)
 	this->vertex.push_back(v);
 }
 
-void Brick::addFace(vector<int> face)
+void Brick::addFace(Face face)
 {
 	this->faces.push_back(face);
 }
@@ -40,7 +40,7 @@ vector<Vertex> Brick::getVertex() const
 	return this->vertex;
 }
 
-vector<vector<int>> Brick::getFaces() const
+vector<Face> Brick::getFaces() const
 {
 	return this->faces;
 }

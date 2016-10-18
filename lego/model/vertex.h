@@ -36,6 +36,18 @@ public:
 	Vertex(double X, double Y, double Z);
 
 	/*!
+	Constructor copy
+	\param[in] other Vertex object to copy
+	*/
+	Vertex(const Vertex& other);
+
+	/*!
+	Constructor transfer
+	\param[in] other Vertex object to transfer
+	*/
+	Vertex(Vertex&& other);
+
+	/*!
 	Destructor fills coordinates with zero values
 	*/
 	~Vertex();
@@ -65,16 +77,34 @@ public:
 	double getX();
 
 	/*!
+	Gets X value of vertex coordinate. Const method.
+	\return X value
+	*/
+	double getX() const;
+
+	/*!
 	Gets Y value of vertex coordinate
 	\return Y value
 	*/
 	double getY();
 
 	/*!
+	Gets X value of vertex coordinate. Const method.
+	\return X value
+	*/
+	double getY() const;
+
+	/*!
 	Gets Z value of vertex coordinate
 	\return Z value
 	*/
 	double getZ();
+
+	/*!
+	Gets X value of vertex coordinate. Const method.
+	\return X value
+	*/
+	double getZ() const;
 
 	/*!
 	Modificate coordinates (rotate/zoom etc)

@@ -32,7 +32,7 @@ Vertex Loader::readVertex()
 {
 	double tmpX, tmpY, tmpZ;
 
-	if (fscanf_s(this->file, "%f %f %f", &tmpX, &tmpY, &tmpZ) != 3)
+	if (fscanf_s(this->file, " %lf %lf %lf", &tmpX, &tmpY, &tmpZ) != 3)
 	{
 		throw LoaderBadFile();
 	}
@@ -41,27 +41,23 @@ Vertex Loader::readVertex()
 	return v;
 }
 
-vector<int> Loader::readFace()
+Face Loader::readFace()
 {
-	double tmpA, tmpB, tmpC;
+	int tmpA, tmpB, tmpC;
 
-	if (fscanf_s(this->file, "%d %d %d", &tmpA, &tmpB, &tmpC) != 3)
+	if (fscanf_s(this->file, " %d %d %d", &tmpA, &tmpB, &tmpC) != 3)
 	{
 		throw LoaderBadFile();
 	}
 
-	vector<int> face(3);
-	face[0] = tmpA;
-	face[1] = tmpB;
-	face[2] = tmpC;
+	Face f(tmpA, tmpB, tmpC);
 
-	return face;
+	return f;
 }
 
 Brick* Loader::load(BaseObject* obj)
 {
 	Brick* brick = new Brick;
-
 
 	this->openFile();
 	FILE* f = this->file;

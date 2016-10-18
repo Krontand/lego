@@ -13,6 +13,7 @@ Contains model archetecture
 using namespace std;
 
 #include "vertex.h"
+#include "face.h"
 
 /*!
 \class Brick brick.h "model/brick.h"
@@ -56,7 +57,7 @@ public:
 	Adds face in model.
 	\param[in] face Vector of 3 links
 	*/
-	void addFace(vector<int>);
+	void addFace(Face);
 
 	/*!
 	Provides access to vertex array
@@ -68,7 +69,7 @@ public:
 	Provides access to faces array
 	\return Faces array
 	*/
-	vector<vector<int>> getFaces() const;
+	vector<Face> getFaces() const;
 
 	/*!
 	Amount of vertex in model
@@ -103,5 +104,5 @@ public:
 private:
 	int ID;
 	vector<Vertex> vertex;		/*!< Vertex array */
-	vector<vector<int>> faces;	/*!< Faces array */
+	vector<Face> faces;			/*!< Faces array */
 };

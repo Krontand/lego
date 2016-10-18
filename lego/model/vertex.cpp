@@ -16,6 +16,20 @@ Vertex::Vertex(double X, double Y, double Z)
 	this->Z = Z;
 }
 
+Vertex::Vertex(const Vertex& other)
+{
+	this->X = other.getX();
+	this->Y = other.getY();
+	this->Z = other.getZ();
+}
+
+Vertex::Vertex(Vertex&& other)
+{
+	this->X = other.getX();
+	this->Y = other.getY();
+	this->Z = other.getZ();
+}
+
 Vertex::~Vertex()
 {
 	this->X = 0;
@@ -43,14 +57,29 @@ double Vertex::getX()
 	return this->X;
 }
 
+double Vertex::getX() const
+{
+	return this->X;
+}
+
 double Vertex::getY()
 {
 	return this->Y;
 }
 
+double Vertex::getY() const
+{
+	return this->X;
+}
+
 double Vertex::getZ()
 {
 	return this->Z;
+}
+
+double Vertex::getZ() const
+{
+	return this->X;
 }
 
 void Vertex::modificate()
