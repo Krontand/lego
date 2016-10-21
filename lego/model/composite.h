@@ -37,7 +37,7 @@ public:
 	Add brick into array
 	\param[in] obj Brick to add
 	*/
-	virtual void add(BaseObject* obj) override;
+	void add(Brick* obj);
 
 	/*!
 	Remove brick with user`s ID
@@ -63,5 +63,5 @@ public:
 	void clear();
 
 	int ID;							/*!< Highest id from objects array */
-	vector<BaseObject*> objects;	/*!< Array of bricks */
+	vector<Brick*> objects;	/*!< Array of bricks */
 };

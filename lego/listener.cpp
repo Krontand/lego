@@ -4,8 +4,7 @@
 #include "interface\drawinterface.h"
 #include "interface\button.h"
 #include "interface\text.h"
-#include "model\composite.h"
-#include "model\loader.h"
+#include "application.h"
 
 extern HINSTANCE hInst;
 PAINTSTRUCT ps;
@@ -24,75 +23,112 @@ BaseDrawInterface* drawInterface = new BaseDrawInterface;
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	switch (message)
-	{
-	case WM_CREATE:
-	{
-		Composite* cobject = new Composite;
-		InterfaceCtrlInit CtrlInit(hWnd, hInst);
-		interface = new BaseInterface;
-		
-		interface->button(BTN_OK)->create(10, 500, 33, 223, TEXT("OK"));
-		interface->button(BTN_OK)->setImage(BTN_ADDBRICK);
 
-		drawInterface->text(TXT_LEGO)
-			->SetColor(RGB(255, 255, 255))
-			->SetWeight(800)
-			->SetHeight(36)
-			->SetSymbolWidth(13)
-			->display(20, 30, 0, 0, TEXT("LEGO"));
-		drawInterface->text(TXT_DESIGNER)
-			->SetColor(RGB(37, 45, 74))
-			->SetWeight(400)
-			->SetHeight(36)
-			->SetSymbolWidth(11)
-			->display(95, 30, 0, 0, TEXT("DESIGNER"));
-		//interface->remove(888);
-		try 
-		{
-			Loader test("objs/one.obj");
-			Brick* brk = test.load(cobject);
-		}
-		catch (BaseException& err)
-		{
-			WCHAR msg[256];
-			MultiByteToWideChar(0, 0, err.what(), 255, msg, 256);
-			MessageBox(NULL, msg, TEXT("ERROR"), MB_OK);
-		}
-	}
-	break;
-	case WM_COMMAND:
+	try
 	{
-		SetFocus(hWnd);
-		int wmId = LOWORD(wParam);
-		// Разобрать выбор в меню:
-		switch (wmId)
+		static Application* application;
+		application = new Application(hWnd, 200, 10, 600, 500);
+		static ActionDraw* actionDraw = new ActionDraw();
+		if (!application)
 		{
-		case IDM_ABOUT:
-			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-			break;
-		case IDM_EXIT:
-			DestroyWindow(hWnd);
+			throw AllocationMemoryError();
+		}
+
+		switch (message)
+		{
+		case WM_CREATE:
+		{
+
+			InterfaceCtrlInit CtrlInit(hWnd, hInst);
+			interface = new BaseInterface;
+
+			interface->button(BTN_OK)->create(10, 500, 33, 223, TEXT("OK"));
+			interface->button(BTN_OK)->setImage(BTN_ADDBRICK);
+
+			drawInterface->text(TXT_LEGO)
+				->SetColor(RGB(255, 255, 255))
+				->SetWeight(800)
+				->SetHeight(36)
+				->SetSymbolWidth(13)
+				->display(20, 30, 0, 0, TEXT("LEGO"));
+			drawInterface->text(TXT_DESIGNER)
+				->SetColor(RGB(37, 45, 74))
+				->SetWeight(400)
+				->SetHeight(36)
+				->SetSymbolWidth(11)
+				->display(95, 30, 0, 0, TEXT("DESIGNER"));
+			//interface->remove(888);
+			try
+			{
+				
+			}
+			catch (BaseException& err)
+			{
+				throw;
+			}
+		}
+		break;
+		case WM_COMMAND:
+		{
+			SetFocus(hWnd);
+			int wmId = LOWORD(wParam);
+			// Разобрать выбор в меню:
+			switch (wmId)
+			{
+			case IDM_ABOUT:
+				DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+				break;
+			case IDM_EXIT:
+				DestroyWindow(hWnd);
+				break;
+			default:
+				return DefWindowProc(hWnd, message, wParam, lParam);
+			}
+		}
+		break;
+		case WM_PAINT:
+		{
+			double width = 1;
+			double height = 1;
+			HDC hdc = BeginPaint(hWnd, &ps);
+			InterfaceDrawInit DrawInit(hdc);
+			drawInterface->redraw();
+			application->call(*actionDraw, 0);
+			/*
+			Brick* brick = new Brick;
+			brick = cobject->objects[0];
+			vector<Face> faces = brick->getFaces();
+			for (int i = 0; i < brick->facesCount(); i++) {
+				Face face = faces[i];
+				for (int j = 0; j < 3; j++) {
+					Vertex v0 = brick->getVertex()[face.getCurrent() - 1];
+					Vertex v1 = brick->getVertex()[face.getNext() - 1];
+					int x0 = (v0.getX())*width / 2. + 100;
+					int y0 = (v0.getY())*height / 2. + 100;
+					int x1 = (v1.getX())*width / 2. + 100;
+					int y1 = (v1.getY())*height / 2. + 100;
+					MoveToEx(hdc, x0, y0, NULL);
+					LineTo(hdc, x1, y1);
+					//line(x0, y0, x1, y1, image, white);
+				}
+			} */
+			EndPaint(hWnd, &ps);
+		}
+		break;
+		case WM_DESTROY:
+			PostQuitMessage(0);
 			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
 	}
-	break;
-	case WM_PAINT:
+	catch (BaseException& err)
 	{
-		HDC hdc = BeginPaint(hWnd, &ps);
-		InterfaceDrawInit DrawInit(hdc);
-		drawInterface->redraw();
-		EndPaint(hWnd, &ps);
+		WCHAR msg[256];
+		MultiByteToWideChar(0, 0, err.what(), 255, msg, 256);
+		MessageBox(NULL, msg, TEXT("ERROR"), MB_OK);
 	}
-	break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
-	}
+
 	return 0;
 }
 
