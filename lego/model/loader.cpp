@@ -55,7 +55,7 @@ Face Loader::readFace()
 	return f;
 }
 
-Brick* Loader::load(BaseObject* obj)
+Brick* Loader::load(Composite* obj)
 {
 	Brick* brick = new Brick;
 

@@ -142,6 +142,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="action.h" />
+    <ClInclude Include="application.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="interface\button.h" />
     <ClInclude Include="interface\drawinterface.h" />
@@ -157,10 +159,12 @@
     <ClInclude Include="model\loader.h" />
     <ClInclude Include="model\vertex.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="scene\scene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="application.cpp" />
     <ClCompile Include="interface\button.cpp" />
     <ClCompile Include="interface\drawinterface.cpp" />
     <ClCompile Include="interface\interface.cpp" />
@@ -172,6 +176,7 @@
     <ClCompile Include="model\face.cpp" />
     <ClCompile Include="model\loader.cpp" />
     <ClCompile Include="model\vertex.cpp" />
+    <ClCompile Include="scene\scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

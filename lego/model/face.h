@@ -32,7 +32,7 @@ public:
 	\param[in] B second link of face
 	\param[in] C third link of face
 	*/
-	Face(double A, double B, double C);
+	Face(int A, int B, int C);
 
 	/*!
 	Constructor copy

@@ -36,6 +36,12 @@ public:
 	Brick(const Brick& brick);
 
 	/*!
+	Constructor. Transfer incoming model.
+	\param[in] brick Source model to transfer.
+	*/
+	Brick::Brick(Brick&& brick);
+
+	/*!
 	Destructor. Clears vertex and faces array.
 	*/
 	~Brick();

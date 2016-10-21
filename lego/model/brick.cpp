@@ -12,6 +12,12 @@ Brick::Brick(const Brick& brick)
 	this->faces = brick.getFaces();
 }
 
+Brick::Brick(Brick&& brick)
+{
+	this->vertex = brick.getVertex();
+	this->faces = brick.getFaces();
+}
+
 Brick::~Brick()
 {
 	this->vertex.clear();
@@ -27,6 +33,8 @@ Brick& Brick::operator=(const Brick& brick)
 
 void Brick::addVertex(Vertex v)
 {
+	Vertex tmp = v;
+	double Y = v.getY();
 	this->vertex.push_back(v);
 }
 

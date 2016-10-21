@@ -69,7 +69,7 @@ double Vertex::getY()
 
 double Vertex::getY() const
 {
-	return this->X;
+	return this->Y;
 }
 
 double Vertex::getZ()
@@ -79,7 +79,7 @@ double Vertex::getZ()
 
 double Vertex::getZ() const
 {
-	return this->X;
+	return this->Z;
 }
 
 void Vertex::modificate()

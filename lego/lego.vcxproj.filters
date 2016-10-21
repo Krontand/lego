@@ -25,6 +25,12 @@
     <Filter Include="Файлы исходного кода\Model">
       <UniqueIdentifier>{394c4eae-116f-4bbe-be53-b4dc89956d27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\Scene">
+      <UniqueIdentifier>{5b55fbe4-a767-4e15-bffc-d3bffa23207c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Scene">
+      <UniqueIdentifier>{52daf049-703d-4704-9000-9e4934597296}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -81,6 +87,15 @@
     <ClInclude Include="model\face.h">
       <Filter>Заголовочные файлы\Model</Filter>
     </ClInclude>
+    <ClInclude Include="scene\scene.h">
+      <Filter>Заголовочные файлы\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="action.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -118,6 +133,12 @@
     </ClCompile>
     <ClCompile Include="model\face.cpp">
       <Filter>Файлы исходного кода\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\scene.cpp">
+      <Filter>Файлы исходного кода\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

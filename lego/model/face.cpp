@@ -11,7 +11,7 @@ Face::Face()
 	this->iterator = this->Vertices.begin();
 }
 
-Face::Face(double A, double B, double C)
+Face::Face(int A, int B, int C)
 {
 	this->Vertices.push_back(A);
 	this->Vertices.push_back(B);

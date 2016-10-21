@@ -11,7 +11,7 @@ Load model from file into Brick object
 
 #pragma once
 
-#include "brick.h"
+#include "composite.h"
 #include "exception.h"
 
 /*!
@@ -44,7 +44,7 @@ public:
 	\param[in] obj Composite array 
 	\return Pointer to loaded Brick object
 	*/
-	Brick* load(BaseObject* obj);
+	Brick* load(Composite* obj);
 
 private:
 	/*!

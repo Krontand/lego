@@ -12,7 +12,7 @@ Composite::~Composite()
 	this->clear();
 }
 
-void Composite::add(BaseObject* obj)
+void Composite::add(Brick* obj)
 {
 	if (!obj)
 	{

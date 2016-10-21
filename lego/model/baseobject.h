@@ -26,12 +26,6 @@ public:
 	virtual void modificate() = 0;
 
 	/*!
-	Add object in composite (only for composite object)
-	\param[in] obj Object to add in composite
-	*/
-	virtual void add(BaseObject* obj) {};
-
-	/*!
 	Different meanings: 
 		In composite - get highest ID of objects.
 		In brick - get ID of this brick.
