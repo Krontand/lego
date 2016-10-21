@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "lego.h"
 #include "listener.h"
+#include "application.h"
 
 #define MAX_LOADSTRING 100
 
@@ -11,6 +12,7 @@
 HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // Tittle
 WCHAR szWindowClass[MAX_LOADSTRING];            // Classname of main window
+Application* application;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -29,6 +31,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         return FALSE;
     }
+
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LEGO));
 
@@ -93,6 +96,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    {
       return FALSE;
    }
+
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);

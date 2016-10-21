@@ -26,9 +26,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	try
 	{
-		static Application* application;
-		application = new Application(hWnd, 200, 10, 600, 500);
+		
 		static ActionDraw* actionDraw = new ActionDraw();
+		static Application* application = new Application(hWnd, 200, 10, 600, 500);
+
 		if (!application)
 		{
 			throw AllocationMemoryError();

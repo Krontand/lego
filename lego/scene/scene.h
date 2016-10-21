@@ -18,7 +18,6 @@ private:
 	int height;
 
 	unsigned long* pixels;
-	unsigned long* pixels2;
 
 	BITMAPINFO sBmInfo;
 	HBITMAP sBmp;

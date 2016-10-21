@@ -20,19 +20,21 @@ Scene::Scene()
 	{
 		throw AllocationMemoryError();
 	}
+	this->pixels = new unsigned long[500 * 600];
 }
 
 Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 {
 	this->hWnd = hWnd;
 	this->hdc = GetDC(hWnd);
-	int error = GetLastError();
 	this->hdcMem = CreateCompatibleDC(this->hdc);
 	
 	this->X = x;
 	this->Y = y;
 	this->width = width;
 	this->height = height;
+
+	this->pixels = new unsigned long[500 * 600];
 
 	this->InitBitmap();
 
@@ -64,20 +66,34 @@ void Scene::InitBitmap()
 
 	this->sBmp = CreateDIBSection(
 		this->hdc, &this->sBmInfo, DIB_RGB_COLORS, (void**)&pixels, NULL, 0
-	);
+		);
 }
 
 void Scene::DrawScene()
 {
-	int sz = sizeof(this->pixels);
-	int sz2 = sizeof(this->pixels2);
 	for (int i = 0; i < this->width; i++)
 	{
 		for (int j = 0; j < this->height; j++)
 		{
-			this->pixels[i*width + j] = 0;
+			this->pixels[j*width + i] = 0x00ffff00;
 		}
 	}
-	SelectObject(this->hdcMem, this->hdc);
-	BitBlt(this->hdc, 0, 0, this->width, this->height, this->hdcMem, 0, 0, SRCCOPY);
+	SelectObject(this->hdcMem, this->sBmp);
+	BitBlt(this->hdc, X, Y, this->width, this->height, this->hdcMem, 0, 0, SRCCOPY);
+	
+	//HDC sourceHdc = CreateCompatibleDC(this->hdc);
+	
+	
+	//sBmp = CreateBitmap(width, height, 1    // Одна панель цветов
+	//	, 8 * 4            // 4 байта - Количество байтов цвета на один пиксель  
+	//	, pixels);
+	//HBITMAP hbmpOldTarget = (HBITMAP)SelectObject(sourceHdc, sBmp);
+	//BOOL r1 = BitBlt(hdc, X, Y, width, height, sourceHdc, 0, 0, SRCCOPY);
+	//if (!r1)
+	//{
+		// ERROR........................ 
+	//}
+	/*::selectobject(sourcehdc, hbmpoldtarget);
+	hbmpoldtarget = null;
+	deletedc(sourcehdc);*/
 }
