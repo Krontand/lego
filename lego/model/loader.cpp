@@ -9,6 +9,13 @@ Loader::Loader()
 Loader::Loader(char* filename)
 {
 	this->filename = filename;
+
+	this->maxX = 0;
+	this->maxY = 0;
+	this->maxZ = 0;
+	this->minX = 0;
+	this->minY = 0;
+	this->minZ = 0;
 }
 
 Loader::~Loader()
@@ -37,6 +44,13 @@ Vertex Loader::readVertex()
 		throw LoaderBadFile();
 	}
 	Vertex v(tmpX, tmpY, tmpZ);
+
+	if (tmpX < this->minX) this->minX = tmpX;
+	if (tmpY < this->minY) this->minY = tmpY;
+	if (tmpZ < this->minZ) this->minZ = tmpZ;
+	if (tmpX > this->maxX) this->maxX = tmpX;
+	if (tmpY > this->maxY) this->maxY = tmpY;
+	if (tmpZ > this->maxZ) this->maxZ = tmpZ;
 
 	return v;
 }
@@ -87,6 +101,14 @@ Brick* Loader::load(Composite* obj)
 			}
 		}
 		brick->setID(obj->getID());
+		
+		double cX = (this->maxX - this->minX) / 2;
+		double cY = (this->maxY - this->minY) / 2;
+		double cZ = (this->maxZ - this->minZ) / 2;
+
+		Vertex center(cX, cY, cZ);
+		brick->setCenter(center);
+
 		obj->add(brick);
 	}
 	catch (BaseException& err)

@@ -63,7 +63,13 @@ public:
 	Adds face in model.
 	\param[in] face Vector of 3 links
 	*/
-	void addFace(Face);
+	void addFace(Face face);
+
+	/*!
+	Set model center.
+	\param[in] vertex Point of center.
+	*/
+	void setCenter(Vertex vertex);
 
 	/*!
 	Provides access to vertex array
@@ -109,6 +115,7 @@ public:
 
 private:
 	int ID;
+	Vertex center;				/*!< Brick center */
 	vector<Vertex> vertex;		/*!< Vertex array */
 	vector<Face> faces;			/*!< Faces array */
 };

@@ -34,13 +34,17 @@ Brick& Brick::operator=(const Brick& brick)
 void Brick::addVertex(Vertex v)
 {
 	Vertex tmp = v;
-	double Y = v.getY();
 	this->vertex.push_back(v);
 }
 
 void Brick::addFace(Face face)
 {
 	this->faces.push_back(face);
+}
+
+void Brick::setCenter(Vertex vertex)
+{
+	this->center = vertex;
 }
 
 vector<Vertex> Brick::getVertex() const

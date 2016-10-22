@@ -15,12 +15,10 @@ Scene::Scene()
 
 	this->InitBitmap();
 
-	this->bricks = new Composite;
-	if (!this->bricks)
-	{
-		throw AllocationMemoryError();
-	}
-	this->pixels = new unsigned long[500 * 600];
+	this->bricks = nullptr;
+	this->pixels = nullptr;
+	this->render = nullptr;
+	this->cam = nullptr;
 }
 
 Scene::Scene(HWND hWnd, int x, int y, int width, int height)
@@ -34,15 +32,55 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 	this->width = width;
 	this->height = height;
 
-	this->pixels = new unsigned long[500 * 600];
+	this->pixels = new unsigned long[this->width * this->height];
+	if (!this->pixels)
+	{
+		throw AllocationMemoryError();
+	}
 
 	this->InitBitmap();
 
 	this->bricks = new Composite;
 	if (!this->bricks)
 	{
+		delete this->pixels;
+		this->pixels = nullptr;
+
 		throw AllocationMemoryError();
 	}
+
+	this->render = new Render(pixels, this->height, this->width);
+	if (!this->render)
+	{
+		delete this->pixels;
+		delete this->bricks;
+		this->pixels = nullptr;
+		this->bricks = nullptr;
+
+		throw AllocationMemoryError();
+	}
+
+	this->cam = new Camera;
+	if (!this->cam)
+	{
+		delete this->pixels;
+		delete this->bricks;
+		delete this->render;
+		this->pixels = nullptr;
+		this->bricks = nullptr;
+		this->render = nullptr;
+
+		throw AllocationMemoryError();
+	}
+}
+
+Scene::~Scene()
+{
+	this->bricks->clear();
+	delete this->render;
+	delete this->cam;
+	this->render = nullptr;
+	this->cam = nullptr;
 }
 
 void Scene::InitBitmap()
@@ -67,33 +105,41 @@ void Scene::InitBitmap()
 	this->sBmp = CreateDIBSection(
 		this->hdc, &this->sBmInfo, DIB_RGB_COLORS, (void**)&pixels, NULL, 0
 		);
+
+#pragma omp parallel for
+	for (int i = 0; i < this->width; i++)
+	{
+#pragma omp parallel for
+		for (int j = 0; j < this->height; j++)
+		{
+			this->pixels[j*this->width + i] = 0x00586bab;
+		}
+	}
+
 }
 
 void Scene::DrawScene()
 {
-	for (int i = 0; i < this->width; i++)
+#pragma omp parallel for
+	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < this->height; j++)
 		{
-			this->pixels[j*width + i] = 0x00ffff00;
+			this->pixels[j*this->width + i] = 0x00a0aacf;
 		}
 	}
+
+	//draw model
+
+	Brick* brick = bricks->objects[0]; // temporary
+	this->render->run(brick, this->cam);
+
 	SelectObject(this->hdcMem, this->sBmp);
 	BitBlt(this->hdc, X, Y, this->width, this->height, this->hdcMem, 0, 0, SRCCOPY);
-	
-	//HDC sourceHdc = CreateCompatibleDC(this->hdc);
-	
-	
-	//sBmp = CreateBitmap(width, height, 1    // Одна панель цветов
-	//	, 8 * 4            // 4 байта - Количество байтов цвета на один пиксель  
-	//	, pixels);
-	//HBITMAP hbmpOldTarget = (HBITMAP)SelectObject(sourceHdc, sBmp);
-	//BOOL r1 = BitBlt(hdc, X, Y, width, height, sourceHdc, 0, 0, SRCCOPY);
-	//if (!r1)
-	//{
-		// ERROR........................ 
-	//}
-	/*::selectobject(sourcehdc, hbmpoldtarget);
-	hbmpoldtarget = null;
-	deletedc(sourcehdc);*/
+}
+
+void Scene::AddBrick(Brick brick)
+{
+	Brick* nbrick = new Brick(brick);
+	this->bricks->add(nbrick);
 }

@@ -22,10 +22,6 @@ Application::Application(HWND hWnd, int x, int y, int width, int height)
 		this->scene = nullptr;
 		throw AllocationMemoryError();
 	}
-
-	Loader first("objs/one.obj");
-
-	first.load(this->loadedBricks);
 }
 
 Application::~Application()

@@ -69,6 +69,10 @@ private:
 	*/
 	Face readFace();
 
-	char* filename;	/*!< Name of file to read */
-	FILE* file;		/*!< File to read */
+	char* filename;		/*!< Name of file to read */
+	FILE* file;			/*!< File to read */
+
+	double maxX, minX;	/*!< Min and max X coordinate of brick */
+	double maxY, minY;	/*!< Min and max Y coordinate of brick */
+	double maxZ, minZ;	/*!< Min and max Z coordinate of brick */
 };

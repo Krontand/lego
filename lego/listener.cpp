@@ -28,7 +28,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		
 		static ActionDraw* actionDraw = new ActionDraw();
-		static Application* application = new Application(hWnd, 200, 10, 600, 500);
+		static Application* application = new Application(hWnd, 270, 0, 850, 750);
 
 		if (!application)
 		{
@@ -61,7 +61,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//interface->remove(888);
 			try
 			{
-				
+				ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/one.obj");
+				application->call(*LoadFirst, 0);
+
+				ActionAddbrick* addBrick = new ActionAddbrick();
+				application->call(*addBrick, 0);
 			}
 			catch (BaseException& err)
 			{

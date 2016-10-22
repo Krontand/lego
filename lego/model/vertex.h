@@ -53,6 +53,12 @@ public:
 	~Vertex();
 
 	/*!
+	Copy vertex
+	\param[in] other Vertex object to copy
+	*/
+	Vertex& operator=(const Vertex& other);
+
+	/*!
 	Updates X coordinate with user`s values
 	\param[in] X Value of X coordinate to set
 	*/

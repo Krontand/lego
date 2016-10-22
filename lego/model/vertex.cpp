@@ -37,6 +37,14 @@ Vertex::~Vertex()
 	this->Z = 0;
 }
 
+Vertex& Vertex::operator=(const Vertex& other)
+{
+	this->X = other.getX();
+	this->Y = other.getY();
+	this->Z = other.getZ();
+	return *this;
+}
+
 void Vertex::setX(double X)
 {
 	this->X = X;

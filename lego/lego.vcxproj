@@ -88,6 +88,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -158,6 +159,7 @@
     <ClInclude Include="model\face.h" />
     <ClInclude Include="model\loader.h" />
     <ClInclude Include="model\vertex.h" />
+    <ClInclude Include="render\render.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="scene\scene.h" />
     <ClInclude Include="stdafx.h" />
@@ -176,6 +178,7 @@
     <ClCompile Include="model\face.cpp" />
     <ClCompile Include="model\loader.cpp" />
     <ClCompile Include="model\vertex.cpp" />
+    <ClCompile Include="render\render.cpp" />
     <ClCompile Include="scene\scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
