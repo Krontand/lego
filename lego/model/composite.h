@@ -47,9 +47,9 @@ public:
 
 	/*!
 	Modificate brick in array
-	\todo ~~~
+	\param[in] modiffication Modification object
 	*/
-	virtual void modificate() override;
+	virtual void modificate(Modification* modification, Vertex* center) override;
 
 	/*!
 	Get next highest ID from objects array. Need for getting unique ID for new bricks

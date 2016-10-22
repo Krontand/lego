@@ -22,9 +22,12 @@ void Composite::add(Brick* obj)
 	this->ID++;
 }
 
-void Composite::modificate()
+void Composite::modificate(Modification* modification, Vertex* center)
 {
-	//todo
+	for (int i = 0; i < this->objects.size(); i++)
+	{
+		this->objects[i]->modificate(modification, center);
+	}
 }
 
 int Composite::getID()

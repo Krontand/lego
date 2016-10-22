@@ -76,9 +76,12 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 
 Scene::~Scene()
 {
-	this->bricks->clear();
+	delete this->pixels;
+	delete this->bricks;
 	delete this->render;
 	delete this->cam;
+	this->pixels = nullptr;
+	this->bricks = nullptr;
 	this->render = nullptr;
 	this->cam = nullptr;
 }
@@ -105,7 +108,10 @@ void Scene::InitBitmap()
 	this->sBmp = CreateDIBSection(
 		this->hdc, &this->sBmInfo, DIB_RGB_COLORS, (void**)&pixels, NULL, 0
 		);
+}
 
+void Scene::DrawScene()
+{
 #pragma omp parallel for
 	for (int i = 0; i < this->width; i++)
 	{
@@ -116,10 +122,6 @@ void Scene::InitBitmap()
 		}
 	}
 
-}
-
-void Scene::DrawScene()
-{
 #pragma omp parallel for
 	for (int i = 0; i < 3; i++)
 	{
@@ -141,5 +143,11 @@ void Scene::DrawScene()
 void Scene::AddBrick(Brick brick)
 {
 	Brick* nbrick = new Brick(brick);
+
 	this->bricks->add(nbrick);
+}
+
+Composite* Scene::getBricks()
+{
+	return this->bricks;
 }

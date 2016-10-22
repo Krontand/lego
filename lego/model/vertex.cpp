@@ -90,7 +90,8 @@ double Vertex::getZ() const
 	return this->Z;
 }
 
-void Vertex::modificate()
+void Vertex::modificate(Modification* modification, Vertex* center)
 {
-	//todo
+	modification->setCenter(center);
+	modification->run(this);
 }

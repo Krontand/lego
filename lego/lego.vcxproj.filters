@@ -31,6 +31,12 @@
     <Filter Include="Файлы исходного кода\Scene">
       <UniqueIdentifier>{52daf049-703d-4704-9000-9e4934597296}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\Model\Modification">
+      <UniqueIdentifier>{d17d99c9-f605-4b22-b211-c2b3358d29f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Model\Modification">
+      <UniqueIdentifier>{cc4da60e-f4b7-4e34-9775-74c631d70dd0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -99,6 +105,12 @@
     <ClInclude Include="render\render.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="model\modification\modification.h">
+      <Filter>Заголовочные файлы\Model\Modification</Filter>
+    </ClInclude>
+    <ClInclude Include="model\modification\rotation.h">
+      <Filter>Заголовочные файлы\Model\Modification</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -145,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="render\render.cpp">
       <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="model\modification\rotation.cpp">
+      <Filter>Файлы исходного кода\Model\Modification</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

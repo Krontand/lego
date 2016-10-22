@@ -43,6 +43,11 @@ Vertex Loader::readVertex()
 	{
 		throw LoaderBadFile();
 	}
+
+	tmpX *= 0.3;
+	tmpY *= 0.3;
+	tmpZ *= 0.3;
+
 	Vertex v(tmpX, tmpY, tmpZ);
 
 	if (tmpX < this->minX) this->minX = tmpX;
@@ -102,9 +107,9 @@ Brick* Loader::load(Composite* obj)
 		}
 		brick->setID(obj->getID());
 		
-		double cX = (this->maxX - this->minX) / 2;
-		double cY = (this->maxY - this->minY) / 2;
-		double cZ = (this->maxZ - this->minZ) / 2;
+		double cX = this->maxX - (this->maxX - this->minX) / 2;
+		double cY = this->maxY - (this->maxY - this->minY) / 2;
+		double cZ = this->maxZ - (this->maxZ - this->minZ) / 2;
 
 		Vertex center(cX, cY, cZ);
 		brick->setCenter(center);

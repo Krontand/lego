@@ -25,10 +25,10 @@ void Render::run(Brick* brick, Camera* cam)
 			Vertex v0 = brick->getVertex()[face.getCurrent() - 1];
 			Vertex v1 = brick->getVertex()[face.getNext() - 1];
 
-			int x0 = (v0.getX()) * 0.3 + this->width / 2;
-			int y0 = (v0.getY()) * 0.3 + this->height / 2;
-			int x1 = (v1.getX()) * 0.3 + this->width / 2;
-			int y1 = (v1.getY()) * 0.3 + this->height / 2;
+			int x0 = (v0.getX()) + this->width / 2;
+			int y0 = (v0.getY()) + this->height / 2;
+			int x1 = (v1.getX()) + this->width / 2;
+			int y1 = (v1.getY()) + this->height / 2;
 
 			this->line(x0, y0, x1, y1);
 

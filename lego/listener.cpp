@@ -10,6 +10,7 @@ extern HINSTANCE hInst;
 PAINTSTRUCT ps;
 BaseInterface* interface;
 BaseDrawInterface* drawInterface = new BaseDrawInterface;
+double angle = 5 * M_PI / 180;
 
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -74,12 +75,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 		case WM_COMMAND:
+		case WM_KEYDOWN:
 		{
 			SetFocus(hWnd);
 			int wmId = LOWORD(wParam);
 			// Разобрать выбор в меню:
 			switch (wmId)
 			{
+			case VK_RIGHT:
+			{
+				ActionBrickRotateX* rotatex = new ActionBrickRotateX(angle);
+				application->call(*rotatex, 0);
+				application->call(*actionDraw, 0);
+			}
+			break;
 			case IDM_ABOUT:
 				DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 				break;

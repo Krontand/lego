@@ -10,12 +10,14 @@ Brick::Brick(const Brick& brick)
 {
 	this->vertex = brick.getVertex();
 	this->faces = brick.getFaces();
+	this->center = brick.getCenter();
 }
 
 Brick::Brick(Brick&& brick)
 {
 	this->vertex = brick.getVertex();
 	this->faces = brick.getFaces();
+	this->center = brick.getCenter();
 }
 
 Brick::~Brick()
@@ -28,6 +30,7 @@ Brick& Brick::operator=(const Brick& brick)
 {
 	this->vertex = brick.getVertex();
 	this->faces = brick.getFaces();
+	this->center = brick.getCenter();
 	return *this;
 }
 
@@ -45,6 +48,16 @@ void Brick::addFace(Face face)
 void Brick::setCenter(Vertex vertex)
 {
 	this->center = vertex;
+}
+
+Vertex Brick::getCenter()
+{
+	return this->center;
+}
+
+Vertex Brick::getCenter() const
+{
+	return this->center;
 }
 
 vector<Vertex> Brick::getVertex() const
@@ -67,9 +80,13 @@ int Brick::facesCount()
 	return this->faces.size();
 }
 
-void Brick::modificate()
+void Brick::modificate(Modification* modification, Vertex* center)
 {
-	//todo
+	for (int i = 0; i < this->vertexCount(); i++)
+	{
+		center = &this->center;
+		this->vertex[i].modificate(modification, center);
+	}
 }
 
 int Brick::getID()

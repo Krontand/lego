@@ -10,6 +10,10 @@ Parent of visible scene objects
 */
 
 #pragma once
+#include "modification\modification.h"
+
+class Vertex;
+class Modification;
 
 /*!
 \class BaseObject baseobject.h "model/baseobject.h"
@@ -23,7 +27,7 @@ public:
 	/*!
 	Modificate object`s coordinates (rotation/zoom etc)
 	*/
-	virtual void modificate() = 0;
+	virtual void modificate(Modification* modification, Vertex* center) = 0;
 
 	/*!
 	Different meanings: 

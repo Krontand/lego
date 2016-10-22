@@ -1,5 +1,6 @@
 #pragma once
 #include "model\loader.h"
+#include "model\modification\rotation.h"
 
 class Action
 {
@@ -78,7 +79,15 @@ public:
 
 	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
 	{
-
+		RotationX* modification = new RotationX(this->angle);
+		BaseObject* brick = scene->getBricks();
+		if (ID >= 0)
+		{
+			Composite* bricks = (Composite*)brick;
+			brick = bricks->objects[ID];
+		}
+		Vertex* tmpCenter = new Vertex(0, 0, 0);
+		brick->modificate(modification, tmpCenter);
 	}
 
 private:

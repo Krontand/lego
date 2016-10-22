@@ -23,6 +23,7 @@ public:
 
 	void DrawScene();
 	void AddBrick(Brick brick);
+	Composite* getBricks();
 private:
 	void InitBitmap();
 

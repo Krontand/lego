@@ -72,6 +72,18 @@ public:
 	void setCenter(Vertex vertex);
 
 	/*!
+	Get model center.
+	\return vertex Point of center.
+	*/
+	Vertex getCenter();
+
+	/*!
+	Get model center.
+	\return vertex Point of center.
+	*/
+	Vertex getCenter() const;
+
+	/*!
 	Provides access to vertex array
 	\return Vertex array
 	*/
@@ -97,9 +109,9 @@ public:
 
 	/*!
 	Modificate coordinates (rotate/zoom etc)
-	\todo param[in] modification
+	\param[in] modification Modification object
 	*/
-	virtual void modificate() override;
+	virtual void modificate(Modification* modification, Vertex* center) override;
 
 	/*!
 	Get uniqui ID of brick
