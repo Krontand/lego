@@ -143,7 +143,22 @@ void Scene::DrawScene()
 void Scene::AddBrick(Brick brick)
 {
 	Brick* nbrick = new Brick(brick);
+	
+#pragma omp parallel for
+	for (int vertexIndex = 0; vertexIndex < nbrick->vertexCount(); vertexIndex++)
+	{
+		Vertex v = nbrick->getVertex()[vertexIndex];
+		double nX = v.getX() + this->width / 2 - nbrick->getCenter().getX();
+		double nY = v.getY() + this->height / 2 - nbrick->getCenter().getY();
+		double nZ = v.getZ() - nbrick->getCenter().getZ();
+		nbrick->updateVertex(vertexIndex)->setX(nX);
+		nbrick->updateVertex(vertexIndex)->setY(nY);
+		nbrick->updateVertex(vertexIndex)->setZ(nZ);
+	}
+	
+	Vertex center(this->width / 2, this->height / 2, 0);
 
+	nbrick->setCenter(center);
 	this->bricks->add(nbrick);
 }
 

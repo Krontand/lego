@@ -93,3 +93,33 @@ public:
 private:
 	double angle;
 };
+
+class ActionBrickRotateY : public Action
+{
+public:
+	ActionBrickRotateY(double angle)
+	{
+		this->angle = angle;
+	}
+
+	~ActionBrickRotateY()
+	{
+	}
+
+	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
+	{
+		RotationY* modification = new RotationY(this->angle);
+		BaseObject* brick = scene->getBricks();
+		if (ID >= 0)
+		{
+			Composite* bricks = (Composite*)brick;
+			brick = bricks->objects[ID];
+		}
+		Vertex* tmpCenter = new Vertex(0, 0, 0);
+		brick->modificate(modification, tmpCenter);
+	}
+
+private:
+	double angle;
+};
+

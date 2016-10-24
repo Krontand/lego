@@ -10,7 +10,7 @@ extern HINSTANCE hInst;
 PAINTSTRUCT ps;
 BaseInterface* interface;
 BaseDrawInterface* drawInterface = new BaseDrawInterface;
-double angle = 5 * M_PI / 180;
+double angle = 1 * M_PI / 180;
 
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -62,7 +62,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//interface->remove(888);
 			try
 			{
-				ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/one.obj");
+				ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/three.obj");
+				//ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/one.obj");
 				application->call(*LoadFirst, 0);
 
 				ActionAddbrick* addBrick = new ActionAddbrick();
@@ -86,6 +87,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				ActionBrickRotateX* rotatex = new ActionBrickRotateX(angle);
 				application->call(*rotatex, 0);
+				application->call(*actionDraw, 0);
+			}
+			break;
+			case VK_LEFT:
+			{
+				ActionBrickRotateX* rotatex = new ActionBrickRotateX(-angle);
+				application->call(*rotatex, 0);
+				application->call(*actionDraw, 0);
+			}
+			break;
+			case VK_UP:
+			{
+				ActionBrickRotateY* rotatey = new ActionBrickRotateY(angle);
+				application->call(*rotatey, 0);
+				application->call(*actionDraw, 0);
+			}
+			break;
+			case VK_DOWN:
+			{
+				ActionBrickRotateY* rotatey = new ActionBrickRotateY(-angle);
+				application->call(*rotatey, 0);
 				application->call(*actionDraw, 0);
 			}
 			break;

@@ -25,10 +25,10 @@ void Render::run(Brick* brick, Camera* cam)
 			Vertex v0 = brick->getVertex()[face.getCurrent() - 1];
 			Vertex v1 = brick->getVertex()[face.getNext() - 1];
 
-			int x0 = (v0.getX()) + this->width / 2;
-			int y0 = (v0.getY()) + this->height / 2;
-			int x1 = (v1.getX()) + this->width / 2;
-			int y1 = (v1.getY()) + this->height / 2;
+			int x0 = (v0.getX());
+			int y0 = (v0.getY());
+			int x1 = (v1.getX());
+			int y1 = (v1.getY());
 
 			this->line(x0, y0, x1, y1);
 
@@ -57,7 +57,6 @@ void Render::line(int x0, int y0, int x1, int y1)
 
 	int y = y0;
 
-#pragma omp parallel for
 	for (int x = x0; x <= x1; x++) {
 		if (step) {
 			this->pixels[x*this->width + y] = 0x00ffffff;

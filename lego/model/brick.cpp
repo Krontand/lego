@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "../stdafx.h"
 #include "brick.h"
+#include <time.h>
 
 Brick::Brick()
 {
@@ -65,6 +66,11 @@ vector<Vertex> Brick::getVertex() const
 	return this->vertex;
 }
 
+Vertex* Brick::updateVertex(int ID)
+{
+	return &this->vertex[ID];
+}
+
 vector<Face> Brick::getFaces() const
 {
 	return this->faces;
@@ -82,6 +88,7 @@ int Brick::facesCount()
 
 void Brick::modificate(Modification* modification, Vertex* center)
 {
+#pragma omp parallel for
 	for (int i = 0; i < this->vertexCount(); i++)
 	{
 		center = &this->center;

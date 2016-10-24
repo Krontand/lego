@@ -90,6 +90,13 @@ public:
 	vector<Vertex> getVertex() const;
 
 	/*!
+	Provides access to vertex item to modify
+	\param[in] ID of vertex item
+	\return Pointer to vertex item
+	*/
+	Vertex* updateVertex(int ID);
+
+	/*!
 	Provides access to faces array
 	\return Faces array
 	*/
