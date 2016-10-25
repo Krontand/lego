@@ -10,7 +10,7 @@ extern HINSTANCE hInst;
 PAINTSTRUCT ps;
 BaseInterface* interface;
 BaseDrawInterface* drawInterface = new BaseDrawInterface;
-double angle = 1 * M_PI / 180;
+double angle = 5 * M_PI / 180;
 
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -62,7 +62,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//interface->remove(888);
 			try
 			{
-				ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/three.obj");
+				ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/four.obj");
 				//ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/one.obj");
 				application->call(*LoadFirst, 0);
 

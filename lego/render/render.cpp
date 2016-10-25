@@ -20,7 +20,14 @@ void Render::run(Brick* brick, Camera* cam)
 	for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
 	{
 		Face face = brick->getFaces()[faceIndex];
-		for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
+		
+		this->fillFaces(
+			brick->getVertex()[face.getA() - 1],
+			brick->getVertex()[face.getB() - 1],
+			brick->getVertex()[face.getC() - 1]
+			);
+
+		/*for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
 		{
 			Vertex v0 = brick->getVertex()[face.getCurrent() - 1];
 			Vertex v1 = brick->getVertex()[face.getNext() - 1];
@@ -32,8 +39,26 @@ void Render::run(Brick* brick, Camera* cam)
 
 			this->line(x0, y0, x1, y1);
 
-		}
+		}*/
 	}
+}
+
+void Render::InitRenderedFaces(Vertex A, Vertex B, Vertex C) 
+{
+	RFace rf;
+
+	rf.A = A;
+	rf.B = B;
+	rf.C = C;
+
+	rf.xCA = C.getX() - A.getX();
+	rf.xCB = C.getX() - B.getX();
+	rf.xBA = B.getX() - A.getX();
+	rf.yCA = C.getY() - A.getY();
+	rf.yCB = C.getY() - B.getY();
+	rf.yBA = B.getY() - A.getY();
+
+	rf.visible = true;
 }
 
 void Render::line(int x0, int y0, int x1, int y1)
@@ -71,4 +96,64 @@ void Render::line(int x0, int y0, int x1, int y1)
 			error2 -= dx * 2;
 		}
 	}
+}
+
+void Render::fillFaces(Vertex A, Vertex B, Vertex C)
+{	
+	if (A.getY() == B.getY() && A.getY() == C.getY()) return;
+
+	if (A.getY() > B.getY()) swap(A, B);
+	if (A.getY() > C.getY()) swap(A, C);
+	if (B.getY() > C.getY()) swap(B, C);
+
+	int aY = A.getY();
+	int bY = B.getY();
+	int cY = C.getY();
+	int aX = A.getX();
+	int bX = B.getX();
+	int cX = C.getX();
+
+	int faceHeight = cY - aY;
+	int halfHeight = bY - aY;
+
+	for (int yCoord = 0; yCoord < faceHeight; yCoord++) {
+		bool secondPart = yCoord > bY - aY || bY == aY;
+
+		float ak = (float)yCoord / faceHeight;
+		float bk;
+		if (secondPart)
+		{
+			halfHeight = cY - bY;
+			bk = (float) (yCoord - (bY - aY)) / halfHeight;
+		}
+		else
+		{
+			bk = (float) yCoord / halfHeight;
+		}
+
+		Vertex na(aX + (cX - aX) * ak, aY + (cY - aY) * ak, 0);
+		Vertex nb;
+		if (secondPart)
+		{	
+			nb.setX(bX + (cX - bX) * bk);
+			nb.setY(bY + (cY - bY) * bk);
+		}
+		else
+		{
+			nb.setX(aX + (bX - aX) * bk);
+			nb.setY(aY + (bY - aY) * bk);
+		}
+
+		if (na.getX() > nb.getX())
+		{
+			swap(na, nb);
+		}
+
+		for (int xCoord = na.getX(); xCoord <= nb.getX(); xCoord++) 
+		{
+			this->pixels[(int)(A.getY() + yCoord)*this->width + xCoord] = 0x00000000;
+		}
+
+	}
+
 }
