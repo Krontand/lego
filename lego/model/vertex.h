@@ -12,6 +12,7 @@ Provide interface for vertex coordinates
 #pragma once
 
 #include "baseobject.h"
+#include "../geometry\gmatrix.h"
 
 /*!
 \class Vertex vertex.h "model/vertex.h"
@@ -111,6 +112,14 @@ public:
 	\return X value
 	*/
 	double getZ() const;
+
+	/*!
+	Transform vertex into vector format
+	\return vector
+	*/
+	GVector vector();
+
+	Vertex operator*(GMatrix matrix);
 
 	/*!
 	Modificate coordinates (rotate/zoom etc)

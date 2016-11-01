@@ -146,6 +146,9 @@
     <ClInclude Include="action.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="exception.h" />
+    <ClInclude Include="geometry\exception.h" />
+    <ClInclude Include="geometry\gmatrix.h" />
+    <ClInclude Include="geometry\gvector.h" />
     <ClInclude Include="interface\button.h" />
     <ClInclude Include="interface\drawinterface.h" />
     <ClInclude Include="interface\interface.h" />
@@ -163,12 +166,16 @@
     <ClInclude Include="model\vertex.h" />
     <ClInclude Include="render\render.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="scene\camera.h" />
+    <ClInclude Include="scene\cameramodification.h" />
     <ClInclude Include="scene\scene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="geometry\gmatrix.cpp" />
+    <ClCompile Include="geometry\gvector.cpp" />
     <ClCompile Include="interface\button.cpp" />
     <ClCompile Include="interface\drawinterface.cpp" />
     <ClCompile Include="interface\interface.cpp" />
@@ -182,6 +189,7 @@
     <ClCompile Include="model\modification\rotation.cpp" />
     <ClCompile Include="model\vertex.cpp" />
     <ClCompile Include="render\render.cpp" />
+    <ClCompile Include="scene\camera.cpp" />
     <ClCompile Include="scene\scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

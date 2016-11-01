@@ -27,7 +27,7 @@ public:
 	/*!
 	Modificate object`s coordinates (rotation/zoom etc)
 	*/
-	virtual void modificate(Modification* modification, Vertex* center) = 0;
+	virtual void modificate(Modification* modification, Vertex* center = NULL) = 0;
 
 	/*!
 	Different meanings: 

@@ -86,8 +86,7 @@ public:
 			Composite* bricks = (Composite*)brick;
 			brick = bricks->objects[ID];
 		}
-		Vertex* tmpCenter = new Vertex(0, 0, 0);
-		brick->modificate(modification, tmpCenter);
+		brick->modificate(modification);
 	}
 
 private:
@@ -115,8 +114,7 @@ public:
 			Composite* bricks = (Composite*)brick;
 			brick = bricks->objects[ID];
 		}
-		Vertex* tmpCenter = new Vertex(0, 0, 0);
-		brick->modificate(modification, tmpCenter);
+		brick->modificate(modification);
 	}
 
 private:

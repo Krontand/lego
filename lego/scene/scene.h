@@ -1,14 +1,8 @@
 #pragma once
 
+#include "../geometry\gmatrix.h"
 #include "../model/composite.h"
-
-class Camera
-{
-public:
-	Camera() {}
-	~Camera() {}
-	int c;
-};
+#include "camera.h"
 
 class Render;
 

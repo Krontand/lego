@@ -60,7 +60,19 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 		throw AllocationMemoryError();
 	}
 
-	this->cam = new Camera;
+	GVector position;
+	position.addItem(10);
+	position.addItem(10);
+	position.addItem(50);
+	position.addItem(1);
+
+	GVector target;
+	target.addItem(10);
+	target.addItem(10);
+	target.addItem(10);
+	target.addItem(1);
+
+	this->cam = new Camera(position, target);
 	if (!this->cam)
 	{
 		delete this->pixels;
@@ -115,7 +127,6 @@ void Scene::DrawScene()
 #pragma omp parallel for
 	for (int i = 0; i < this->width; i++)
 	{
-#pragma omp parallel for
 		for (int j = 0; j < this->height; j++)
 		{
 			this->pixels[j*this->width + i] = 0x00586bab;

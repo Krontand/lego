@@ -88,10 +88,14 @@ int Brick::facesCount()
 
 void Brick::modificate(Modification* modification, Vertex* center)
 {
+	if (!center)
+	{
+		center = &this->center;
+	}
+
 #pragma omp parallel for
 	for (int i = 0; i < this->vertexCount(); i++)
 	{
-		center = &this->center;
 		this->vertex[i].modificate(modification, center);
 	}
 }

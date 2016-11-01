@@ -37,6 +37,12 @@
     <Filter Include="Файлы исходного кода\Model\Modification">
       <UniqueIdentifier>{cc4da60e-f4b7-4e34-9775-74c631d70dd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\geometry">
+      <UniqueIdentifier>{03a8f368-730d-4813-a3ca-a3e2176ef126}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\geometry">
+      <UniqueIdentifier>{1dcc009b-e4c0-4b89-b6b8-f60665fc1221}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -111,6 +117,21 @@
     <ClInclude Include="model\modification\rotation.h">
       <Filter>Заголовочные файлы\Model\Modification</Filter>
     </ClInclude>
+    <ClInclude Include="scene\camera.h">
+      <Filter>Заголовочные файлы\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\cameramodification.h">
+      <Filter>Заголовочные файлы\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry\gmatrix.h">
+      <Filter>Заголовочные файлы\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry\gvector.h">
+      <Filter>Заголовочные файлы\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry\exception.h">
+      <Filter>Заголовочные файлы\geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -160,6 +181,15 @@
     </ClCompile>
     <ClCompile Include="model\modification\rotation.cpp">
       <Filter>Файлы исходного кода\Model\Modification</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\camera.cpp">
+      <Filter>Файлы исходного кода\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="geometry\gmatrix.cpp">
+      <Filter>Файлы исходного кода\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="geometry\gvector.cpp">
+      <Filter>Файлы исходного кода\geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

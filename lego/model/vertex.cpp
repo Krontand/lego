@@ -90,8 +90,41 @@ double Vertex::getZ() const
 	return this->Z;
 }
 
+GVector Vertex::vector()
+{
+	GVector vec;
+	vec.addItem(this->X);
+	vec.addItem(this->Y);
+	vec.addItem(this->Z);
+	vec.addItem(1);
+	return vec;
+}
+
 void Vertex::modificate(Modification* modification, Vertex* center)
 {
 	modification->setCenter(center);
 	modification->run(this);
+}
+
+Vertex Vertex::operator*(GMatrix matrix)
+
+{
+	GVector tmp(4);
+	tmp.addItem((*this).getX());
+	tmp.addItem((*this).getY());
+	tmp.addItem((*this).getZ());
+	tmp.addItem(1);
+	GVector result(0);
+	for (unsigned long i = 0; i < matrix.columncount(); i++)
+	{
+		result.addItem(0);
+		for (unsigned long j = 0; j < matrix.rowcount(); j++)
+		{
+			result[i] = result[i] + matrix[j][i] * tmp[j];
+		}
+	}
+	(*this).setX(result[0]);
+	(*this).setY(result[1]);
+	(*this).setZ(result[2]);
+	return (*this);
 }
