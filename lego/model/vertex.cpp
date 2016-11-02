@@ -110,10 +110,11 @@ Vertex Vertex::operator*(GMatrix matrix)
 
 {
 	GVector tmp(4);
-	tmp.addItem((*this).getX());
-	tmp.addItem((*this).getY());
-	tmp.addItem((*this).getZ());
-	tmp.addItem(1);
+	tmp[0] = (*this).getX();
+	tmp[1] = (*this).getY();
+	tmp[2] = (*this).getZ();
+	tmp[3] = 1;
+
 	GVector result(0);
 	for (unsigned long i = 0; i < matrix.columncount(); i++)
 	{

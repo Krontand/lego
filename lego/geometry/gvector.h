@@ -17,8 +17,8 @@ public:
 
 	GVector& operator=(GVector& other);
 	GVector& operator=(GVector&& other);
-	double* operator[](const unsigned long index);
-	const double* operator[](const unsigned long index) const;
+	double& operator[](const unsigned long index);
+	const double& operator[](const unsigned long index) const;
 
 	void addItem(double item);
 	unsigned long size() const;
@@ -28,8 +28,8 @@ public:
 
 	GVector normalize();
 
-	GVector static cross(GVector first, GVector second);
-	double static scalar(GVector first, GVector second);
+	static GVector cross(GVector first, GVector second);
+	static double scalar(GVector first, GVector second);
 
 	GVector operator*(GMatrix matrix);
 

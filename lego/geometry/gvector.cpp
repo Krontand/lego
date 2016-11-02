@@ -42,14 +42,14 @@ GVector& GVector::operator=(GVector&& other)
 	return *this;
 }
 
-double* GVector::operator[](const unsigned long index)
+double& GVector::operator[](const unsigned long index)
 {
-	return &(this->vec[index]);
+	return this->vec[index];
 }
 
-const double* GVector::operator[](const unsigned long index) const
+const double& GVector::operator[](const unsigned long index) const
 {
-	return &(this->vec[index]);
+	return this->vec[index];
 }
 
 void GVector::addItem(double item)

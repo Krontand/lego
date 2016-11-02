@@ -17,7 +17,7 @@ public:
 	GMatrix& operator=(GMatrix& other);
 	GMatrix& operator=(GMatrix&& other);
 	GVector& operator[](const unsigned long index);
-	GVector& operator[](const unsigned long index) const;
+	const GVector& operator[](const unsigned long index) const;
 
 	GMatrix& operator-();
 	GMatrix& operator*(const double value);
@@ -29,7 +29,6 @@ public:
 
 private:
 	vector<GVector> matrix;
-	vector<GVector>::iterator iterator;
 	unsigned long ccount;
 	unsigned long rcount;
 };

@@ -154,7 +154,7 @@ void Scene::DrawScene()
 void Scene::AddBrick(Brick brick)
 {
 	Brick* nbrick = new Brick(brick);
-	
+
 #pragma omp parallel for
 	for (int vertexIndex = 0; vertexIndex < nbrick->vertexCount(); vertexIndex++)
 	{

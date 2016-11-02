@@ -63,6 +63,7 @@ GMatrix Camera::cameraview()
 		view[i][0] = this->right[i];
 		view[i][1] = this->up[i];
 		view[i][2] = this->direction[i];
+		view[i][3] = 1;
 	}
 	view[3][0] = X;
 	view[3][1] = Y;

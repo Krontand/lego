@@ -17,7 +17,6 @@ GMatrix::GMatrix(unsigned long rows, unsigned long cols)
 		this->matrix.push_back(tmp);
 	}
 
-	this->iterator = this->matrix.begin();
 }
 
 GMatrix::GMatrix(const GMatrix& other)
@@ -30,7 +29,6 @@ GMatrix::GMatrix(const GMatrix& other)
 		this->matrix.push_back(other[i]);
 	}
 
-	this->iterator = this->matrix.begin();
 }
 
 GMatrix::GMatrix(GMatrix&& other)
@@ -43,7 +41,6 @@ GMatrix::GMatrix(GMatrix&& other)
 		this->matrix.push_back(other[i]);
 	}
 
-	this->iterator = this->matrix.begin();
 }
 
 GMatrix::~GMatrix()
@@ -61,7 +58,6 @@ GMatrix& GMatrix::operator=(GMatrix& other)
 		this->matrix.push_back(other[i]);
 	}
 
-	this->iterator = this->matrix.begin();
 	return (*this);
 }
 
@@ -75,20 +71,17 @@ GMatrix& GMatrix::operator=(GMatrix&& other)
 		this->matrix.push_back(other[i]);
 	}
 
-	this->iterator = this->matrix.begin();
 	return (*this);
 }
 
 GVector& GMatrix::operator[](const unsigned long index)
 {
-	this->iterator[index];
-	return *(this->iterator);
+	return this->matrix[index];
 }
 
-GVector& GMatrix::operator[](const unsigned long index) const
+const GVector& GMatrix::operator[](const unsigned long index) const
 {
-	this->iterator[index];
-	return *(this->iterator);
+	return this->matrix[index];
 }
 
 GMatrix& GMatrix::operator-()
