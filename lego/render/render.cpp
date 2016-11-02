@@ -17,16 +17,20 @@ Render::~Render()
 void Render::run(Brick* brick, Camera* cam)
 {
 	GMatrix view = cam->cameraview();
-#pragma omp parallel for
+//#pragma omp parallel for
 	for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
 	{
 		Face face = brick->getFaces()[faceIndex];
 		
-		this->fillFaces(
-			brick->getVertex()[face.getA() - 1] * view,
-			brick->getVertex()[face.getB() - 1] * view,
-			brick->getVertex()[face.getC() - 1] * view
-			);
+		Vertex A(brick->getVertex()[face.getA() - 1]);
+		Vertex B(brick->getVertex()[face.getB() - 1]);
+		Vertex C(brick->getVertex()[face.getC() - 1]);
+
+		A = A * view;
+		B = B * view;
+		C = C * view;
+
+		this->fillFaces(A, B, C);
 
 		/*for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
 		{
