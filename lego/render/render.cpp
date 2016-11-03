@@ -30,6 +30,15 @@ void Render::run(Brick* brick, Camera* cam)
 		B = B * view;
 		C = C * view;
 
+		A.setX(A.getX() + this->width / 2);
+		A.setY(A.getY() + this->height / 2);
+
+		B.setX(B.getX() + this->width / 2);
+		B.setY(B.getY() + this->height / 2);
+
+		C.setX(C.getX() + this->width / 2);
+		C.setY(C.getY() + this->height / 2);
+
 		this->fillFaces(A, B, C);
 
 		/*for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
@@ -156,7 +165,11 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C)
 
 		for (int xCoord = na.getX(); xCoord <= nb.getX(); xCoord++) 
 		{
-			this->pixels[(int)(A.getY() + yCoord)*this->width + xCoord] = 0x00000000;
+			int pix = (int)(A.getY() + yCoord)*this->width + xCoord;
+			if (pix >= 0 && pix <= this->width * this->height)
+			{
+				this->pixels[pix] = 0x00000000;
+			}
 		}
 
 	}

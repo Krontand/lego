@@ -3,7 +3,6 @@
 
 GMatrix matrixrotation(double X, double Y, double Z, double angle)
 {
-	angle = angle * M_PI / 180;
 	double cosa = cos(angle);
 	double sina = sin(angle);
 

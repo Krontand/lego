@@ -61,15 +61,15 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 	}
 
 	GVector position;
-	position.addItem(10);
-	position.addItem(10);
-	position.addItem(50);
+	position.addItem(0);
+	position.addItem(0);
+	position.addItem(500);
 	position.addItem(1);
 
 	GVector target;
-	target.addItem(10);
-	target.addItem(10);
-	target.addItem(10);
+	target.addItem(0);
+	target.addItem(0);
+	target.addItem(0);
 	target.addItem(1);
 
 	this->cam = new Camera(position, target);
@@ -159,21 +159,16 @@ void Scene::AddBrick(Brick brick)
 	for (int vertexIndex = 0; vertexIndex < nbrick->vertexCount(); vertexIndex++)
 	{
 		Vertex v = nbrick->getVertex()[vertexIndex];
-		int nX = v.getX() + 1. + this->width / 2. - nbrick->getCenter().getX();
-		int nY = v.getY() + 1. + this->height / 2. - nbrick->getCenter().getY();
+		int nX = v.getX() + 1. - nbrick->getCenter().getX();
+		int nY = v.getY() + 1. - nbrick->getCenter().getY();
 		int nZ = v.getZ() + 1. - nbrick->getCenter().getZ();
 		nbrick->updateVertex(vertexIndex)->setX(nX);
 		nbrick->updateVertex(vertexIndex)->setY(nY);
 		nbrick->updateVertex(vertexIndex)->setZ(nZ);
 	}
 	
-	Vertex center(this->width / 2, this->height / 2, 0);
+	Vertex center(0, 0, 0);
 
 	nbrick->setCenter(center);
 	this->bricks->add(nbrick);
-}
-
-Composite* Scene::getBricks()
-{
-	return this->bricks;
 }

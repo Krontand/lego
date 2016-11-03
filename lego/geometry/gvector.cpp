@@ -105,9 +105,9 @@ GVector GVector::cross(GVector first, GVector second)
 	}
 
 	GVector result(4);
-	result[0] = first[2] * second[1] - first[1] * second[2]; // new X = Z1 * Y2 - Y1 * Z2
-	result[1] = first[0] * second[2] - first[2] * second[0]; // new Y = X1 * Z2 - Z1 * X2
-	result[2] = first[1] * second[0] - first[0] * second[1]; // new Z = Y1 * X2 - X1 * Y2
+	result[0] = first[1] * second[2] - first[2] * second[1]; // new X = Z1 * Y2 - Y1 * Z2
+	result[1] = first[2] * second[0] - first[0] * second[2]; // new Y = X1 * Z2 - Z1 * X2
+	result[2] = first[0] * second[1] - first[1] * second[0]; // new Z = Y1 * X2 - X1 * Y2
 	result[3] = 1;
 
 	return result;

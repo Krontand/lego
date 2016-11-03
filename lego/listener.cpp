@@ -85,14 +85,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 			case VK_RIGHT:
 			{
-				ActionBrickRotateX* rotatex = new ActionBrickRotateX(angle);
+				ActionCameraRotationHorizontal* rotatex = new ActionCameraRotationHorizontal(angle);
 				application->call(*rotatex, 0);
 				application->call(*actionDraw, 0);
 			}
 			break;
 			case VK_LEFT:
 			{
-				ActionBrickRotateX* rotatex = new ActionBrickRotateX(-angle);
+				ActionCameraRotationHorizontal* rotatex = new ActionCameraRotationHorizontal(-angle);
 				application->call(*rotatex, 0);
 				application->call(*actionDraw, 0);
 			}

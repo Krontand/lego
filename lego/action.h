@@ -80,7 +80,7 @@ public:
 	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
 	{
 		RotationX* modification = new RotationX(this->angle);
-		BaseObject* brick = scene->getBricks();
+		BaseObject* brick = scene->bricks;
 		if (ID >= 0)
 		{
 			Composite* bricks = (Composite*)brick;
@@ -108,7 +108,7 @@ public:
 	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
 	{
 		RotationY* modification = new RotationY(this->angle);
-		BaseObject* brick = scene->getBricks();
+		BaseObject* brick = scene->bricks;
 		if (ID >= 0)
 		{
 			Composite* bricks = (Composite*)brick;
@@ -121,3 +121,22 @@ private:
 	double angle;
 };
 
+class ActionCameraRotationHorizontal : public Action
+{
+public:
+	ActionCameraRotationHorizontal(double angle)
+	{
+		this->angle = angle;
+	}
+
+	~ActionCameraRotationHorizontal()
+	{
+	}
+
+	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
+	{
+	}
+
+private:
+	double angle;
+};

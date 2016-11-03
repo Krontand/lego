@@ -17,7 +17,9 @@ public:
 
 	void DrawScene();
 	void AddBrick(Brick brick);
-	Composite* getBricks();
+	
+	Composite* bricks;
+	Camera* cam;
 private:
 	void InitBitmap();
 
@@ -33,9 +35,6 @@ private:
 	HDC hdc;
 	HDC hdcMem;
 	HWND hWnd;
-
-	Composite* bricks;
-	Camera* cam;
 
 	Render* render;
 
