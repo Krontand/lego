@@ -1,7 +1,7 @@
 #pragma once
 #include "../scene/scene.h"
 
-using namespace std;
+using std::vector;
 
 class Render
 {

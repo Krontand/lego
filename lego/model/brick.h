@@ -3,14 +3,14 @@
 \brief  Model basement
 \author Dmitry Zaitsev
 \copyright © BMSTU All rights violated.
-\version 1.0
+\version 2.0
 \date 16 October 2016
 
 Contains model archetecture
 */
 
 #pragma once
-using namespace std;
+using std::vector;
 
 #include "vertex.h"
 #include "face.h"
@@ -66,43 +66,6 @@ public:
 	void addFace(Face face);
 
 	/*!
-	Set model center.
-	\param[in] vertex Point of center.
-	*/
-	void setCenter(Vertex vertex);
-
-	/*!
-	Get model center.
-	\return vertex Point of center.
-	*/
-	Vertex getCenter();
-
-	/*!
-	Get model center.
-	\return vertex Point of center.
-	*/
-	Vertex getCenter() const;
-
-	/*!
-	Provides access to vertex array
-	\return Vertex array
-	*/
-	vector<Vertex> getVertex() const;
-
-	/*!
-	Provides access to vertex item to modify
-	\param[in] ID of vertex item
-	\return Pointer to vertex item
-	*/
-	Vertex* updateVertex(int ID);
-
-	/*!
-	Provides access to faces array
-	\return Faces array
-	*/
-	vector<Face> getFaces() const;
-
-	/*!
 	Amount of vertex in model
 	\return Amount of items
 	*/
@@ -120,20 +83,6 @@ public:
 	*/
 	virtual void modificate(Modification* modification, Vertex* center) override;
 
-	/*!
-	Get uniqui ID of brick
-	\return ID of brick
-	*/
-	virtual int getID() override;
-
-	/*!
-	Set uniqui ID of brick
-	\param[in] ID of brick
-	*/
-	void setID(int ID);
-
-private:
-	int ID;
 	Vertex center;				/*!< Brick center */
 	vector<Vertex> vertex;		/*!< Vertex array */
 	vector<Face> faces;			/*!< Faces array */

@@ -17,43 +17,33 @@ Render::~Render()
 void Render::run(Brick* brick, Camera* cam)
 {
 	GMatrix view = cam->cameraview();
-//#pragma omp parallel for
+
+	int xCenter = this->width / 2;
+	int yCenter = this->height / 2;
+
+#pragma omp parallel for
 	for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
 	{
-		Face face = brick->getFaces()[faceIndex];
+		Face face = brick->faces[faceIndex];
 		
-		Vertex A(brick->getVertex()[face.getA() - 1]);
-		Vertex B(brick->getVertex()[face.getB() - 1]);
-		Vertex C(brick->getVertex()[face.getC() - 1]);
+		Vertex A(brick->vertex[face.getA() - 1]);
+		Vertex B(brick->vertex[face.getB() - 1]);
+		Vertex C(brick->vertex[face.getC() - 1]);
 
 		A = A * view;
 		B = B * view;
 		C = C * view;
 
-		A.setX(A.getX() + this->width / 2);
-		A.setY(A.getY() + this->height / 2);
+		A.X = A.X + xCenter;
+		A.Y = A.Y + yCenter;
 
-		B.setX(B.getX() + this->width / 2);
-		B.setY(B.getY() + this->height / 2);
+		B.X = B.X + xCenter;
+		B.Y = B.Y + yCenter;
 
-		C.setX(C.getX() + this->width / 2);
-		C.setY(C.getY() + this->height / 2);
+		C.X = C.X + xCenter;
+		C.Y = C.Y + yCenter;
 
 		this->fillFaces(A, B, C);
-
-		/*for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
-		{
-			Vertex v0 = brick->getVertex()[face.getCurrent() - 1];
-			Vertex v1 = brick->getVertex()[face.getNext() - 1];
-
-			int x0 = (v0.getX());
-			int y0 = (v0.getY());
-			int x1 = (v1.getX());
-			int y1 = (v1.getY());
-
-			this->line(x0, y0, x1, y1);
-
-		}*/
 	}
 }
 
@@ -65,12 +55,12 @@ void Render::InitRenderedFaces(Vertex A, Vertex B, Vertex C)
 	rf.B = B;
 	rf.C = C;
 
-	rf.xCA = C.getX() - A.getX();
-	rf.xCB = C.getX() - B.getX();
-	rf.xBA = B.getX() - A.getX();
-	rf.yCA = C.getY() - A.getY();
-	rf.yCB = C.getY() - B.getY();
-	rf.yBA = B.getY() - A.getY();
+	rf.xCA = C.X - A.X;
+	rf.xCB = C.X - B.X;
+	rf.xBA = B.X - A.X;
+	rf.yCA = C.Y - A.Y;
+	rf.yCB = C.Y - B.Y;
+	rf.yBA = B.Y - A.Y;
 
 	rf.visible = true;
 }
@@ -79,14 +69,14 @@ void Render::line(int x0, int y0, int x1, int y1)
 {
 	bool step = false;
 	if (abs(x0 - x1) < abs(y0 - y1)) {
-		swap(x0, y0);
-		swap(x1, y1);
+		std::swap(x0, y0);
+		std::swap(x1, y1);
 		step = true;
 	}
 
 	if (x0 > x1) {
-		swap(x0, x1);
-		swap(y0, y1);
+		std::swap(x0, x1);
+		std::swap(y0, y1);
 	}
 
 	int dx = x1 - x0;
@@ -114,18 +104,18 @@ void Render::line(int x0, int y0, int x1, int y1)
 
 void Render::fillFaces(Vertex A, Vertex B, Vertex C)
 {	
-	if (A.getY() == B.getY() && A.getY() == C.getY()) return;
+	if (A.Y == B.Y && A.Y == C.Y) return;
 
-	if (A.getY() > B.getY()) swap(A, B);
-	if (A.getY() > C.getY()) swap(A, C);
-	if (B.getY() > C.getY()) swap(B, C);
+	if (A.Y > B.Y) std::swap(A, B);
+	if (A.Y > C.Y) std::swap(A, C);
+	if (B.Y > C.Y) std::swap(B, C);
 
-	int aY = A.getY();
-	int bY = B.getY();
-	int cY = C.getY();
-	int aX = A.getX();
-	int bX = B.getX();
-	int cX = C.getX();
+	int aY = A.Y;
+	int bY = B.Y;
+	int cY = C.Y;
+	int aX = A.X;
+	int bX = B.X;
+	int cX = C.X;
 
 	int faceHeight = cY - aY;
 	int halfHeight = bY - aY;
@@ -149,23 +139,23 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C)
 		Vertex nb;
 		if (secondPart)
 		{	
-			nb.setX(bX + (cX - bX) * bk);
-			nb.setY(bY + (cY - bY) * bk);
+			nb.X = bX + (cX - bX) * bk;
+			nb.Y = bY + (cY - bY) * bk;
 		}
 		else
 		{
-			nb.setX(aX + (bX - aX) * bk);
-			nb.setY(aY + (bY - aY) * bk);
+			nb.X = aX + (bX - aX) * bk;
+			nb.Y = aY + (bY - aY) * bk;
 		}
 
-		if (na.getX() > nb.getX())
+		if (na.X > nb.X)
 		{
-			swap(na, nb);
+			std::swap(na, nb);
 		}
 
-		for (int xCoord = na.getX(); xCoord <= nb.getX(); xCoord++) 
+		for (int xCoord = na.X; xCoord <= nb.X; xCoord++) 
 		{
-			int pix = (int)(A.getY() + yCoord)*this->width + xCoord;
+			int pix = (int)(A.Y + yCoord)*this->width + xCoord;
 			if (pix >= 0 && pix <= this->width * this->height)
 			{
 				this->pixels[pix] = 0x00000000;

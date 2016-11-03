@@ -13,43 +13,43 @@ Rotation::~Rotation()
 void Rotation::rotateX(Vertex* vertex)
 {
 	double tmpX =
-		this->center->getX() + (vertex->getX() - this->center->getX()) * cos(this->angle) -
-		(vertex->getZ() - this->center->getZ()) * sin(this->angle);
+		this->center->X + (vertex->X - this->center->X) * cos(this->angle) -
+		(vertex->Z - this->center->Z) * sin(this->angle);
 
 	double tmpZ =
-		this->center->getZ() + (vertex->getX() - this->center->getX()) * sin(this->angle) +
-		(vertex->getZ() - this->center->getZ()) * cos(this->angle);
+		this->center->Z + (vertex->X - this->center->X) * sin(this->angle) +
+		(vertex->Z - this->center->Z) * cos(this->angle);
 
-	vertex->setX(tmpX);
-	vertex->setZ(tmpZ);
+	vertex->X = tmpX;
+	vertex->Z = tmpZ;
 }
 
 void Rotation::rotateY(Vertex* vertex)
 {
 	double tmpY =
-		this->center->getY() + (vertex->getY() - this->center->getY()) * cos(this->angle) -
-		(vertex->getZ() - this->center->getZ()) * sin(this->angle);
+		this->center->Y + (vertex->Y - this->center->Y) * cos(this->angle) -
+		(vertex->Z - this->center->Z) * sin(this->angle);
 
 	double tmpZ =
-		this->center->getZ() + (vertex->getY() - this->center->getY()) * sin(this->angle) +
-		(vertex->getZ() - this->center->getZ()) * cos(this->angle);
+		this->center->Z + (vertex->Y - this->center->Y) * sin(this->angle) +
+		(vertex->Z - this->center->Z) * cos(this->angle);
 
-	vertex->setY(tmpY);
-	vertex->setZ(tmpZ);
+	vertex->Y = tmpY;
+	vertex->Z = tmpZ;
 }
 
 void Rotation::rotateZ(Vertex* vertex)
 {
 	double tmpX =
-		this->center->getX() + (vertex->getX() - this->center->getX()) * cos(this->angle) -
-		(vertex->getY() - this->center->getY()) * sin(this->angle);
+		this->center->X + (vertex->X - this->center->X) * cos(this->angle) -
+		(vertex->Y - this->center->Y) * sin(this->angle);
 
 	double tmpY =
-		this->center->getY() + (vertex->getX() - this->center->getX()) * sin(this->angle) +
-		(vertex->getY() - this->center->getY()) * cos(this->angle);
+		this->center->Y + (vertex->X - this->center->X) * sin(this->angle) +
+		(vertex->Y - this->center->Y) * cos(this->angle);
 
-	vertex->setX(tmpX);
-	vertex->setY(tmpY);
+	vertex->X = tmpX;
+	vertex->Y = tmpY;
 }
 
 void Rotation::setCenter(Vertex* center)

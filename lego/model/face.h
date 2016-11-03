@@ -10,11 +10,11 @@ Contains links to verices
 */
 
 #pragma once
-using namespace std;
+using std::vector;
 
 /*!
 \class Face face.h "model/face.h"
-\brief  Define face consisting 3 links to vetices
+\brief Define face consisting 3 links to vetices
 
 Contains links to verices
 */
@@ -50,6 +50,13 @@ public:
 	Destructor fills links with zero values
 	*/
 	~Face();
+
+	/*!
+	Copies incoming face.
+	\param[in] face Source face to copy.
+	\return Link to this object.
+	*/
+	Face& operator=(const Face& face);
 
 	/*!
 	Get vertices links array
@@ -93,7 +100,8 @@ public:
 	*/
 	int getNext();
 
-private:
 	vector<int> Vertices;			/*!< Links array */
+
+private:
 	vector<int>::iterator iterator;	/*!< Iterator for links array */
 };

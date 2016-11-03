@@ -39,6 +39,13 @@ Face::~Face()
 	}
 }
 
+Face& Face::operator=(const Face& face)
+{
+	this->Vertices = face.getFace();
+	this->iterator = this->Vertices.begin();
+	return *this;
+}
+
 vector<int> Face::getFace()
 {
 	return this->Vertices;

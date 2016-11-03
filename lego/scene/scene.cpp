@@ -60,17 +60,8 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 		throw AllocationMemoryError();
 	}
 
-	GVector position;
-	position.addItem(0);
-	position.addItem(0);
-	position.addItem(500);
-	position.addItem(1);
-
-	GVector target;
-	target.addItem(0);
-	target.addItem(0);
-	target.addItem(0);
-	target.addItem(1);
+	GVector position(0, 0, 500, 1);
+	GVector target(0, 0, 0, 1);
 
 	this->cam = new Camera(position, target);
 	if (!this->cam)
@@ -142,8 +133,6 @@ void Scene::DrawScene()
 		}
 	}
 
-	//draw model
-
 	Brick* brick = bricks->objects[0]; // temporary
 	this->render->run(brick, this->cam);
 
@@ -158,17 +147,19 @@ void Scene::AddBrick(Brick brick)
 #pragma omp parallel for
 	for (int vertexIndex = 0; vertexIndex < nbrick->vertexCount(); vertexIndex++)
 	{
-		Vertex v = nbrick->getVertex()[vertexIndex];
-		int nX = v.getX() + 1. - nbrick->getCenter().getX();
-		int nY = v.getY() + 1. - nbrick->getCenter().getY();
-		int nZ = v.getZ() + 1. - nbrick->getCenter().getZ();
-		nbrick->updateVertex(vertexIndex)->setX(nX);
-		nbrick->updateVertex(vertexIndex)->setY(nY);
-		nbrick->updateVertex(vertexIndex)->setZ(nZ);
+		Vertex v = nbrick->vertex[vertexIndex];
+
+		int nX = v.X + 1. - nbrick->center.X;
+		int nY = v.Y + 1. - nbrick->center.Y;
+		int nZ = v.Z + 1. - nbrick->center.Z;
+
+		nbrick->vertex[vertexIndex].X = nX;
+		nbrick->vertex[vertexIndex].Y = nY;
+		nbrick->vertex[vertexIndex].Z = nZ;
 	}
 	
 	Vertex center(0, 0, 0);
+	nbrick->center = center;
 
-	nbrick->setCenter(center);
 	this->bricks->add(nbrick);
 }

@@ -10,7 +10,7 @@ Provide interface for drawing common interface
 */
 
 #pragma once
-using namespace std;
+using std::vector;
 
 /*!
 \class BaseDrawInterfaceElement drawinterface.h "interface/drawinterface.h"

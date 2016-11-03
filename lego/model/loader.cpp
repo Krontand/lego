@@ -105,14 +105,14 @@ Brick* Loader::load(Composite* obj)
 				break;
 			}
 		}
-		brick->setID(obj->getID());
+		brick->ID = obj->ID;
 		
 		double cX = this->maxX - (this->maxX - this->minX) / 2;
 		double cY = this->maxY - (this->maxY - this->minY) / 2;
 		double cZ = this->maxZ - (this->maxZ - this->minZ) / 2;
 
 		Vertex center(cX, cY, cZ);
-		brick->setCenter(center);
+		brick->center = center;
 
 		obj->add(brick);
 	}

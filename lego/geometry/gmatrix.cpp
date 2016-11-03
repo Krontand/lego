@@ -2,45 +2,29 @@
 #include "../stdafx.h"
 #include "gmatrix.h"
 
-GMatrix::GMatrix() : GMatrix(1, 1)
+GMatrix::GMatrix()
 {
-}
-
-GMatrix::GMatrix(unsigned long rows, unsigned long cols)
-{
-	this->rcount = rows;
-	this->ccount = cols;
-
-	for (unsigned long i = 0; i < rows; i++)
+	for (unsigned long i = 0; i <= 3; i++)
 	{
-		GVector tmp(cols);
+		GVector tmp;
 		this->matrix.push_back(tmp);
 	}
-
 }
 
 GMatrix::GMatrix(const GMatrix& other)
 {
-	this->rcount = other.rowcount();
-	this->ccount = other.columncount();
-
-	for (unsigned long i = 0; i < this->rcount; i++)
+	for (unsigned long i = 0; i <= 3; i++)
 	{
 		this->matrix.push_back(other[i]);
 	}
-
 }
 
 GMatrix::GMatrix(GMatrix&& other)
 {
-	this->rcount = other.rowcount();
-	this->ccount = other.columncount();
-
-	for (unsigned long i = 0; i < this->rcount; i++)
+	for (unsigned long i = 0; i <= 3; i++)
 	{
 		this->matrix.push_back(other[i]);
 	}
-
 }
 
 GMatrix::~GMatrix()
@@ -50,10 +34,7 @@ GMatrix::~GMatrix()
 
 GMatrix& GMatrix::operator=(GMatrix& other)
 {
-	this->rcount = other.rowcount();
-	this->ccount = other.columncount();
-
-	for (unsigned long i = 0; i < this->rcount; i++)
+	for (unsigned long i = 0; i <= 3; i++)
 	{
 		this->matrix.push_back(other[i]);
 	}
@@ -63,10 +44,7 @@ GMatrix& GMatrix::operator=(GMatrix& other)
 
 GMatrix& GMatrix::operator=(GMatrix&& other)
 {
-	this->rcount = other.rowcount();
-	this->ccount = other.columncount();
-
-	for (unsigned long i = 0; i < this->rcount; i++)
+	for (unsigned long i = 0; i <= 3; i++)
 	{
 		this->matrix.push_back(other[i]);
 	}
@@ -92,32 +70,12 @@ GMatrix& GMatrix::operator-()
 GMatrix& GMatrix::operator*(const double value)
 {
 	GMatrix result(*this);
-	for (unsigned long i = 0; i < this->rcount; i++)
+	for (unsigned long i = 0; i <= 3; i++)
 	{
-		for (unsigned long j = 0; j < ccount; j++)
+		for (unsigned long j = 0; j <= 3; j++)
 		{
 			result[i][j] = result[i][j] * value;
 		}
 	}
 	return (*this);
-}
-
-unsigned long GMatrix::columncount()
-{
-	return this->ccount;
-}
-
-unsigned long GMatrix::columncount() const
-{
-	return this->ccount;
-}
-
-unsigned long GMatrix::rowcount()
-{
-	return this->rcount;
-}
-
-unsigned long GMatrix::rowcount() const
-{
-	return this->rcount;
 }

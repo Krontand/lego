@@ -3,7 +3,7 @@
 \brief  Define vertex consisting 3 double coordinates
 \author Dmitry Zaitsev
 \copyright © BMSTU All rights violated.
-\version 1.0
+\version 2.0
 \date 16 October 2016
 
 Provide interface for vertex coordinates
@@ -60,65 +60,16 @@ public:
 	Vertex& operator=(const Vertex& other);
 
 	/*!
-	Updates X coordinate with user`s values
-	\param[in] X Value of X coordinate to set
-	*/
-	void setX(double X);
-
-	/*!
-	Updates Y coordinate with user`s values
-	\param[in] Y Value of Y coordinate to set
-	*/
-	void setY(double Y);
-
-	/*!
-	Updates Z coordinate with user`s values
-	\param[in] Z Value of Z coordinate to set
-	*/
-	void setZ(double Z);
-
-	/*!
-	Gets X value of vertex coordinate
-	\return X value
-	*/
-	double getX();
-
-	/*!
-	Gets X value of vertex coordinate. Const method.
-	\return X value
-	*/
-	double getX() const;
-
-	/*!
-	Gets Y value of vertex coordinate
-	\return Y value
-	*/
-	double getY();
-
-	/*!
-	Gets X value of vertex coordinate. Const method.
-	\return X value
-	*/
-	double getY() const;
-
-	/*!
-	Gets Z value of vertex coordinate
-	\return Z value
-	*/
-	double getZ();
-
-	/*!
-	Gets X value of vertex coordinate. Const method.
-	\return X value
-	*/
-	double getZ() const;
-
-	/*!
 	Transform vertex into vector format
 	\return vector
 	*/
 	GVector vector();
 
+	/*!
+	Multiply this vertex by matrix
+	\param[in] matrix Matrix to multiply
+	\return Vertex multiplied by matrix
+	*/
 	Vertex operator*(GMatrix matrix);
 
 	/*!
@@ -127,7 +78,6 @@ public:
 	*/
 	virtual void modificate(Modification* modification, Vertex* center) override;
 
-private:
 	double X;	/*!< X coordinate of vertex */
 	double Y;	/*!< Y coordinate of vertex */
 	double Z;	/*!< Z coordinate of vertex */

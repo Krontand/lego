@@ -6,7 +6,6 @@
 
 Camera::Camera()
 {
-
 }
 
 Camera::Camera(GVector position, GVector target)
@@ -14,18 +13,20 @@ Camera::Camera(GVector position, GVector target)
 	this->position = position;
 	this->target = target;
 	
-	this->right.addItem(1);
-	this->right.addItem(0);
-	this->right.addItem(0);
-	this->right.addItem(1);
-	this->up.addItem(0);
-	this->up.addItem(1);
-	this->up.addItem(0);
-	this->up.addItem(1);
-	this->direction.addItem(0);
-	this->direction.addItem(0);
-	this->direction.addItem(1);
-	this->direction.addItem(1);
+	this->right[0] = 1;
+	this->right[1] = 0;
+	this->right[2] = 0;
+	this->right[3] = 1;
+
+	this->up[0] = 0;
+	this->up[1] = 1;
+	this->up[2] = 0;
+	this->up[3] = 1;
+
+	this->direction[0] = 0;
+	this->direction[1] = 0;
+	this->direction[2] = 1;
+	this->direction[3] = 1;
 }
 
 void Camera::rotateHorizontalSphere(double angle)
@@ -56,7 +57,7 @@ GMatrix Camera::cameraview()
 	double Y = -GVector::scalar(this->up, this->position);
 	double Z = -GVector::scalar(this->direction, this->position);
 
-	GMatrix view(4, 4);
+	GMatrix view;
 	
 	for (int i = 0; i < 3; i++)
 	{

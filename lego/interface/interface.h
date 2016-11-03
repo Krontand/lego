@@ -10,7 +10,7 @@ Provide interface for creating/removing/updating common interface items
 */
 
 #pragma once
-using namespace std;
+using std::vector;
 
 /*!
 \class BaseInterfaceItem interface.h "interface/interface.h"

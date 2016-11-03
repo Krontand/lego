@@ -3,7 +3,7 @@
 \brief  Composite class
 \author Dmitry Zaitsev
 \copyright © BMSTU All rights violated.
-\version 1.0
+\version 2.0
 \date 16 October 2016
 
 Contains loaded bricks
@@ -52,16 +52,9 @@ public:
 	virtual void modificate(Modification* modification, Vertex* center) override;
 
 	/*!
-	Get next highest ID from objects array. Need for getting unique ID for new bricks
-	\return Next highest ID
-	*/
-	virtual int getID() override;
-
-	/*!
 	Clears objects array and free memory.
 	*/
 	void clear();
 
-	int ID;							/*!< Highest id from objects array */
-	vector<Brick*> objects;	/*!< Array of bricks */
+	vector<Brick*> objects;		/*!< Array of bricks */
 };

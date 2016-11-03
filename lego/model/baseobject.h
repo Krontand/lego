@@ -26,6 +26,8 @@ class BaseObject
 public:
 	/*!
 	Modificate object`s coordinates (rotation/zoom etc)
+	\param[in] modification Type of modification
+	\param[in] center Modification center
 	*/
 	virtual void modificate(Modification* modification, Vertex* center = NULL) = 0;
 
@@ -33,7 +35,6 @@ public:
 	Different meanings: 
 		In composite - get highest ID of objects.
 		In brick - get ID of this brick.
-	\return ID
 	*/
-	virtual int getID() { return -1; };
+	int ID;
 };

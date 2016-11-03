@@ -30,16 +30,11 @@ void Composite::modificate(Modification* modification, Vertex* center)
 	}
 }
 
-int Composite::getID()
-{
-	return this->ID;
-}
-
 void Composite::remove(int ID)
 {
 	for (int i = 0; i < this->objects.size(); i++)
 	{
-		if (this->objects[i]->getID() == ID)
+		if (this->objects[i]->ID == ID)
 		{
 			delete this->objects[i];
 			this->objects.erase(this->objects.begin() + i);
