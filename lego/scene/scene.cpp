@@ -19,6 +19,7 @@ Scene::Scene()
 	this->pixels = nullptr;
 	this->render = nullptr;
 	this->cam = nullptr;
+	this->light = nullptr;
 }
 
 Scene::Scene(HWND hWnd, int x, int y, int width, int height)
@@ -72,6 +73,21 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 		this->pixels = nullptr;
 		this->bricks = nullptr;
 		this->render = nullptr;
+
+		throw AllocationMemoryError();
+	}
+
+	this->light = new Light(position, target);
+	if (!this->light)
+	{
+		delete this->pixels;
+		delete this->bricks;
+		delete this->render;
+		delete this->cam;
+		this->pixels = nullptr;
+		this->bricks = nullptr;
+		this->render = nullptr;
+		this->light = nullptr;
 
 		throw AllocationMemoryError();
 	}
@@ -134,7 +150,7 @@ void Scene::DrawScene()
 	}
 
 	Brick* brick = bricks->objects[0]; // temporary
-	this->render->run(brick, this->cam);
+	this->render->run(brick, this->cam, this->light);
 
 	SelectObject(this->hdcMem, this->sBmp);
 	BitBlt(this->hdc, X, Y, this->width, this->height, this->hdcMem, 0, 0, SRCCOPY);

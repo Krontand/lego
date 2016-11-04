@@ -132,6 +132,9 @@
     <ClInclude Include="geometry\exception.h">
       <Filter>Заголовочные файлы\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="scene\light.h">
+      <Filter>Заголовочные файлы\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -190,6 +193,12 @@
     </ClCompile>
     <ClCompile Include="geometry\gvector.cpp">
       <Filter>Файлы исходного кода\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\light.cpp">
+      <Filter>Файлы исходного кода\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\cameramodification.cpp">
+      <Filter>Файлы исходного кода\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

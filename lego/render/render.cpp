@@ -8,18 +8,29 @@ Render::Render(unsigned long* pixels, int height, int width)
 	this->pixels = pixels;
 	this->height = height;
 	this->width = width;
+	this->zbuffer = new int[this->width * this->height];
+	if (!zbuffer)
+	{
+		throw AllocationMemoryError();
+	}
 }
 
 Render::~Render()
 {
 }
 
-void Render::run(Brick* brick, Camera* cam)
+void Render::run(Brick* brick, Camera* cam, Light* light)
 {
 	GMatrix view = cam->cameraview();
 
+	for (int i = 0; i<this->width * this->height; i++) {
+		this->zbuffer[i] = -999999;
+	}
+
 	int xCenter = this->width / 2;
 	int yCenter = this->height / 2;
+
+	int color = 70;
 
 #pragma omp parallel for
 	for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
@@ -43,7 +54,12 @@ void Render::run(Brick* brick, Camera* cam)
 		C.X = C.X + xCenter;
 		C.Y = C.Y + yCenter;
 
-		this->fillFaces(A, B, C);
+		this->fillFaces(A, B, C, color);
+		color += 5;
+		if (color > 160)
+		{
+			color = 70;
+		}
 	}
 }
 
@@ -102,7 +118,7 @@ void Render::line(int x0, int y0, int x1, int y1)
 	}
 }
 
-void Render::fillFaces(Vertex A, Vertex B, Vertex C)
+void Render::fillFaces(Vertex A, Vertex B, Vertex C, int color)
 {	
 	if (A.Y == B.Y && A.Y == C.Y) return;
 
@@ -110,42 +126,37 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C)
 	if (A.Y > C.Y) std::swap(A, C);
 	if (B.Y > C.Y) std::swap(B, C);
 
-	int aY = A.Y;
-	int bY = B.Y;
-	int cY = C.Y;
-	int aX = A.X;
-	int bX = B.X;
-	int cX = C.X;
-
-	int faceHeight = cY - aY;
-	int halfHeight = bY - aY;
+	int faceHeight = (int)C.Y - (int)A.Y;
+	int halfHeight = (int)B.Y - (int)A.Y;
 
 	for (int yCoord = 0; yCoord < faceHeight; yCoord++) {
-		bool secondPart = yCoord > bY - aY || bY == aY;
+		bool secondPart = yCoord >(int)B.Y - (int)A.Y || (int)B.Y == (int)A.Y;
 
 		float ak = (float)yCoord / faceHeight;
 		float bk;
 		if (secondPart)
 		{
-			halfHeight = cY - bY;
-			bk = (float) (yCoord - (bY - aY)) / halfHeight;
+			halfHeight = (int)C.Y - (int)B.Y;
+			bk = (float) (yCoord - ((int)B.Y - (int)A.Y)) / halfHeight;
 		}
 		else
 		{
 			bk = (float) yCoord / halfHeight;
 		}
 
-		Vertex na(aX + (cX - aX) * ak, aY + (cY - aY) * ak, 0);
+		Vertex na((int)A.X + ((int)C.X - (int)A.X) * ak, (int)A.Y + ((int)C.Y - (int)A.Y) * ak, (int)A.Z + ((int)C.Z - (int)A.Z) * ak);
 		Vertex nb;
 		if (secondPart)
 		{	
-			nb.X = bX + (cX - bX) * bk;
-			nb.Y = bY + (cY - bY) * bk;
+			nb.X = (int)B.X + ((int)C.X - (int)B.X) * bk;
+			nb.Y = (int)B.Y + ((int)C.Y - (int)B.Y) * bk;
+			nb.Z = (int)B.Z + ((int)C.Z - (int)B.Z) * bk;
 		}
 		else
 		{
-			nb.X = aX + (bX - aX) * bk;
-			nb.Y = aY + (bY - aY) * bk;
+			nb.X = (int)A.X + ((int)B.X - (int)A.X) * bk;
+			nb.Y = (int)A.Y + ((int)B.Y - (int)A.Y) * bk;
+			nb.Z = (int)A.Z + ((int)B.Z - (int)A.Z) * bk;
 		}
 
 		if (na.X > nb.X)
@@ -153,12 +164,21 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C)
 			std::swap(na, nb);
 		}
 
-		for (int xCoord = na.X; xCoord <= nb.X; xCoord++) 
+		for (int xCoord = (int)na.X; xCoord <= (int)nb.X; xCoord++)
 		{
-			int pix = (int)(A.Y + yCoord)*this->width + xCoord;
+
+			double phi = nb.X == na.X ? 1. : (double)(xCoord - (int)na.X) / (double)((int)nb.X - (int)na.X);
+
+			Vertex P((int)na.X+((int)nb.X- (int)na.X)*phi, (int)na.Y + ((int)nb.Y - (int)na.Y)*phi, (int)na.Z + ((int)nb.Z - (int)na.Z)*phi);
+
+			int pix = (int)((int)A.Y + yCoord)*this->width + xCoord;
 			if (pix >= 0 && pix <= this->width * this->height)
 			{
-				this->pixels[pix] = 0x00000000;
+				if (this->zbuffer[(int)P.X + (int)P.Y * width] <= P.Z)
+				{
+					this->zbuffer[(int)P.X + (int)P.Y * width] = P.Z;
+					this->pixels[pix] = 0x000000+color;
+				}
 			}
 		}
 

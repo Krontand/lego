@@ -9,7 +9,7 @@ public:
 	Render(unsigned long* pixels, int height, int width);
 	~Render();
 
-	void run(Brick* brick, Camera* cam);
+	void run(Brick* brick, Camera* cam, Light* light);
 
 	void InitRenderedFaces(Vertex A, Vertex B, Vertex C);
 
@@ -33,11 +33,13 @@ public:
 
 private:
 	void line(int x0, int y0, int x1, int y1);
-	void fillFaces(Vertex A, Vertex B, Vertex C);
+	void fillFaces(Vertex A, Vertex B, Vertex C, int color);
 
 	unsigned long* pixels;
 	int height;
 	int width;
+
+	int* zbuffer;
 
 	vector<RFace> RenderedFaces;
 
