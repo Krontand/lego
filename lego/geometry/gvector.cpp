@@ -129,15 +129,8 @@ double GVector::scalar(GVector first, GVector second)
 
 double GVector::angle(GVector first, GVector second)
 {
-	double X1 = first[0];
-	double Y1 = first[1];
-	double Z1 = first[2];
-
-	double X2 = second[0];
-	double Y2 = second[1];
-	double Z2 = second[2];
-
-	double angle = acos((X1 * X2 + Y1 * Y2 + Z1 * Z2) / (first.length() * second.length())) * 180 / M_PI;
+	double angle = acos(scalar(first, second) / (first.length() * second.length()));
+	angle *= 180 / M_PI;
 
 	if (angle > 180)
 	{
