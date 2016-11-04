@@ -130,7 +130,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, int color)
 	int halfHeight = (int)B.Y - (int)A.Y;
 
 	for (int yCoord = 0; yCoord < faceHeight; yCoord++) {
-		bool secondPart = yCoord >(int)B.Y - (int)A.Y || (int)B.Y == (int)A.Y;
+		bool secondPart = yCoord >B.Y - A.Y || B.Y == A.Y;
 
 		float ak = (float)yCoord / faceHeight;
 		float bk;
@@ -167,17 +167,21 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, int color)
 		for (int xCoord = (int)na.X; xCoord <= (int)nb.X; xCoord++)
 		{
 
-			double phi = nb.X == na.X ? 1. : (double)(xCoord - (int)na.X) / (double)((int)nb.X - (int)na.X);
+			double phi = 1;
+			if (nb.X != na.X)
+			{
+				phi = (double)(xCoord - na.X) / (double)(nb.X - na.X);
+			}
 
-			Vertex P((int)na.X+((int)nb.X- (int)na.X)*phi, (int)na.Y + ((int)nb.Y - (int)na.Y)*phi, (int)na.Z + ((int)nb.Z - (int)na.Z)*phi);
+			Vertex P(na.X + (nb.X - na.X) * phi, na.Y + (nb.Y - na.Y) * phi, na.Z + (nb.Z - na.Z) * phi);
 
-			int pix = (int)((int)A.Y + yCoord)*this->width + xCoord;
+			int pix = ((int)A.Y + yCoord) * this->width + xCoord;
 			if (pix >= 0 && pix <= this->width * this->height)
 			{
-				if (this->zbuffer[(int)P.X + (int)P.Y * width] <= P.Z)
+				if (this->zbuffer[(int)P.X + (int)P.Y * this->width] <= P.Z)
 				{
-					this->zbuffer[(int)P.X + (int)P.Y * width] = P.Z;
-					this->pixels[pix] = 0x000000+color;
+					this->zbuffer[(int)P.X + (int)P.Y * this->width] = P.Z;
+					this->pixels[pix] = 0x000000 + color;
 				}
 			}
 		}
