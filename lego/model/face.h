@@ -10,6 +10,10 @@ Contains links to verices
 */
 
 #pragma once
+
+#include "vertex.h"
+#include "../geometry/gvector.h"
+
 using std::vector;
 
 /*!
@@ -59,18 +63,6 @@ public:
 	Face& operator=(const Face& face);
 
 	/*!
-	Get vertices links array
-	\return Links array
-	*/
-	vector<int> getFace();
-
-	/*!
-	Get vertices links array. Const array
-	\return Links array
-	*/
-	vector<int> getFace() const;
-
-	/*!
 	Get first link of face
 	\return first link from array
 	*/
@@ -100,7 +92,18 @@ public:
 	*/
 	int getNext();
 
+	/*!
+	Calculate nurmal to face. Set face normal and vertices normal.
+	\param[in] A First vertex of triangle
+	\param[in] B Second vertex of triangle
+	\param[in] C Third vertex of triangle
+	*/
+	void calcNormal(Vertex A, Vertex B, Vertex C);
+
 	vector<int> Vertices;			/*!< Links array */
+
+	GVector Normal;					/*!< Normal to face */
+	vector<GVector> VNormal;		/*!< Normal to each vertex */
 
 private:
 	vector<int>::iterator iterator;	/*!< Iterator for links array */

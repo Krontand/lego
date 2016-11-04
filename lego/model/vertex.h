@@ -60,6 +60,12 @@ public:
 	Vertex& operator=(const Vertex& other);
 
 	/*!
+	Transfer vertex
+	\param[in] other Vertex object to transfer
+	*/
+	Vertex& operator=(Vertex&& other);
+
+	/*!
 	Transform vertex into vector format
 	\return vector
 	*/

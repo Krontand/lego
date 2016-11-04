@@ -81,6 +81,7 @@ Brick* Loader::load(Composite* obj)
 	this->openFile();
 	FILE* f = this->file;
 
+	Face face;
 	char linetype;
 	try
 	{
@@ -94,7 +95,14 @@ Brick* Loader::load(Composite* obj)
 				break;
 
 			case 'f':
-				brick->addFace(this->readFace());
+				face = this->readFace();
+				face.calcNormal(
+					brick->vertex[face.getA() - 1], 
+					brick->vertex[face.getB() - 1],
+					brick->vertex[face.getC() - 1]
+				);
+
+				brick->addFace(face);
 				break;
 
 			case '#':
@@ -105,6 +113,35 @@ Brick* Loader::load(Composite* obj)
 				break;
 			}
 		}
+
+		for (int i = 0; i < brick->facesCount() - 1; i++)
+		{
+			Face c1Face = brick->faces[i];
+			for (int j = i + 1; j < brick->facesCount(); j++)
+			{
+				Face c2Face = brick->faces[j];
+				int c1Vertex = c1Face.getCurrent();
+				for (int k = 0; k < 3; k++)
+				{
+					int c2Vertex = c2Face.getCurrent();
+					for (int l = 0; l < 3; l++)
+					{
+						if (c1Vertex == c2Vertex)
+						{
+							double angle = GVector::angle(c1Face.Normal, c2Face.Normal);
+							if (angle > 130)
+							{
+								brick->faces[i].VNormal[k] = (brick->faces[i].VNormal[k] + c2Face.Normal) / 2.0;
+								brick->faces[j].VNormal[l] = (brick->faces[j].VNormal[l] + c1Face.Normal) / 2.0;
+							}
+						}
+						c2Vertex = c2Face.getNext();
+					}
+					c1Vertex = c1Face.getNext();
+				}
+			}
+		}
+
 		brick->ID = obj->ID;
 		
 		double cX = this->maxX - (this->maxX - this->minX) / 2;

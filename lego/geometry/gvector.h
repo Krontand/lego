@@ -66,10 +66,31 @@ public:
 
 	/*!
 	Sets vector with sourse`s vector values
+	\param[in] other Source vector to copy
+	\return GVector current vector
+	*/
+	GVector& operator=(const GVector& other);
+
+	/*!
+	Sets vector with sourse`s vector values
 	\param[in] other Source vector to transfer
 	\return GVector current vector
 	*/
 	GVector& operator=(GVector&& other);
+
+	/*!
+	Sum this vector with incoming vector values
+	\param[in] other Source vector to sum
+	\return GVector vector after sum
+	*/
+	GVector& operator+(const GVector other);
+
+	/*!
+	Divide this vector with incoming value
+	\param[in] value Value to divide
+	\return GVector vector after divide
+	*/
+	GVector& operator/(const double value);
 
 	/*!
 	Chooses coordinate by index: 0-X; 1-Y; 2-Z; 3-length
@@ -118,6 +139,14 @@ public:
 	\return Double value after production
 	*/
 	static double scalar(GVector first, GVector second);
+
+	/*!
+	Angle between two vectors
+	\param[in] first First vector
+	\param[in] second Second vector
+	\return Angle between vectors in degrees
+	*/
+	static double angle(GVector first, GVector second);
 
 	/*!
 	Multiply this vector by matrix

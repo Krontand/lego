@@ -40,9 +40,31 @@ GVector& GVector::operator=(GVector& other)
 	return *this;
 }
 
+GVector& GVector::operator=(const GVector& other)
+{
+	this->vec = other.getVec();
+	return *this;
+}
+
 GVector& GVector::operator=(GVector&& other)
 {
 	this->vec = other.getVec();
+	return *this;
+}
+
+GVector& GVector::operator+(const GVector other)
+{
+	(*this)[0] = (*this)[0] + other[0];
+	(*this)[1] = (*this)[1] + other[1];
+	(*this)[2] = (*this)[2] + other[2];
+	return *this;
+}
+
+GVector& GVector::operator/(const double value)
+{
+	(*this)[0] = (*this)[0] / value;
+	(*this)[1] = (*this)[1] / value;
+	(*this)[2] = (*this)[2] / value;
 	return *this;
 }
 
@@ -103,6 +125,26 @@ GVector GVector::cross(GVector first, GVector second)
 double GVector::scalar(GVector first, GVector second)
 {
 	return first[0] * second[0] + first[1] * second[1] + first[2] * second[2];
+}
+
+double GVector::angle(GVector first, GVector second)
+{
+	double X1 = first[0];
+	double Y1 = first[1];
+	double Z1 = first[2];
+
+	double X2 = second[0];
+	double Y2 = second[1];
+	double Z2 = second[2];
+
+	double angle = acos((X1 * X2 + Y1 * Y2 + Z1 * Z2) / (first.length() * second.length())) * 180 / M_PI;
+
+	if (angle > 180)
+	{
+		angle -= 180;
+	}
+
+	return angle;
 }
 
 GVector GVector::operator*(GMatrix matrix)

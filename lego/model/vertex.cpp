@@ -45,6 +45,14 @@ Vertex& Vertex::operator=(const Vertex& other)
 	return *this;
 }
 
+Vertex& Vertex::operator=(Vertex&& other)
+{
+	this->X = other.X;
+	this->Y = other.Y;
+	this->Z = other.Z;
+	return *this;
+}
+
 GVector Vertex::vector()
 {
 	GVector vec(this->X, this->Y, this->Z, 1);
