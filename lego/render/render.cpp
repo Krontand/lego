@@ -130,7 +130,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, int color)
 	int halfHeight = (int)B.Y - (int)A.Y;
 
 	for (int yCoord = 0; yCoord < faceHeight; yCoord++) {
-		bool secondPart = yCoord >B.Y - A.Y || B.Y == A.Y;
+		bool secondPart = yCoord >(int)B.Y - (int)A.Y || (int)B.Y == (int)A.Y;
 
 		float ak = (float)yCoord / faceHeight;
 		float bk;
@@ -159,7 +159,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, int color)
 			nb.Z = (int)A.Z + ((int)B.Z - (int)A.Z) * bk;
 		}
 
-		if (na.X > nb.X)
+		if ((int)na.X > (int)nb.X)
 		{
 			std::swap(na, nb);
 		}
@@ -167,13 +167,13 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, int color)
 		for (int xCoord = (int)na.X; xCoord <= (int)nb.X; xCoord++)
 		{
 
-			double phi = 1;
-			if (nb.X != na.X)
+			double phi = 1.;
+			if ((int)nb.X != (int)na.X)
 			{
-				phi = (double)(xCoord - na.X) / (double)(nb.X - na.X);
+				phi = (double)(xCoord - (int)na.X) / (double)((int)nb.X - (int)na.X);
 			}
 
-			Vertex P(na.X + (nb.X - na.X) * phi, na.Y + (nb.Y - na.Y) * phi, na.Z + (nb.Z - na.Z) * phi);
+			Vertex P((int)na.X + ((int)nb.X - (int)na.X) * phi, (int)na.Y + ((int)nb.Y - (int)na.Y) * phi, (int)na.Z + ((int)nb.Z - (int)na.Z) * phi);
 
 			int pix = ((int)A.Y + yCoord) * this->width + xCoord;
 			if (pix >= 0 && pix <= this->width * this->height)
