@@ -96,12 +96,7 @@ Brick* Loader::load(Composite* obj)
 
 			case 'f':
 				face = this->readFace();
-				face.calcNormal(
-					brick->vertex[face.getA() - 1], 
-					brick->vertex[face.getB() - 1],
-					brick->vertex[face.getC() - 1]
-				);
-
+				brick->calcNormal(face.getA(), face.getB(), face.getC());
 				brick->addFace(face);
 				break;
 
@@ -128,11 +123,11 @@ Brick* Loader::load(Composite* obj)
 					{
 						if (c1Vertex == c2Vertex)
 						{
-							double angle = GVector::angle(c1Face.Normal, c2Face.Normal);
+							double angle = GVector::angle(brick->FNormal[i], brick->FNormal[j]);
 							if (angle <= 45)
 							{
-								brick->faces[i].VNormal[k] = (brick->faces[i].VNormal[k] + c2Face.Normal) / 2.0;
-								brick->faces[j].VNormal[l] = (brick->faces[j].VNormal[l] + c1Face.Normal) / 2.0;
+								brick->VNormal[i][k] = (brick->VNormal[i][k] + brick->FNormal[j]) / 2.0;
+								brick->VNormal[j][l] = (brick->VNormal[j][l] + brick->FNormal[i]) / 2.0;
 							}
 						}
 						c2Vertex = c2Face.getNext();

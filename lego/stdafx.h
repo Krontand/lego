@@ -25,6 +25,7 @@
 #include <vector>
 #include <math.h>
 #include <cmath>
+#include <time.h>
 
 #define BTN_OK 888
 #define TXT_LEGO 889

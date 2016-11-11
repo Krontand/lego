@@ -86,11 +86,25 @@ public:
 	GVector& operator+(const GVector other);
 
 	/*!
+	Difference between this vector and incoming vector
+	\param[in] other Source vector to diff
+	\return GVector vector after diff
+	*/
+	GVector& operator-(const GVector other);
+
+	/*!
 	Divide this vector with incoming value
 	\param[in] value Value to divide
 	\return GVector vector after divide
 	*/
 	GVector& operator/(const double value);
+
+	/*!
+	Multiply this vector with incoming value
+	\param[in] value Value to multiply
+	\return GVector vector after multiply
+	*/
+	GVector& operator*(const double value);
 
 	/*!
 	Chooses coordinate by index: 0-X; 1-Y; 2-Z; 3-length

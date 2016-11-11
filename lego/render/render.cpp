@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "../stdafx.h"
 #include "render.h"
-#include <time.h>
 
 Render::Render(unsigned long* pixels, int height, int width)
 {
@@ -30,7 +29,7 @@ void Render::run(Brick* brick, Camera* cam, Light* light)
 	int xCenter = this->width / 2;
 	int yCenter = this->height / 2;
 
-	int color = 70;
+	COLORREF color = 0x00AA0000;
 
 #pragma omp parallel for
 	for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
@@ -54,31 +53,17 @@ void Render::run(Brick* brick, Camera* cam, Light* light)
 		C.X = C.X + xCenter;
 		C.Y = C.Y + yCenter;
 
-		this->fillFaces(A, B, C, color);
-		color += 5;
+		GVector nA = brick->VNormal[faceIndex][0];
+		GVector nB = brick->VNormal[faceIndex][1];
+		GVector nC = brick->VNormal[faceIndex][2];
+
+		this->fillFaces(A, B, C, nA, nB, nC, color, *light);
+		//color += 5;
 		if (color > 160)
 		{
 			color = 70;
 		}
 	}
-}
-
-void Render::InitRenderedFaces(Vertex A, Vertex B, Vertex C) 
-{
-	RFace rf;
-
-	rf.A = A;
-	rf.B = B;
-	rf.C = C;
-
-	rf.xCA = C.X - A.X;
-	rf.xCB = C.X - B.X;
-	rf.xBA = B.X - A.X;
-	rf.yCA = C.Y - A.Y;
-	rf.yCB = C.Y - B.Y;
-	rf.yBA = B.Y - A.Y;
-
-	rf.visible = true;
 }
 
 void Render::line(int x0, int y0, int x1, int y1)
@@ -118,13 +103,13 @@ void Render::line(int x0, int y0, int x1, int y1)
 	}
 }
 
-void Render::fillFaces(Vertex A, Vertex B, Vertex C, int color)
+void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector normB, GVector normC, int color, Light light)
 {	
 	if (A.Y == B.Y && A.Y == C.Y) return;
 
-	if (A.Y > B.Y) std::swap(A, B);
-	if (A.Y > C.Y) std::swap(A, C);
-	if (B.Y > C.Y) std::swap(B, C);
+	if (A.Y > B.Y) { std::swap(A, B); std::swap(normA, normB); }
+	if (A.Y > C.Y) { std::swap(A, C); std::swap(normA, normC); }
+	if (B.Y > C.Y) { std::swap(B, C); std::swap(normB, normC); }
 
 	int faceHeight = (int)C.Y - (int)A.Y;
 	int halfHeight = (int)B.Y - (int)A.Y;
@@ -145,23 +130,31 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, int color)
 		}
 
 		Vertex na((int)A.X + ((int)C.X - (int)A.X) * ak, (int)A.Y + ((int)C.Y - (int)A.Y) * ak, (int)A.Z + ((int)C.Z - (int)A.Z) * ak);
+		GVector nNormA(normA + (normC - normA) * ak);
+
 		Vertex nb;
+		GVector nNormB;
 		if (secondPart)
 		{	
 			nb.X = (int)B.X + ((int)C.X - (int)B.X) * bk;
 			nb.Y = (int)B.Y + ((int)C.Y - (int)B.Y) * bk;
 			nb.Z = (int)B.Z + ((int)C.Z - (int)B.Z) * bk;
+
+			nNormB = normB + (normC - normB) * bk;
 		}
 		else
 		{
 			nb.X = (int)A.X + ((int)B.X - (int)A.X) * bk;
 			nb.Y = (int)A.Y + ((int)B.Y - (int)A.Y) * bk;
 			nb.Z = (int)A.Z + ((int)B.Z - (int)A.Z) * bk;
+
+			nNormB = normA + (normB - normA) * bk;
 		}
 
 		if ((int)na.X > (int)nb.X)
 		{
 			std::swap(na, nb);
+			std::swap(nNormA, nNormB);
 		}
 
 		for (int xCoord = (int)na.X; xCoord <= (int)nb.X; xCoord++)
@@ -174,18 +167,28 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, int color)
 			}
 
 			Vertex P((int)na.X + ((int)nb.X - (int)na.X) * phi, (int)na.Y + ((int)nb.Y - (int)na.Y) * phi, (int)na.Z + ((int)nb.Z - (int)na.Z) * phi);
-
+			GVector normP(nNormA + (nNormB - nNormA) * phi);
+			
 			int pix = ((int)A.Y + yCoord) * this->width + xCoord;
 			if (pix >= 0 && pix <= this->width * this->height)
 			{
 				if (this->zbuffer[(int)P.X + (int)P.Y * this->width] <= P.Z)
 				{
 					this->zbuffer[(int)P.X + (int)P.Y * this->width] = P.Z;
-					this->pixels[pix] = 0x000000 + color;
+					double I = this->intencity(P.X, P.Y, P.Z, normP, light);
+					this->pixels[pix] = RGB(GetRValue(color) * I, GetGValue(color) * I, GetBValue(color) * I);
 				}
 			}
 		}
 
 	}
 
+}
+
+double Render::intencity(double X, double Y, double Z, GVector N, Light light)
+{
+	GVector d = light.direction - N;
+	d.normalize();
+	N.normalize();
+	return max(0,GVector::scalar(d,N));
 }

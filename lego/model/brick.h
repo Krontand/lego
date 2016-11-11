@@ -66,6 +66,14 @@ public:
 	void addFace(Face face);
 
 	/*!
+	Calculate normal to face. Set face normal.
+	\param[in] A First vertex of triangle
+	\param[in] B Second vertex of triangle
+	\param[in] C Third vertex of triangle
+	*/
+	void calcNormal(int A, int B, int C);
+
+	/*!
 	Amount of vertex in model
 	\return Amount of items
 	*/
@@ -83,7 +91,11 @@ public:
 	*/
 	virtual void modificate(Modification* modification, Vertex* center) override;
 
-	Vertex center;				/*!< Brick center */
-	vector<Vertex> vertex;		/*!< Vertex array */
+	Vertex center;		/*!< Brick center */
+
+	vector<Vertex> vertex;				/*!< Vertex array */
+	vector<vector<GVector>> VNormal;	/*!< Normal to each vertex */
+
 	vector<Face> faces;			/*!< Faces array */
+	vector<GVector> FNormal;	/*!< Normal to face */
 };

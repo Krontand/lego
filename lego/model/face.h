@@ -92,18 +92,7 @@ public:
 	*/
 	int getNext();
 
-	/*!
-	Calculate nurmal to face. Set face normal and vertices normal.
-	\param[in] A First vertex of triangle
-	\param[in] B Second vertex of triangle
-	\param[in] C Third vertex of triangle
-	*/
-	void calcNormal(Vertex A, Vertex B, Vertex C);
-
 	vector<int> Vertices;			/*!< Links array */
-
-	GVector Normal;					/*!< Normal to face */
-	vector<GVector> VNormal;		/*!< Normal to each vertex */
 
 private:
 	vector<int>::iterator iterator;	/*!< Iterator for links array */
