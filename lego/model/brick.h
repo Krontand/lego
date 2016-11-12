@@ -93,9 +93,12 @@ public:
 
 	Vertex center;		/*!< Brick center */
 
-	vector<Vertex> vertex;				/*!< Vertex array */
+	vector<Vertex> vertex;		/*!< Vertex array */
+	vector<Vertex> svertex;		/*!< Vertex array in scene coordinates */
+
 	vector<vector<GVector>> VNormal;	/*!< Normal to each vertex */
 
 	vector<Face> faces;			/*!< Faces array */
+
 	vector<GVector> FNormal;	/*!< Normal to face */
 };

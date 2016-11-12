@@ -10,6 +10,7 @@ Brick::Brick()
 Brick::Brick(const Brick& brick)
 {
 	this->vertex = brick.vertex;
+	this->svertex = brick.svertex;
 	this->faces = brick.faces;
 	this->VNormal = brick.VNormal;
 	this->FNormal = brick.FNormal;
@@ -19,6 +20,7 @@ Brick::Brick(const Brick& brick)
 Brick::Brick(Brick&& brick)
 {
 	this->vertex = brick.vertex;
+	this->svertex = brick.svertex;
 	this->faces = brick.faces;
 	this->VNormal = brick.VNormal;
 	this->FNormal = brick.FNormal;
@@ -28,6 +30,7 @@ Brick::Brick(Brick&& brick)
 Brick::~Brick()
 {
 	this->vertex.clear();
+	this->svertex.clear();
 	this->faces.clear();
 	this->VNormal.clear();
 	this->FNormal.clear();
@@ -36,6 +39,7 @@ Brick::~Brick()
 Brick& Brick::operator=(const Brick& brick)
 {
 	this->vertex = brick.vertex;
+	this->svertex = brick.svertex;
 	this->faces = brick.faces;
 	this->VNormal = brick.VNormal;
 	this->FNormal = brick.FNormal;
@@ -46,6 +50,7 @@ Brick& Brick::operator=(const Brick& brick)
 void Brick::addVertex(Vertex v)
 {
 	this->vertex.push_back(v);
+	this->svertex.push_back(v);
 }
 
 void Brick::addFace(Face face)

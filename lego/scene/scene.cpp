@@ -131,6 +131,11 @@ void Scene::InitBitmap()
 
 void Scene::DrawScene()
 {
+	int fps;
+	WCHAR fps_buf[20] = { 0 };
+	LARGE_INTEGER sta, fin, frq;
+	QueryPerformanceCounter(&sta);
+
 #pragma omp parallel for
 	for (int i = 0; i < this->width; i++)
 	{
@@ -149,11 +154,22 @@ void Scene::DrawScene()
 		}
 	}
 
+	this->toCam();
+
 	Brick* brick = bricks->objects[0]; // temporary
 	this->render->run(brick, this->cam, this->light);
 
 	SelectObject(this->hdcMem, this->sBmp);
 	BitBlt(this->hdc, X, Y, this->width, this->height, this->hdcMem, 0, 0, SRCCOPY);
+
+	QueryPerformanceCounter(&fin);
+	QueryPerformanceFrequency(&frq);
+
+	long double dif = long double(fin.QuadPart - sta.QuadPart) / frq.QuadPart;
+	fps = 1.0 / dif;
+
+	wsprintf(fps_buf, TEXT("%d"), fps);
+	TextOut(this->hdc, this->X + 25, this->height - 50, (LPCWSTR)fps_buf, 15);
 }
 
 void Scene::AddBrick(Brick brick)
@@ -178,4 +194,27 @@ void Scene::AddBrick(Brick brick)
 	nbrick->center = center;
 
 	this->bricks->add(nbrick);
+}
+
+void Scene::toCam()
+{
+	int xCenter = this->width / 2;
+	int yCenter = this->height / 2;
+
+	GMatrix view = this->cam->cameraview();
+
+	for (int brickIndex = 0; brickIndex < this->bricks->objects.size(); brickIndex++)
+	{
+		Brick* nbrick = this->bricks->objects[brickIndex];
+#pragma omp parallel for
+		for (int vertexIndex = 0; vertexIndex < nbrick->vertexCount(); vertexIndex++)
+		{
+			Vertex tmpVertex = nbrick->vertex[vertexIndex];
+			tmpVertex = tmpVertex * view;
+			tmpVertex.X = tmpVertex.X + xCenter;
+			tmpVertex.Y = tmpVertex.Y + yCenter;
+
+			nbrick->svertex[vertexIndex] = tmpVertex;
+		}
+	}
 }

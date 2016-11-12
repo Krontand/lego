@@ -59,6 +59,11 @@ public:
 	\param[in] brick Brick to add
 	*/
 	void AddBrick(Brick brick);
+
+	/*!
+	Transfer vertices from world to camera coordinates
+	*/
+	void toCam();
 	
 	Composite* bricks;	/*!< Scene bricks array */
 	Camera* cam;		/*!< Camera object */

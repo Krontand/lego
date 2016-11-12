@@ -20,38 +20,20 @@ Render::~Render()
 
 void Render::run(Brick* brick, Camera* cam, Light* light)
 {
-	GMatrix view = cam->cameraview();
-
 	for (int i = 0; i<this->width * this->height; i++) {
 		this->zbuffer[i] = -999999;
 	}
 
-	int xCenter = this->width / 2;
-	int yCenter = this->height / 2;
-
-	COLORREF color = 0x00AA0000;
+	COLORREF color = 0x000000FF;
 
 #pragma omp parallel for
 	for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
 	{
 		Face face = brick->faces[faceIndex];
 		
-		Vertex A(brick->vertex[face.getA() - 1]);
-		Vertex B(brick->vertex[face.getB() - 1]);
-		Vertex C(brick->vertex[face.getC() - 1]);
-
-		A = A * view;
-		B = B * view;
-		C = C * view;
-
-		A.X = A.X + xCenter;
-		A.Y = A.Y + yCenter;
-
-		B.X = B.X + xCenter;
-		B.Y = B.Y + yCenter;
-
-		C.X = C.X + xCenter;
-		C.Y = C.Y + yCenter;
+		Vertex A(brick->svertex[face.getA() - 1]);
+		Vertex B(brick->svertex[face.getB() - 1]);
+		Vertex C(brick->svertex[face.getC() - 1]);
 
 		GVector nA = brick->VNormal[faceIndex][0];
 		GVector nB = brick->VNormal[faceIndex][1];
@@ -103,7 +85,7 @@ void Render::line(int x0, int y0, int x1, int y1)
 	}
 }
 
-void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector normB, GVector normC, int color, Light light)
+void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector normB, GVector normC, COLORREF color, Light light)
 {	
 	if (A.Y == B.Y && A.Y == C.Y) return;
 
@@ -175,7 +157,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector norm
 				if (this->zbuffer[(int)P.X + (int)P.Y * this->width] <= P.Z)
 				{
 					this->zbuffer[(int)P.X + (int)P.Y * this->width] = P.Z;
-					double I = this->intencity(P.X, P.Y, P.Z, normP, light);
+					double I =  this->intencity(P.X, P.Y, P.Z, normP, light);
 					this->pixels[pix] = RGB(GetRValue(color) * I, GetGValue(color) * I, GetBValue(color) * I);
 				}
 			}
@@ -187,8 +169,9 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector norm
 
 double Render::intencity(double X, double Y, double Z, GVector N, Light light)
 {
-	GVector d = light.direction - N;
-	d.normalize();
+	//GVector d = light.direction - N;
+	//d.normalize();
 	N.normalize();
-	return max(0,GVector::scalar(d,N));
+	light.direction.normalize();
+	return max(0,GVector::scalar(N,light.direction));
 }
