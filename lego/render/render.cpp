@@ -24,7 +24,7 @@ void Render::run(Brick* brick, Camera* cam, Light* light)
 		this->zbuffer[i] = -999999;
 	}
 
-	COLORREF color = 0x000000FF;
+	COLORREF color = RGB(255,255,255);
 
 #pragma omp parallel for
 	for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
@@ -40,11 +40,6 @@ void Render::run(Brick* brick, Camera* cam, Light* light)
 		GVector nC = brick->VNormal[faceIndex][2];
 
 		this->fillFaces(A, B, C, nA, nB, nC, color, *light);
-		//color += 5;
-		if (color > 160)
-		{
-			color = 70;
-		}
 	}
 }
 
