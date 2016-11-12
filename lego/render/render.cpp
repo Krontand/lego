@@ -18,7 +18,7 @@ Render::~Render()
 {
 }
 
-void Render::run(Brick* brick, Camera* cam, Light* light)
+void Render::run(Brick* brick, Camera* cam, Vertex light)
 {
 	for (int i = 0; i<this->width * this->height; i++) {
 		this->zbuffer[i] = -9999999;
@@ -35,11 +35,11 @@ void Render::run(Brick* brick, Camera* cam, Light* light)
 		Vertex B(brick->svertex[face.getB() - 1]);
 		Vertex C(brick->svertex[face.getC() - 1]);
 
-		GVector nA = brick->VNormal[faceIndex][0];
-		GVector nB = brick->VNormal[faceIndex][1];
-		GVector nC = brick->VNormal[faceIndex][2];
+		GVector nA = brick->sVNormal[faceIndex][0];
+		GVector nB = brick->sVNormal[faceIndex][1];
+		GVector nC = brick->sVNormal[faceIndex][2];
 
-		this->fillFaces(A, B, C, nA, nB, nC, color, *light);
+		this->fillFaces(A, B, C, nA, nB, nC, color, light);
 	}
 }
 
@@ -80,7 +80,7 @@ void Render::line(int x0, int y0, int x1, int y1)
 	}
 }
 
-void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector normB, GVector normC, COLORREF color, Light light)
+void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector normB, GVector normC, COLORREF color, Vertex light)
 {	
 	if (A.Y == B.Y && A.Y == C.Y) return;
 
@@ -162,13 +162,12 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector norm
 
 }
 
-double Render::intencity(double X, double Y, double Z, GVector N, Light light)
+double Render::intencity(double X, double Y, double Z, GVector N, Vertex light)
 {
 	//GVector d = light.direction - N;
 	//d.normalize();
+	GVector D(light.X - X, light.Y - Y, light.Z - Z, 0);
+	D.normalize();
 	N.normalize();
-	light.sdirection[0] = light.sdirection[0] + this->width / 2;
-	light.sdirection[1] = light.sdirection[1] + this->height / 2;
-	light.sdirection.normalize();
-	return max(0,GVector::scalar(N,light.sdirection));
+	return max(0,cos(GVector::scalar(N,D)));
 }

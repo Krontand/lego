@@ -124,7 +124,7 @@ Brick* Loader::load(Composite* obj)
 						if (c1Vertex == c2Vertex)
 						{
 							double angle = GVector::angle(brick->FNormal[i], brick->FNormal[j]);
-							if (angle <= 45)
+							if (angle <= 30)
 							{
 								brick->VNormal[i][k] = (brick->VNormal[i][k] + brick->FNormal[j]) / 2.0;
 								brick->VNormal[j][l] = (brick->VNormal[j][l] + brick->FNormal[i]) / 2.0;

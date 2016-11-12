@@ -14,7 +14,7 @@ Provide interface to bricks on scene and camera
 #include "../geometry\gmatrix.h"
 #include "../model/composite.h"
 #include "camera.h"
-#include "light.h"
+//#include "light.h"
 
 class Render;
 
@@ -67,7 +67,7 @@ public:
 	
 	Composite* bricks;	/*!< Scene bricks array */
 	Camera* cam;		/*!< Camera object */
-	Light* light;		/*!< Light object */
+	Vertex light;		/*!< Light object */
 
 private:
 	/*!

@@ -19,7 +19,6 @@ Scene::Scene()
 	this->pixels = nullptr;
 	this->render = nullptr;
 	this->cam = nullptr;
-	this->light = nullptr;
 }
 
 Scene::Scene(HWND hWnd, int x, int y, int width, int height)
@@ -77,20 +76,10 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 		throw AllocationMemoryError();
 	}
 
-	this->light = new Light(position, target);
-	if (!this->light)
-	{
-		delete this->pixels;
-		delete this->bricks;
-		delete this->render;
-		delete this->cam;
-		this->pixels = nullptr;
-		this->bricks = nullptr;
-		this->render = nullptr;
-		this->light = nullptr;
+	light.X = 0; this->width / 2;
+	light.Y = 0; this->height / 2;
+	light.Z = 0; 500;
 
-		throw AllocationMemoryError();
-	}
 }
 
 Scene::~Scene()
@@ -216,7 +205,18 @@ void Scene::toCam()
 
 			nbrick->svertex[vertexIndex] = tmpVertex;
 		}
+
+//#pragma omp parallel for
+//		for (int faceIndex = 0; faceIndex < nbrick->facesCount(); faceIndex++)
+//		{
+//			for (int i = 0; i < 3; i++)
+//			{
+//				GVector tmpN = nbrick->VNormal[faceIndex][i];
+//				tmpN = tmpN * view;
+//				nbrick->sVNormal[faceIndex][i] = tmpN;
+//			}
+//		}
 	}
 
-	this->light->sdirection = this->light->direction * view;
+	//this->light = this->light * view;
 }

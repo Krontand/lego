@@ -13,6 +13,7 @@ Brick::Brick(const Brick& brick)
 	this->svertex = brick.svertex;
 	this->faces = brick.faces;
 	this->VNormal = brick.VNormal;
+	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
 	this->center = brick.center;
 }
@@ -23,6 +24,7 @@ Brick::Brick(Brick&& brick)
 	this->svertex = brick.svertex;
 	this->faces = brick.faces;
 	this->VNormal = brick.VNormal;
+	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
 	this->center = brick.center;
 }
@@ -33,6 +35,7 @@ Brick::~Brick()
 	this->svertex.clear();
 	this->faces.clear();
 	this->VNormal.clear();
+	this->sVNormal.clear();
 	this->FNormal.clear();
 }
 
@@ -42,6 +45,7 @@ Brick& Brick::operator=(const Brick& brick)
 	this->svertex = brick.svertex;
 	this->faces = brick.faces;
 	this->VNormal = brick.VNormal;
+	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
 	this->center = brick.center;
 	return *this;
@@ -78,6 +82,7 @@ void Brick::calcNormal(int vA, int vB, int vC)
 		tmp.push_back(this->FNormal[FNormal.size() - 1]);
 	}
 	this->VNormal.push_back(tmp);
+	this->sVNormal.push_back(tmp);
 }
 
 int Brick::vertexCount()

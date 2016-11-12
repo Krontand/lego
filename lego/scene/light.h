@@ -10,45 +10,22 @@ Provide lighting -> brightness of object
 */
 
 #pragma once
-#include "cameramodification.h"
+#include "..\model\vertex.h"
 
-class GVector;
-class GMatrix;
-
-class Light
+class Light : public Vertex
 {
 public:
 	/*!
 	Emty constructor. No action.
 	*/
-	Light();
+	Light() : Vertex() {}
 
 	/*!
-	Constructor. Settin light with it's position and target look
-	\param[in] position Light position point
-	\param[in] target Light target point
+	Constructor. Settin light position
+	\param[in] X Light position X
+	\param[in] X Light position Y
+	\param[in] X Light position Z
 	*/
-	Light(GVector position, GVector direction);
-
-	/*!
-	Rotate light around target point in horizontal surface
-	\param[in] angle Rotation angle
-	*/
-	void rotateHorizontalSphere(double angle);
-
-	/*!
-	Rotate light around target point in vertical surface
-	\param[in] angle Rotation angle
-	*/
-	void rotateVerticalSphere(double angle);
-
-	GVector position;	/*!< Light position */
-	GVector target;		/*! Point on which looks camera */
-
-	GVector direction;	/*! "Z" axis of light coordinate system */
-	GVector sdirection;	/*! "Z" axis of light coordinate system in camera CO */
-private:
-	GVector right;		/*! "X" axis of light coordinate system */
-	GVector up;			/*! "Y" axis of light coordinate system */
+	Light(double X, double Y, double Z) : Vertex(X, Y, Z) {}
 
 };

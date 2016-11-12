@@ -97,6 +97,7 @@ public:
 	vector<Vertex> svertex;		/*!< Vertex array in scene coordinates */
 
 	vector<vector<GVector>> VNormal;	/*!< Normal to each vertex */
+	vector<vector<GVector>> sVNormal;	/*!< Normal to each vertex in scene coordinates*/
 
 	vector<Face> faces;			/*!< Faces array */
 
