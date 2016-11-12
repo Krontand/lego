@@ -46,6 +46,7 @@ public:
 	GVector target;		/*! Point on which looks camera */
 
 	GVector direction;	/*! "Z" axis of light coordinate system */
+	GVector sdirection;	/*! "Z" axis of light coordinate system in camera CO */
 private:
 	GVector right;		/*! "X" axis of light coordinate system */
 	GVector up;			/*! "Y" axis of light coordinate system */

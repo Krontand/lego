@@ -217,4 +217,6 @@ void Scene::toCam()
 			nbrick->svertex[vertexIndex] = tmpVertex;
 		}
 	}
+
+	this->light->sdirection = this->light->direction * view;
 }

@@ -21,7 +21,7 @@ Render::~Render()
 void Render::run(Brick* brick, Camera* cam, Light* light)
 {
 	for (int i = 0; i<this->width * this->height; i++) {
-		this->zbuffer[i] = -999999;
+		this->zbuffer[i] = -9999999;
 	}
 
 	COLORREF color = RGB(255,255,255);
@@ -167,8 +167,8 @@ double Render::intencity(double X, double Y, double Z, GVector N, Light light)
 	//GVector d = light.direction - N;
 	//d.normalize();
 	N.normalize();
-	light.direction[0] = light.direction[0] + this->width / 2;
-	light.direction[1] = light.direction[1] + this->height / 2;
-	light.direction.normalize();
-	return max(0,GVector::scalar(N,light.direction));
+	light.sdirection[0] = light.sdirection[0] + this->width / 2;
+	light.sdirection[1] = light.sdirection[1] + this->height / 2;
+	light.sdirection.normalize();
+	return max(0,GVector::scalar(N,light.sdirection));
 }
