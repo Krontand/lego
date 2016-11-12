@@ -172,6 +172,8 @@ double Render::intencity(double X, double Y, double Z, GVector N, Light light)
 	//GVector d = light.direction - N;
 	//d.normalize();
 	N.normalize();
+	light.direction[0] = light.direction[0] + this->width / 2;
+	light.direction[1] = light.direction[1] + this->height / 2;
 	light.direction.normalize();
 	return max(0,GVector::scalar(N,light.direction));
 }

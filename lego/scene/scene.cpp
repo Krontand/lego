@@ -132,7 +132,7 @@ void Scene::InitBitmap()
 void Scene::DrawScene()
 {
 	int fps;
-	WCHAR fps_buf[20] = { 0 };
+	WCHAR fps_buf[8] = { 0 };
 	LARGE_INTEGER sta, fin, frq;
 	QueryPerformanceCounter(&sta);
 
@@ -168,8 +168,8 @@ void Scene::DrawScene()
 	long double dif = long double(fin.QuadPart - sta.QuadPart) / frq.QuadPart;
 	fps = 1.0 / dif;
 
-	wsprintf(fps_buf, TEXT("%d"), fps);
-	TextOut(this->hdc, this->X + 25, this->height - 50, (LPCWSTR)fps_buf, 15);
+	wsprintf(fps_buf, TEXT("FPS: %d"), fps);
+	TextOut(this->hdc, this->X + 25, this->height - 50, (LPCWSTR)fps_buf, 7);
 }
 
 void Scene::AddBrick(Brick brick)
