@@ -66,6 +66,12 @@ public:
 	void addFace(Face face);
 
 	/*!
+	Adds normal in model.
+	\param[in] noraml Normal to face
+	*/
+	void addNormal(GVector normal);
+
+	/*!
 	Calculate normal to face. Set face normal.
 	\param[in] A First vertex of triangle
 	\param[in] B Second vertex of triangle
@@ -99,7 +105,7 @@ public:
 	vector<vector<GVector>> VNormal;	/*!< Normal to each vertex */
 	vector<vector<GVector>> sVNormal;	/*!< Normal to each vertex in scene coordinates*/
 
-	vector<Face> faces;			/*!< Faces array */
-
 	vector<GVector> FNormal;	/*!< Normal to face */
+
+	vector<Face> faces;			/*!< Faces array */
 };

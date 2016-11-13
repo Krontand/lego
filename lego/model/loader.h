@@ -69,6 +69,12 @@ private:
 	*/
 	Face readFace();
 
+	/*!
+	Reads line contins normal coordinates
+	\return Geometric vector contains normal to face
+	*/
+	GVector readNormal();
+
 	char* filename;		/*!< Name of file to read */
 	FILE* file;			/*!< File to read */
 

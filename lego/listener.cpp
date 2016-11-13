@@ -62,7 +62,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//interface->remove(888);
 			try
 			{
-				ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/two.obj");
+				ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/untitled.obj");
 				//ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/one.obj");
 				application->call(*LoadFirst, 0);
 

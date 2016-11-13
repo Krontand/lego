@@ -206,16 +206,16 @@ void Scene::toCam()
 			nbrick->svertex[vertexIndex] = tmpVertex;
 		}
 
-//#pragma omp parallel for
-//		for (int faceIndex = 0; faceIndex < nbrick->facesCount(); faceIndex++)
-//		{
-//			for (int i = 0; i < 3; i++)
-//			{
-//				GVector tmpN = nbrick->VNormal[faceIndex][i];
-//				tmpN = tmpN * view;
-//				nbrick->sVNormal[faceIndex][i] = tmpN;
-//			}
-//		}
+#pragma omp parallel for
+		for (int faceIndex = 0; faceIndex < nbrick->facesCount(); faceIndex++)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				GVector tmpN = nbrick->VNormal[faceIndex][i];
+				tmpN = tmpN * view;
+				nbrick->sVNormal[faceIndex][i] = tmpN;
+			}
+		}
 	}
 
 	//this->light = this->light * view;

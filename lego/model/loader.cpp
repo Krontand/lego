@@ -63,15 +63,30 @@ Vertex Loader::readVertex()
 Face Loader::readFace()
 {
 	int tmpA, tmpB, tmpC;
+	int tmpnA, tmpnB, tmpnC;
 
-	if (fscanf_s(this->file, " %d %d %d", &tmpA, &tmpB, &tmpC) != 3)
+	if (fscanf_s(this->file, " %d//%d %d//%d %d//%d", &tmpA, &tmpnA, &tmpB, &tmpnB, &tmpC, &tmpnC) != 6)
 	{
 		throw LoaderBadFile();
 	}
 
-	Face f(tmpA, tmpB, tmpC);
+	Face f(tmpA, tmpnA, tmpB, tmpnB, tmpC, tmpnC);
 
 	return f;
+}
+
+GVector Loader::readNormal()
+{
+	double tmpX, tmpY, tmpZ;
+
+	if (fscanf_s(this->file, " %lf %lf %lf", &tmpX, &tmpY, &tmpZ) != 3)
+	{
+		throw LoaderBadFile();
+	}
+
+	GVector N(tmpX, tmpY, tmpZ, 0);
+
+	return N;
 }
 
 Brick* Loader::load(Composite* obj)
@@ -81,7 +96,6 @@ Brick* Loader::load(Composite* obj)
 	this->openFile();
 	FILE* f = this->file;
 
-	Face face;
 	char linetype;
 	try
 	{
@@ -95,9 +109,11 @@ Brick* Loader::load(Composite* obj)
 				break;
 
 			case 'f':
-				face = this->readFace();
-				brick->calcNormal(face.getA(), face.getB(), face.getC());
-				brick->addFace(face);
+				brick->addFace(this->readFace());
+				break;
+
+			case 'n':
+				brick->addNormal(this->readNormal());
 				break;
 
 			case '#':
@@ -115,24 +131,26 @@ Brick* Loader::load(Composite* obj)
 			for (int j = i + 1; j < brick->facesCount(); j++)
 			{
 				Face c2Face = brick->faces[j];
-				int c1Vertex = c1Face.getCurrent();
+				int c1Vertex = c1Face.getVertex();
 				for (int k = 0; k < 3; k++)
 				{
-					int c2Vertex = c2Face.getCurrent();
+					int c2Vertex = c2Face.getVertex();
 					for (int l = 0; l < 3; l++)
 					{
 						if (c1Vertex == c2Vertex)
 						{
-							double angle = GVector::angle(brick->FNormal[i], brick->FNormal[j]);
-							if (angle <= 30)
+							double angle = GVector::angle(brick->FNormal[c1Face.getNormal() - 1], brick->FNormal[c2Face.getNormal() - 1]);
+							if (angle <= 30 && angle > 0)
 							{
-								brick->VNormal[i][k] = (brick->VNormal[i][k] + brick->FNormal[j]) / 2.0;
-								brick->VNormal[j][l] = (brick->VNormal[j][l] + brick->FNormal[i]) / 2.0;
+								brick->VNormal[i][k] = (brick->VNormal[i][k] + brick->FNormal[c1Face.getNormal() - 1]) / 2.0;
+								brick->VNormal[j][l] = (brick->VNormal[j][l] + brick->FNormal[c2Face.getNormal() - 1]) / 2.0;
 							}
 						}
-						c2Vertex = c2Face.getNext();
+						c2Vertex = c2Face.getNextVertex();
+						c2Face.getNextNormal();
 					}
-					c1Vertex = c1Face.getNext();
+					c1Vertex = c1Face.getNextVertex();
+					c1Face.getNextNormal();
 				}
 			}
 		}
@@ -152,7 +170,7 @@ Brick* Loader::load(Composite* obj)
 	{
 		delete brick;
 		brick = nullptr;
-		throw LoaderError();
+		throw;
 	}
 
 	this->closeFile();

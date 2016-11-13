@@ -60,6 +60,19 @@ void Brick::addVertex(Vertex v)
 void Brick::addFace(Face face)
 {
 	this->faces.push_back(face);
+	vector<GVector> tmp;
+	for (int i = 0; i < 3; i++)
+	{
+		tmp.push_back(GVector(this->FNormal[face.getNormal() - 1]));
+		face.getNextNormal();
+	}
+	this->VNormal.push_back(tmp);
+	this->sVNormal.push_back(tmp);
+}
+
+void Brick::addNormal(GVector normal)
+{
+	this->FNormal.push_back(normal);
 }
 
 void Brick::calcNormal(int vA, int vB, int vC)
@@ -75,14 +88,6 @@ void Brick::calcNormal(int vA, int vB, int vC)
 	this->FNormal.push_back(GVector(nA, nB, nC, 0));
 
 	this->FNormal[FNormal.size() - 1].normalize();
-
-	vector<GVector> tmp;
-	for (int i = 0; i < 3; i++)
-	{
-		tmp.push_back(this->FNormal[FNormal.size() - 1]);
-	}
-	this->VNormal.push_back(tmp);
-	this->sVNormal.push_back(tmp);
 }
 
 int Brick::vertexCount()
@@ -107,4 +112,5 @@ void Brick::modificate(Modification* modification, Vertex* center)
 	{
 		this->vertex[i].modificate(modification, center);
 	}
-}
+
+}	

@@ -36,7 +36,7 @@ public:
 	\param[in] B second link of face
 	\param[in] C third link of face
 	*/
-	Face(int A, int B, int C);
+	Face(int A, int nA, int B, int nB, int C, int nC);
 
 	/*!
 	Constructor copy
@@ -63,37 +63,69 @@ public:
 	Face& operator=(const Face& face);
 
 	/*!
-	Get first link of face
+	Get first link of vertex
 	\return first link from array
 	*/
-	int getA();
+	int A();
 
 	/*!
-	Get second link of face
+	Get second link of vertex
 	\return second link from array
 	*/
-	int getB();
+	int B();
 
 	/*!
-	Get third link of face
+	Get third link of vertex
 	\return third link from array
 	*/
-	int getC();
+	int C();
 
 	/*!
-	Get current link of face
+	Get first link of normal
+	\return first link from array
+	*/
+	int nA();
+
+	/*!
+	Get second link of normal
+	\return second link from array
+	*/
+	int nB();
+
+	/*!
+	Get third link of normal
+	\return third link from array
+	*/
+	int nC();
+
+	/*!
+	Get current link of vertex
 	\return current link from array
 	*/
-	int getCurrent();
+	int getVertex();
 
 	/*!
-	Get next link of face
+	Get next link of vertex
 	\return next link from array
 	*/
-	int getNext();
+	int getNextVertex();
+
+	/*!
+	Get current link of normal
+	\return current link from array
+	*/
+	int getNormal();
+
+	/*!
+	Get next link of normal
+	\return next link from array
+	*/
+	int getNextNormal();
 
 	vector<int> Vertices;			/*!< Links array */
+	vector<int> Normals;			/*!< Links array */
 
 private:
-	vector<int>::iterator iterator;	/*!< Iterator for links array */
+	vector<int>::iterator viterator;	/*!< Iterator for links array */
+	vector<int>::iterator niterator;	/*!< Iterator for links array */
 };
