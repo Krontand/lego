@@ -163,8 +163,32 @@ GVector GVector::operator*(GMatrix matrix)
 	{
 		for (size_t j = 0; j <= 3; j++)
 		{
-			result[i] = result[i] + matrix[j][i] * vec[j];
+			result[i] = result[i] + matrix[j][i] * this->vec[j];
 		}
 	}
 	return result;
+}
+
+bool GVector::operator==(const GVector& other) const
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (this->vec[i] != other[i])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool GVector::operator!=(const GVector& other) const
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (this->vec[i] != other[i])
+		{
+			return true;
+		}
+	}
+	return false;
 }

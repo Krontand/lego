@@ -76,9 +76,11 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 		throw AllocationMemoryError();
 	}
 
-	light.X = 0; this->width / 2;
-	light.Y = 0; this->height / 2;
-	light.Z = 0; 500;
+	this->light = this->light * this->cam->cameraview();
+
+	this->light.X += this->width / 2;
+	this->light.Y += this->height / 2;
+	this->light.Z += 0;
 
 }
 
@@ -212,11 +214,10 @@ void Scene::toCam()
 			for (int i = 0; i < 3; i++)
 			{
 				GVector tmpN = nbrick->VNormal[faceIndex][i];
-				tmpN = tmpN * view;
+				//tmpN = tmpN * view;
 				nbrick->sVNormal[faceIndex][i] = tmpN;
 			}
 		}
 	}
 
-	//this->light = this->light * view;
 }

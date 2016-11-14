@@ -169,6 +169,20 @@ public:
 	*/
 	GVector operator*(GMatrix matrix);
 
+	/*!
+	Compare two vectors
+	\param[in] other Vector to compare
+	\return TRUE if vectors are similar. FALSE in other case.
+	*/
+	bool operator==(const GVector& other) const;
+
+	/*!
+	Compare two vectors
+	\param[in] other Vector to compare
+	\return TRUE if vectors are not similar. FALSE in other case.
+	*/
+	bool operator!=(const GVector& other) const;
+
 private:
 	vector<double> vec;	/*!< Vector contains coordinates */
 };

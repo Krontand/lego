@@ -218,10 +218,14 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector norm
 
 double Render::intencity(double X, double Y, double Z, GVector N, Vertex light)
 {
-	//GVector d = light.direction - N;
-	//d.normalize();
-	GVector D(light.X - X, light.Y - Y, light.Z - Z, 0);
+	GVector D(light.X - X, light.Y - Y, light.Z + Z, 0);
+	D * (-1);
 	D.normalize();
 	N.normalize();
-	return max(0,cos(GVector::scalar(N,D)));
+	double I;
+	double Iconst = 0.35;
+	double Idiff = 0.4 * max(0, GVector::scalar(N, D));
+	double Iblinn = 0;
+	I = Iconst + Idiff + Iblinn;
+	return I;
 }

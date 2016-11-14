@@ -140,10 +140,10 @@ Brick* Loader::load(Composite* obj)
 						if (c1Vertex == c2Vertex)
 						{
 							double angle = GVector::angle(brick->FNormal[c1Face.getNormal() - 1], brick->FNormal[c2Face.getNormal() - 1]);
-							if (angle <= 30 && angle > 0)
+							if (angle <= 60 && angle > 0.1)
 							{
-								brick->VNormal[i][k] = (brick->VNormal[i][k] + brick->FNormal[c1Face.getNormal() - 1]) / 2.0;
-								brick->VNormal[j][l] = (brick->VNormal[j][l] + brick->FNormal[c2Face.getNormal() - 1]) / 2.0;
+								brick->VNormal[i][k] = (brick->VNormal[i][k] + brick->FNormal[c2Face.getNormal() - 1]) / 2.0;
+								brick->VNormal[j][l] = (brick->VNormal[j][l] + brick->FNormal[c1Face.getNormal() - 1]) / 2.0;
 							}
 						}
 						c2Vertex = c2Face.getNextVertex();
@@ -156,7 +156,7 @@ Brick* Loader::load(Composite* obj)
 		}
 
 		brick->ID = obj->ID;
-		
+
 		double cX = this->maxX - (this->maxX - this->minX) / 2;
 		double cY = this->maxY - (this->maxY - this->minY) / 2;
 		double cZ = this->maxZ - (this->maxZ - this->minZ) / 2;
