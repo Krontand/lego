@@ -26,7 +26,7 @@ void Render::run(Brick* brick, Camera* cam, Vertex light)
 
 	COLORREF color = RGB(255,255,255);
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(dynamic, 1)
 	for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
 	{
 		Face face = brick->faces[faceIndex];
@@ -185,11 +185,14 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector norm
 			int pix = yCoord * this->width + xCoord;
 			if (pix >= 0 && pix <= this->width * this->height)
 			{
-				if (this->zbuffer[pix] <= z)
+				if (this->zbuffer[pix] < z)
 				{
-					this->zbuffer[pix] = z;
 					double I = this->intencity(xCoord, yCoord, z, normP, light);
-					this->pixels[pix] = RGB(GetRValue(color) * I, GetGValue(color) * I, GetBValue(color) * I);
+					if (this->zbuffer[pix] < z)
+					{
+						this->zbuffer[pix] = z;
+						this->pixels[pix] = RGB(GetRValue(color) * I, GetGValue(color) * I, GetBValue(color) * I);
+					}
 				}
 			}
 			z += dz;
