@@ -127,14 +127,10 @@ Brick* Loader::load(Composite* obj)
 
 		vector<int> facesGroup;
 		vector<int> usedVertices;
-		for (int i = 0; i < brick->facesCount() - 1; i++)
+		for (int i = 0; i < brick->facesCount(); i++)
 		{
-			facesGroup.clear();
-
 			Face c1Face = brick->faces[i];
 			int c1Vertex = c1Face.getVertex();
-
-			facesGroup.push_back(i);
 			
 			for (int k = 0; k < 3; k++)
 			{
@@ -148,61 +144,75 @@ Brick* Loader::load(Composite* obj)
 				}
 				if (!found)
 				{
+					facesGroup.clear();
+					facesGroup.push_back(i);
 					usedVertices.push_back(c1Vertex);
-					for (int j = i + 1; j < brick->facesCount(); j++)
+					for (int j = 0; j < brick->facesCount(); j++)
 					{
-						Face c2Face = brick->faces[j];
-						int c2Vertex = c2Face.getVertex();
-						for (int l = 0; l < 3; l++)
+						if (i != j)
 						{
-							if (c1Vertex == c2Vertex)
+							Face c2Face = brick->faces[j];
+							int c2Vertex = c2Face.getVertex();
+							for (int l = 0; l < 3; l++)
 							{
-								double angle = GVector::angle(brick->FNormal[c1Face.getNormal() - 1], brick->FNormal[c2Face.getNormal() - 1]);
-								if (angle <= 30 && angle > 0)
+								if (c1Vertex == c2Vertex)
 								{
-									facesGroup.push_back(j);
+									double angle = GVector::angle(brick->FNormal[c1Face.getNormal() - 1], brick->FNormal[c2Face.getNormal() - 1]);
+									if (angle <= 40)
+									{
+										facesGroup.push_back(j);
+									}
 								}
+								c2Vertex = c2Face.getNextVertex();
 							}
-							c2Vertex = c2Face.getNextVertex();
 						}
 					}
+
+					if (facesGroup.size() > 1)
+					{
+						vector<GVector> usedNormals;
+						int used = 1;
+						GVector RNormal = brick->FNormal[c1Face.getNormal() - 1];
+						usedNormals.push_back(RNormal);
+						for (int fgIndex = 1; fgIndex < facesGroup.size(); fgIndex++)
+						{
+							Face f = brick->faces[facesGroup[fgIndex]];
+							GVector N = brick->FNormal[f.getNormal() - 1];
+							bool found = false;
+							for (int i = 0; i < usedNormals.size() && !found; i++)
+							{
+								if (N == usedNormals[i])
+								{
+									found = true;
+								}
+							}
+							if (!found)
+							{
+								RNormal = RNormal + N;
+								usedNormals.push_back(N);
+								used++;
+							}
+						}
+
+						RNormal = RNormal / used;
+
+						for (int fgIndex = 0; fgIndex < facesGroup.size(); fgIndex++)
+						{
+							Face currentFace = brick->faces[facesGroup[fgIndex]];
+							for (int vi = 0; vi < 3; vi++)
+							{
+								if (currentFace.getVertex() == c1Vertex)
+								{
+									brick->VNormal[facesGroup[fgIndex]][vi] = RNormal;
+								}
+								currentFace.getNextVertex();
+							}
+						}
+					}
+
 				}
+
 				c1Vertex = c1Face.getNextVertex();
-			}
-
-			vector<GVector> usedNormals;
-			GVector RNormal = brick->FNormal[c1Face.getNormal() - 1];
-			usedNormals.push_back(RNormal);
-			for (int fgIndex = 1; fgIndex < facesGroup.size(); fgIndex++)
-			{
-				Face f = brick->faces[facesGroup[fgIndex]];
-				GVector N = brick->FNormal[f.getNormal() - 1];
-				bool found = false;
-				for (int i = 0; i < usedNormals.size() && !found; i++)
-				{
-					if (N == usedNormals[i])
-					{
-						found = true;
-					}
-				}
-				if (!found)
-				{
-					RNormal = (RNormal + N) / 2;
-					usedNormals.push_back(N);
-				}
-			}
-
-			for (int fgIndex = 0; fgIndex < facesGroup.size(); fgIndex++)
-			{
-				Face currentFace = brick->faces[facesGroup[fgIndex]];
-				for (int vi = 0; vi < 3; vi++)
-				{
-					if (currentFace.getVertex() == c1Vertex)
-					{
-						brick->VNormal[facesGroup[fgIndex]][vi] = RNormal;
-					}
-					currentFace.getNextVertex();
-				}
 			}
 
 		}

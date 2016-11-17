@@ -173,7 +173,7 @@ bool GVector::operator==(const GVector& other) const
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (this->vec[i] != other[i])
+		if (round(this->vec[i] * 100) / 100. != round(other[i] * 100) / 100.)
 		{
 			return false;
 		}
@@ -185,7 +185,7 @@ bool GVector::operator!=(const GVector& other) const
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (this->vec[i] != other[i])
+		if (round(this->vec[i] * 100) / 100. != round(other[i] * 100) / 100.)
 		{
 			return true;
 		}

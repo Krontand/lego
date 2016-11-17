@@ -71,9 +71,9 @@ Vertex Vertex::operator*(GMatrix matrix)
 	GVector tmp(this->X, this->Y, this->Z, 1);
 
 	GVector result;
-	for (unsigned long i = 0; i <= 3; i++)
+	for (size_t i = 0; i <= 3; i++)
 	{
-		for (unsigned long j = 0; j <= 3; j++)
+		for (size_t j = 0; j <= 3; j++)
 		{
 			result[i] = result[i] + matrix[j][i] * tmp[j];
 		}
