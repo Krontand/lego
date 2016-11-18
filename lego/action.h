@@ -141,3 +141,24 @@ public:
 private:
 	double angle;
 };
+
+class ActionCameraRotationVertical : public Action
+{
+public:
+	ActionCameraRotationVertical(double angle)
+	{
+		this->angle = angle;
+	}
+
+	~ActionCameraRotationVertical()
+	{
+	}
+
+	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
+	{
+		scene->cam->rotateVerticalSphere(this->angle);
+	}
+
+private:
+	double angle;
+};
