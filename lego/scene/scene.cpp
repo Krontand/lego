@@ -214,7 +214,6 @@ void Scene::toCam()
 			for (int i = 0; i < 3; i++)
 			{
 				GVector tmpN = nbrick->VNormal[faceIndex][i];
-				//tmpN = tmpN * view;
 				nbrick->sVNormal[faceIndex][i] = tmpN;
 			}
 		}

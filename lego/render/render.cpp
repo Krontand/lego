@@ -221,7 +221,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector norm
 
 double Render::intencity(double X, double Y, double Z, GVector N, Vertex light)
 {
-	GVector D(light.X - X, light.Y - Y, light.Z + Z, 0);
+	GVector D(light.X - X, light.Y - Y, light.Z + Z, 1);
 	D * (-1);
 	D.normalize();
 	N.normalize();

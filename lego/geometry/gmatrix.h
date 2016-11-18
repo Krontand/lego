@@ -87,6 +87,13 @@ public:
 	*/
 	GMatrix& operator*(const double value);
 
+	/*!
+	Multiply matrix with incoming matrix
+	\param[in] other Matrix to multiply
+	\return Matrix after multiply
+	*/
+	GMatrix& operator*(const GMatrix& other);
+
 private:
 	vector<GVector> matrix;	/*! Geometric matrix ¯\_(ツ)_/¯ */
 };

@@ -111,6 +111,10 @@ void Brick::modificate(Modification* modification, Vertex* center)
 	for (int i = 0; i < this->vertexCount(); i++)
 	{
 		this->vertex[i].modificate(modification, center);
+		for (int j = 0; j < 3; j++)
+		{
+			//this->VNormal[i][j].modificate(modification, center);
+		}	
 	}
 
 }	
