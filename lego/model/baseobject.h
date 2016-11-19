@@ -10,7 +10,6 @@ Parent of visible scene objects
 */
 
 #pragma once
-#include "modification\modification.h"
 
 class Vertex;
 class Modification;

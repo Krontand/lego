@@ -11,6 +11,7 @@ Provide interface for geometric vector like base object
 
 #pragma once
 
+#include "modification\modification.h"
 #include "baseobject.h"
 #include "../geometry\gmatrix.h"
 

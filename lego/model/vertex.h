@@ -11,6 +11,7 @@ Provide interface for vertex coordinates
 
 #pragma once
 
+#include "modification\modification.h"
 #include "baseobject.h"
 #include "../geometry\gmatrix.h"
 
