@@ -60,17 +60,17 @@ void Brick::addVertex(Vertex v)
 void Brick::addFace(Face face)
 {
 	this->faces.push_back(face);
-	vector<GVector> tmp;
+	vector<Normal> tmp;
 	for (int i = 0; i < 3; i++)
 	{
-		tmp.push_back(GVector(this->FNormal[face.getNormal() - 1]));
+		tmp.push_back(Normal(this->FNormal[face.getNormal() - 1]));
 		face.getNextNormal();
 	}
 	this->VNormal.push_back(tmp);
 	this->sVNormal.push_back(tmp);
 }
 
-void Brick::addNormal(GVector normal)
+void Brick::addNormal(Normal normal)
 {
 	this->FNormal.push_back(normal);
 }
@@ -85,7 +85,7 @@ void Brick::calcNormal(int vA, int vB, int vC)
 	double nB = A.Z * (B.X - C.X) + B.Z * (C.X - A.X) + C.Z * (A.X - B.X);
 	double nC = A.X * (B.Y - C.Y) + B.X * (C.Y - A.Y) + C.X * (A.Y - B.Y);
 
-	this->FNormal.push_back(GVector(nA, nB, nC, 0));
+	this->FNormal.push_back(Normal(nA, nB, nC, 0));
 
 	this->FNormal[FNormal.size() - 1].normalize();
 }
@@ -107,13 +107,13 @@ void Brick::modificate(Modification* modification, Vertex* center)
 		center = &this->center;
 	}
 
-#pragma omp parallel for
+//#pragma omp parallel for
 	for (int i = 0; i < this->vertexCount(); i++)
 	{
 		this->vertex[i].modificate(modification, center);
 		for (int j = 0; j < 3; j++)
 		{
-			//this->VNormal[i][j].modificate(modification, center);
+			this->VNormal[i][j].modificate(modification, center);
 		}	
 	}
 

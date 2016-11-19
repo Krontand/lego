@@ -61,6 +61,12 @@ public:
 	*/
 	virtual void run(Vertex* vertex) = 0;
 
+	/*!
+	Launches modification
+	\param[in] normal Object to modificate
+	*/
+	virtual void run(Normal* normal) {};
+
 protected:
 	Vertex* center;	/*!< Rotation center */
 	double angle;	/*!< Rotation angle in degrees */

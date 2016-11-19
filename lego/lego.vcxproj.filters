@@ -132,6 +132,9 @@
     <ClInclude Include="geometry\exception.h">
       <Filter>Заголовочные файлы\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="model\normal.h">
+      <Filter>Заголовочные файлы\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -193,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="scene\cameramodification.cpp">
       <Filter>Файлы исходного кода\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="model\normal.cpp">
+      <Filter>Файлы исходного кода\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -38,7 +38,7 @@ public:
 	\param[in] Z Z coordinate
 	\param[in] length Length of vector
 	*/
-	GVector(double X, double Y, double Z, double lenglth);
+	GVector(double X, double Y, double Z, double length);
 	
 	/*!
 	Constructor. Copies incoming vector.

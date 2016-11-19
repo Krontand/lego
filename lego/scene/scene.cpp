@@ -75,7 +75,7 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 
 		throw AllocationMemoryError();
 	}
-
+	this->light.Z = 500;
 	this->light = this->light * this->cam->cameraview();
 
 	this->light.X += this->width / 2;

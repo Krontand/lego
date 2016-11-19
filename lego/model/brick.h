@@ -12,6 +12,7 @@ Contains model archetecture
 #pragma once
 using std::vector;
 
+#include "normal.h"
 #include "vertex.h"
 #include "face.h"
 
@@ -69,7 +70,7 @@ public:
 	Adds normal in model.
 	\param[in] noraml Normal to face
 	*/
-	void addNormal(GVector normal);
+	void addNormal(Normal normal);
 
 	/*!
 	Calculate normal to face. Set face normal.
@@ -102,10 +103,10 @@ public:
 	vector<Vertex> vertex;		/*!< Vertex array */
 	vector<Vertex> svertex;		/*!< Vertex array in scene coordinates */
 
-	vector<vector<GVector>> VNormal;	/*!< Normal to each vertex */
-	vector<vector<GVector>> sVNormal;	/*!< Normal to each vertex in scene coordinates*/
+	vector<vector<Normal>> VNormal;		/*!< Normal to each vertex */
+	vector<vector<Normal>> sVNormal;	/*!< Normal to each vertex in scene coordinates*/
 
-	vector<GVector> FNormal;	/*!< Normal to face */
+	vector<Normal> FNormal;	/*!< Normal to face */
 
 	vector<Face> faces;			/*!< Faces array */
 };

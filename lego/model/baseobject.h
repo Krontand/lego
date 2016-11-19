@@ -29,7 +29,7 @@ public:
 	\param[in] modification Type of modification
 	\param[in] center Modification center
 	*/
-	virtual void modificate(Modification* modification, Vertex* center = NULL) = 0;
+	virtual void modificate(Modification* modification, Vertex* center = nullptr) = 0;
 
 	/*!
 	Different meanings: 

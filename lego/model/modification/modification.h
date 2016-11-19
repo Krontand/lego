@@ -11,8 +11,10 @@ Virtual class
 
 #pragma once
 #include "../vertex.h"
+#include "../normal.h"
 
 class Vertex;
+class Normal;
 
 /*!
 \class Modification modification.h "model/modification/modification.h"
@@ -44,4 +46,10 @@ public:
 	\param[in] vertex Object to modificate
 	*/
 	virtual void run(Vertex* vertex) = 0;
+
+	/*!
+	Launches modification
+	\param[in] normal Object to modificate
+	*/
+	virtual void run(Normal* normal) = 0;
 };

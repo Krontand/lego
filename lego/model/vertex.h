@@ -20,7 +20,7 @@ Provide interface for vertex coordinates
 
 Provide interface for vertex coordinates
 */
-class Vertex : public BaseObject
+class Vertex: public BaseObject
 {
 public:
 	/*!
