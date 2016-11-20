@@ -1,5 +1,5 @@
 /*!
-\file camera.h "scene/cameramodification.h"
+\file cameramodification.h "scene/cameramodification.h"
 \brief  Modidy camera
 \author Dmitry Zaitsev
 \copyright © BMSTU All rights violated.

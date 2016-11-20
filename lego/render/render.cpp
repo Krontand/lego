@@ -128,8 +128,8 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector norm
 		dn23 = (normC - normB) / (double)(y3 - y2);
 	}
 
-	double z;
-	double dz;
+	double z = 0;
+	double dz = 0;
 
 	GVector normP;
 	GVector dnorm;

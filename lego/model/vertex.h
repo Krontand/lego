@@ -85,6 +85,14 @@ public:
 	*/
 	virtual void modificate(Modification* modification, Vertex* center) override;
 
+	/*!
+	In modification methods we need to know
+	what kind of object we use: vertex or normal
+	so here we know
+	\return true if object is vertex (it's vertex now)
+	*/
+	virtual bool isVertex() override { return true; }
+
 	double X;	/*!< X coordinate of vertex */
 	double Y;	/*!< Y coordinate of vertex */
 	double Z;	/*!< Z coordinate of vertex */

@@ -31,6 +31,14 @@ public:
 	virtual void modificate(Modification* modification, Vertex* center = nullptr) = 0;
 
 	/*!
+	In modification methods we need to know 
+	what kind of object we use: vertex or normal
+	so here we know
+	\return true if object is vertex, false in other case
+	*/
+	virtual bool isVertex() { return false; }
+
+	/*!
 	Different meanings: 
 		In composite - get highest ID of objects.
 		In brick - get ID of this brick.

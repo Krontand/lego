@@ -135,6 +135,9 @@
     <ClInclude Include="model\normal.h">
       <Filter>Заголовочные файлы\Model</Filter>
     </ClInclude>
+    <ClInclude Include="model\modification\transformationmatrix.h">
+      <Filter>Заголовочные файлы\Model\Modification</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -199,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="model\normal.cpp">
       <Filter>Файлы исходного кода\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\modification\transformationmatrix.cpp">
+      <Filter>Файлы исходного кода\Model\Modification</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

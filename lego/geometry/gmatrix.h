@@ -33,7 +33,7 @@ public:
 	Constructor. Copies incoming matrix.
 	\param[in] other Source matrix to copy.
 	*/
-	GMatrix(const GMatrix& other);
+	GMatrix(GMatrix& other);
 
 	/*!
 	Constructor. Transfer incoming matrix.
@@ -85,14 +85,22 @@ public:
 	\param[in] value Value to multiply
 	\return Matrix after multiply
 	*/
-	GMatrix& operator*(const double value);
+	GMatrix operator*(const double value);
 
 	/*!
 	Multiply matrix with incoming matrix
 	\param[in] other Matrix to multiply
 	\return Matrix after multiply
 	*/
-	GMatrix& operator*(const GMatrix& other);
+	GMatrix operator*(const GMatrix& other);
+
+	/*!
+	Inverse current matrix
+	\return true if success, else in other case
+	*/
+	bool inverse();
+
+	GMatrix transposition();
 
 private:
 	vector<GVector> matrix;	/*! Geometric matrix ¯\_(ツ)_/¯ */

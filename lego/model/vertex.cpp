@@ -61,7 +61,6 @@ GVector Vertex::vector()
 
 void Vertex::modificate(Modification* modification, Vertex* center)
 {
-	modification->setCenter(center);
 	modification->run(this);
 }
 
@@ -75,7 +74,7 @@ Vertex Vertex::operator*(GMatrix matrix)
 	{
 		for (size_t j = 0; j <= 3; j++)
 		{
-			result[i] = result[i] + matrix[j][i] * tmp[j];
+			result[j] = result[j] + matrix[i][j] * tmp[i];
 		}
 	}
 	(*this).X = result[0];

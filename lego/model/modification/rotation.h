@@ -35,41 +35,39 @@ public:
 	Provide rotation in OX surface
 	\param[in] vertex Object to transform
 	*/
-	void rotateX(Vertex* vertex);
+	void rotateX(BaseObject* o);
 
 	/*!
 	Provide rotation in OY surface
 	\param[in] vertex Object to transform
 	*/
-	void rotateY(Vertex* vertex);
+	void rotateY(BaseObject* o);
 
 	/*!
 	Provide rotation in OZ surface
 	\param[in] vertex Object to transform
 	*/
-	void rotateZ(Vertex* vertex);
+	void rotateZ(BaseObject* o);
 
 	/*!
-	Set center around which occur modificaion
+	Set center around which occur modificaion and calculate transform matrix
 	\param[in] center Point of modification center
 	*/
 	virtual void setCenter(Vertex* center) override;
 
 	/*!
 	Launches modification
-	\param[in] vertex Object to modificate
+	\param[in] o Object to modificate
 	*/
-	virtual void run(Vertex* vertex) = 0;
+	virtual void run(BaseObject* o) = 0;
 
-	/*!
-	Launches modification
-	\param[in] normal Object to modificate
-	*/
-	virtual void run(Normal* normal) {};
 
 protected:
-	Vertex* center;	/*!< Rotation center */
-	double angle;	/*!< Rotation angle in degrees */
+	Vertex* center;				/*!< Rotation center */
+	double angle;				/*!< Rotation angle in degrees */
+	GMatrix rotate;				/*!< Rotation matrix */
+	GMatrix vMatrixRotation;	/*!< Matrix to change vertex */
+	GMatrix nMatrixRotation;	/*!< Matrix to change normal */
 };
 
 /*!
@@ -99,9 +97,10 @@ public:
 
 	/*!
 	Launches modification
-	\param[in] vertex Object to modificate
+	\param[in] o Object to modificate
 	*/
-	virtual void run(Vertex* vertex) override;
+	virtual void run(BaseObject* o) override;
+
 };
 
 /*!
@@ -131,9 +130,9 @@ public:
 
 	/*!
 	Launches modification
-	\param[in] vertex Object to modificate
+	\param[in] o Object to modificate
 	*/
-	virtual void run(Vertex* vertex) override;
+	virtual void run(BaseObject* o) override;
 };
 
 /*!
@@ -163,7 +162,8 @@ public:
 
 	/*!
 	Launches modification
-	\param[in] vertex Object to modificate
+	\param[in] o Object to modificate
 	*/
-	virtual void run(Vertex* vertex) override;
+	virtual void run(BaseObject* o) override;
+
 };

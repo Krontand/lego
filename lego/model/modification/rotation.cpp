@@ -10,51 +10,56 @@ Rotation::~Rotation()
 {
 }
 
-void Rotation::rotateX(Vertex* vertex)
+void Rotation::rotateX(BaseObject* o)
 {
-	double tmpX =
-		this->center->X + (vertex->X - this->center->X) * cos(this->angle) -
-		(vertex->Z - this->center->Z) * sin(this->angle);
-
-	double tmpZ =
-		this->center->Z + (vertex->X - this->center->X) * sin(this->angle) +
-		(vertex->Z - this->center->Z) * cos(this->angle);
-
-	vertex->X = tmpX;
-	vertex->Z = tmpZ;
+	if (o->isVertex())
+	{
+		*o = *(Vertex*)o * this->vMatrixRotation;
+	}
+	else
+	{
+		*o = *(Normal*)o * this->nMatrixRotation;
+	}
 }
 
-void Rotation::rotateY(Vertex* vertex)
+void Rotation::rotateY(BaseObject* o)
 {
-	double tmpY =
-		this->center->Y + (vertex->Y - this->center->Y) * cos(this->angle) -
-		(vertex->Z - this->center->Z) * sin(this->angle);
-
-	double tmpZ =
-		this->center->Z + (vertex->Y - this->center->Y) * sin(this->angle) +
-		(vertex->Z - this->center->Z) * cos(this->angle);
-
-	vertex->Y = tmpY;
-	vertex->Z = tmpZ;
+	if (o->isVertex())
+	{
+		*o = *(Vertex*)o * this->vMatrixRotation;
+	}
+	else
+	{
+		*o = *(Normal*)o * this->nMatrixRotation;
+	}
 }
 
-void Rotation::rotateZ(Vertex* vertex)
+void Rotation::rotateZ(BaseObject* o)
 {
-	double tmpX =
-		this->center->X + (vertex->X - this->center->X) * cos(this->angle) -
-		(vertex->Y - this->center->Y) * sin(this->angle);
-
-	double tmpY =
-		this->center->Y + (vertex->X - this->center->X) * sin(this->angle) +
-		(vertex->Y - this->center->Y) * cos(this->angle);
-
-	vertex->X = tmpX;
-	vertex->Y = tmpY;
+	if (o->isVertex())
+	{
+		*o = *(Vertex*)o * this->vMatrixRotation;
+	}
+	else
+	{
+		*o = *(Normal*)o * this->nMatrixRotation;
+	}
 }
 
 void Rotation::setCenter(Vertex* center)
 {
 	this->center = center;
+
+	GMatrix moveToOrigin = matrixMove(-this->center->X, -this->center->Y, -this->center->Z);
+	GMatrix moveBack = matrixMove(this->center->X, this->center->Y, this->center->Z);
+	
+	this->vMatrixRotation = moveBack * rotate  * moveToOrigin;
+	this->nMatrixRotation = this->vMatrixRotation;
+	this->nMatrixRotation.transposition();
+	if (!this->nMatrixRotation.inverse())
+	{
+		//throw WrongRotationMatrix();
+	}
 }
 
 RotationX::RotationX()
@@ -64,15 +69,16 @@ RotationX::RotationX()
 RotationX::RotationX(double angle)
 {
 	this->angle = angle;
+	this->rotate = matrixrotationX(this->angle);
 }
 
 RotationX::~RotationX()
 {
 }
 
-void RotationX::run(Vertex* vertex)
+void RotationX::run(BaseObject* o)
 {
-	this->rotateX(vertex);
+	this->rotateX(o);
 }
 
 RotationY::RotationY()
@@ -82,16 +88,18 @@ RotationY::RotationY()
 RotationY::RotationY(double angle)
 {
 	this->angle = angle;
+	this->rotate = matrixrotationY(this->angle);
 }
 
 RotationY::~RotationY()
 {
 }
 
-void RotationY::run(Vertex* vertex)
+void RotationY::run(BaseObject* o)
 {
-	this->rotateY(vertex);
+	this->rotateY(o);
 }
+
 
 RotationZ::RotationZ()
 {
@@ -100,13 +108,15 @@ RotationZ::RotationZ()
 RotationZ::RotationZ(double angle)
 {
 	this->angle = angle;
+	this->rotate = matrixrotationZ(this->angle);
 }
 
 RotationZ::~RotationZ()
 {
 }
 
-void RotationZ::run(Vertex* vertex)
+void RotationZ::run(BaseObject* o)
 {
-	this->rotateZ(vertex);
+	this->rotateZ(o);
 }
+

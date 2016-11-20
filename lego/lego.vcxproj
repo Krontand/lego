@@ -165,6 +165,7 @@
     <ClInclude Include="model\loader.h" />
     <ClInclude Include="model\modification\modification.h" />
     <ClInclude Include="model\modification\rotation.h" />
+    <ClInclude Include="model\modification\transformationmatrix.h" />
     <ClInclude Include="model\normal.h" />
     <ClInclude Include="model\vertex.h" />
     <ClInclude Include="render\render.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="model\face.cpp" />
     <ClCompile Include="model\loader.cpp" />
     <ClCompile Include="model\modification\rotation.cpp" />
+    <ClCompile Include="model\modification\transformationmatrix.cpp" />
     <ClCompile Include="model\normal.cpp" />
     <ClCompile Include="model\vertex.cpp" />
     <ClCompile Include="render\render.cpp" />

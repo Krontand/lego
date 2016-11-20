@@ -62,6 +62,5 @@ Normal& Normal::operator*(GMatrix matrix)
 
 void Normal::modificate(Modification* modification, Vertex* center)
 {
-	modification->setCenter(center);
 	modification->run(this);
 }

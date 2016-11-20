@@ -12,6 +12,7 @@ Virtual class
 #pragma once
 #include "../vertex.h"
 #include "../normal.h"
+#include "transformationmatrix.h"
 
 class Vertex;
 class Normal;
@@ -45,11 +46,11 @@ public:
 	Launches modification
 	\param[in] vertex Object to modificate
 	*/
-	virtual void run(Vertex* vertex) = 0;
+	virtual void run(BaseObject* vertex) = 0;
 
 	/*!
 	Launches modification
 	\param[in] normal Object to modificate
 	*/
-	virtual void run(Normal* normal) = 0;
+	//virtual void run(Normal* normal) = 0;
 };
