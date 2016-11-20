@@ -85,13 +85,13 @@ GMatrix GMatrix::operator*(const double value)
 GMatrix GMatrix::operator*(const GMatrix& other)
 {
 	GMatrix result(*this);
-	for (size_t i = 0; i < 3; i++)
-		for (size_t j = 0; j < 3; j++)
+	for (size_t i = 0; i <= 3; i++)
+		for (size_t j = 0; j <= 3; j++)
 		{
 			GVector row((*this)[i]);
 			GVector column(other[0][j],other[1][j],other[2][j],other[3][j]);
 			double sum = 0;
-			for (size_t k = 0; k < 3; k++)
+			for (size_t k = 0; k <= 3; k++)
 				sum += row[k] * column[k];
 			result[i][j] = sum;
 		}
@@ -102,9 +102,9 @@ bool GMatrix::inverse()
 {
 	GMatrix result;
 
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i <= 3; ++i)
 	{
-		for (int j = 0; j < 3; ++j)
+		for (int j = 0; j <= 3; ++j)
 			result[i][j] = 0.0;
 
 		result[i][i] = 1.0;
@@ -113,12 +113,12 @@ bool GMatrix::inverse()
 
 	GMatrix tmp(*this);
 
-	for (int k = 0; k < 3; ++k)
+	for (int k = 0; k <= 3; ++k)
 	{
 		if (fabs(tmp[k][k]) < 1e-8)
 		{
 			bool changed = false;
-			for (int i = k + 1; i < 3; ++i)
+			for (int i = k + 1; i <= 3; ++i)
 			{
 				if (fabs(tmp[i][k]) > 1e-8)
 				{
@@ -138,16 +138,16 @@ bool GMatrix::inverse()
 
 
 		double div = tmp[k][k];
-		for (int j = 0; j < 3; ++j)
+		for (int j = 0; j <= 3; ++j)
 		{
 			tmp[k][j] /= div;
 			result[k][j] /= div;
 		}
 
-		for (int i = k + 1; i < 3; ++i)
+		for (int i = k + 1; i <= 3; ++i)
 		{
 			double multi = tmp[i][k];
-			for (int j = 0; j < 3; ++j)
+			for (int j = 0; j <= 3; ++j)
 			{
 				tmp[i][j] -= multi * tmp[k][j];
 				result[i][j] -= multi * result[k][j];
@@ -155,12 +155,12 @@ bool GMatrix::inverse()
 		}
 	}
 
-	for (int k = 2; k > 0; --k)
+	for (int k = 3; k > 0; --k)
 	{
 		for (int i = k - 1; i + 1 > 0; --i)
 		{
 			double multi = tmp[i][k];
-			for (int j = 0; j < 3; ++j)
+			for (int j = 0; j <= 3; ++j)
 			{
 				tmp[i][j] -= multi * tmp[k][j];
 				result[i][j] -= multi * result[k][j];
@@ -175,14 +175,14 @@ bool GMatrix::inverse()
 
 GMatrix GMatrix::transposition()
 {
-	for (int i = 0; i < 3; i++)
+	GMatrix result;
+	for (int i = 0; i <= 3; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j <= 3; j++)
 		{
-			double tmp = this->matrix[i][j];
-			this->matrix[i][j] = this->matrix[j][i];
-			this->matrix[j][i] = tmp;
+			result[i][j] = this->matrix[j][i];
 		}
 	}
+	*this = result;
 	return *this;
 }

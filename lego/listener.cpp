@@ -6,11 +6,15 @@
 #include "interface\text.h"
 #include "application.h"
 
+#define ROTATTION_ANGLE 5 * M_PI / 180
+
 extern HINSTANCE hInst;
 PAINTSTRUCT ps;
 BaseInterface* interface;
 BaseDrawInterface* drawInterface = new BaseDrawInterface;
-double angle = 5 * M_PI / 180;
+
+double angleX = 0;
+double angleY = 0;
 
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -84,28 +88,40 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 			case VK_RIGHT:
 			{
-				ActionBrickRotateX* rotatex = new ActionBrickRotateX(-angle);
+				angleX -= ROTATTION_ANGLE;
+				if (angleX < -360)
+					angleX += 360;
+				ActionBrickRotateX* rotatex = new ActionBrickRotateX(angleX);
 				application->call(*rotatex, 0);
 				application->call(*actionDraw, 0);
 			}
 			break;
 			case VK_LEFT:
 			{
-				ActionBrickRotateX* rotatex = new ActionBrickRotateX(angle);
+				angleX += ROTATTION_ANGLE;
+				if (angleX > 360)
+					angleX -= 360;
+				ActionBrickRotateX* rotatex = new ActionBrickRotateX(angleX);
 				application->call(*rotatex, 0);
 				application->call(*actionDraw, 0);
 			}
 			break;
 			case VK_UP:
 			{
-				ActionBrickRotateY* rotatey = new ActionBrickRotateY(angle);
+				angleY += ROTATTION_ANGLE;
+				if (angleY > 360)
+					angleY -= 360;
+				ActionBrickRotateY* rotatey = new ActionBrickRotateY(angleY);
 				application->call(*rotatey, 0);
 				application->call(*actionDraw, 0);
 			}
 			break;
 			case VK_DOWN:
 			{
-				ActionBrickRotateY* rotatey = new ActionBrickRotateY(-angle);
+				angleY -= ROTATTION_ANGLE;
+				if (angleY < -360)
+					angleY += 360;
+				ActionBrickRotateY* rotatey = new ActionBrickRotateY(angleY);
 				application->call(*rotatey, 0);
 				application->call(*actionDraw, 0);
 			}

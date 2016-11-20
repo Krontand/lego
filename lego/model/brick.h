@@ -73,14 +73,6 @@ public:
 	void addNormal(Normal normal);
 
 	/*!
-	Calculate normal to face. Set face normal.
-	\param[in] A First vertex of triangle
-	\param[in] B Second vertex of triangle
-	\param[in] C Third vertex of triangle
-	*/
-	void calcNormal(int A, int B, int C);
-
-	/*!
 	Amount of vertex in model
 	\return Amount of items
 	*/
@@ -100,10 +92,12 @@ public:
 
 	Vertex center;		/*!< Brick center */
 
-	vector<Vertex> vertex;		/*!< Vertex array */
+	vector<Vertex> ivertex;		/*!< Source vertex array */
+	vector<Vertex> vertex;		/*!< Vertex array after modification (rotation, move) */
 	vector<Vertex> svertex;		/*!< Vertex array in scene coordinates */
 
-	vector<vector<Normal>> VNormal;		/*!< Normal to each vertex */
+	vector<vector<Normal>> iVNormal;	/*!< Source normal to each vertex */
+	vector<vector<Normal>> VNormal;		/*!< Normal to each vertex after modification */
 	vector<vector<Normal>> sVNormal;	/*!< Normal to each vertex in scene coordinates*/
 
 	vector<Normal> FNormal;	/*!< Normal to face */

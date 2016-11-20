@@ -9,9 +9,11 @@ Brick::Brick()
 
 Brick::Brick(const Brick& brick)
 {
+	this->ivertex = brick.ivertex;
 	this->vertex = brick.vertex;
 	this->svertex = brick.svertex;
 	this->faces = brick.faces;
+	this->iVNormal = brick.iVNormal;
 	this->VNormal = brick.VNormal;
 	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
@@ -20,9 +22,11 @@ Brick::Brick(const Brick& brick)
 
 Brick::Brick(Brick&& brick)
 {
+	this->ivertex = brick.ivertex;
 	this->vertex = brick.vertex;
 	this->svertex = brick.svertex;
 	this->faces = brick.faces;
+	this->iVNormal = brick.iVNormal;
 	this->VNormal = brick.VNormal;
 	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
@@ -31,9 +35,11 @@ Brick::Brick(Brick&& brick)
 
 Brick::~Brick()
 {
+	this->ivertex.clear();
 	this->vertex.clear();
 	this->svertex.clear();
 	this->faces.clear();
+	this->iVNormal.clear();
 	this->VNormal.clear();
 	this->sVNormal.clear();
 	this->FNormal.clear();
@@ -41,9 +47,11 @@ Brick::~Brick()
 
 Brick& Brick::operator=(const Brick& brick)
 {
+	this->ivertex = brick.ivertex;
 	this->vertex = brick.vertex;
 	this->svertex = brick.svertex;
 	this->faces = brick.faces;
+	this->iVNormal = brick.iVNormal;
 	this->VNormal = brick.VNormal;
 	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
@@ -53,6 +61,7 @@ Brick& Brick::operator=(const Brick& brick)
 
 void Brick::addVertex(Vertex v)
 {
+	this->ivertex.push_back(v);
 	this->vertex.push_back(v);
 	this->svertex.push_back(v);
 }
@@ -66,6 +75,7 @@ void Brick::addFace(Face face)
 		tmp.push_back(Normal(this->FNormal[face.getNormal() - 1]));
 		face.getNextNormal();
 	}
+	this->iVNormal.push_back(tmp);
 	this->VNormal.push_back(tmp);
 	this->sVNormal.push_back(tmp);
 }
@@ -73,21 +83,6 @@ void Brick::addFace(Face face)
 void Brick::addNormal(Normal normal)
 {
 	this->FNormal.push_back(normal);
-}
-
-void Brick::calcNormal(int vA, int vB, int vC)
-{
-	Vertex A = this->vertex[vA - 1];
-	Vertex B = this->vertex[vB - 1];
-	Vertex C = this->vertex[vC - 1];
-
-	double nA = A.Y * (B.Z - C.Z) + B.Y * (C.Z - A.Z) + C.Y * (A.Z - B.Z);
-	double nB = A.Z * (B.X - C.X) + B.Z * (C.X - A.X) + C.Z * (A.X - B.X);
-	double nC = A.X * (B.Y - C.Y) + B.X * (C.Y - A.Y) + C.X * (A.Y - B.Y);
-
-	this->FNormal.push_back(Normal(nA, nB, nC, 0));
-
-	this->FNormal[FNormal.size() - 1].normalize();
 }
 
 int Brick::vertexCount()
@@ -109,12 +104,14 @@ void Brick::modificate(Modification* modification, Vertex* center)
 
 	modification->setCenter(center);
 
-//#pragma omp parallel for
+#pragma omp parallel for
 	for (int i = 0; i < this->vertexCount(); i++)
 	{
+		this->vertex[i] = this->ivertex[i];
 		this->vertex[i].modificate(modification, center);
 		for (int j = 0; j < 3; j++)
 		{
+			this->VNormal[i][j] = this->iVNormal[i][j];
 			this->VNormal[i][j].modificate(modification, center);
 		}	
 	}
