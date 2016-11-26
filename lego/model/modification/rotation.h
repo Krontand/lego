@@ -53,7 +53,7 @@ public:
 	Set center around which occur modificaion and calculate transform matrix
 	\param[in] center Point of modification center
 	*/
-	virtual void setCenter(Vertex* center) override;
+	virtual void initModification(Vertex* center) override;
 
 	/*!
 	Launches modification

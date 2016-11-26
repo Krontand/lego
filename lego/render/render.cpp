@@ -24,7 +24,7 @@ void Render::run(Brick* brick, Camera* cam, Vertex light)
 		this->zbuffer[i] = -9999999;
 	}
 
-	COLORREF color = RGB(255,255,255);
+	COLORREF color = RGB(255,100,0);
 
 #pragma omp parallel for schedule(dynamic, 1)
 	for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
@@ -35,9 +35,9 @@ void Render::run(Brick* brick, Camera* cam, Vertex light)
 		Vertex B(brick->svertex[face.B() - 1]);
 		Vertex C(brick->svertex[face.C() - 1]);
 
-		GVector nA = brick->sVNormal[faceIndex][0];
-		GVector nB = brick->sVNormal[faceIndex][1];
-		GVector nC = brick->sVNormal[faceIndex][2];
+		Normal nA = brick->sVNormal[faceIndex][0];
+		Normal nB = brick->sVNormal[faceIndex][1];
+		Normal nC = brick->sVNormal[faceIndex][2];
 
 		this->fillFaces(A, B, C, nA, nB, nC, color, light);
 	}
@@ -80,7 +80,7 @@ void Render::line(int x0, int y0, int x1, int y1)
 	}
 }
 
-void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector normB, GVector normC, COLORREF color, Vertex light)
+void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB, Normal normC, COLORREF color, Vertex light)
 {
 	if (A.Y == B.Y && A.Y == C.Y) return;
 
@@ -101,13 +101,16 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector norm
 	int z3 = int(C.Z + .5);
 
 	if ((y1 == y2) && (x1 > x2)) { std::swap(A, B); std::swap(normA, normB); }
-
+	x1 = int(A.X + .5);
+	x2 = int(B.X + .5);
+	y1 = int(A.Y + .5);
+	y2 = int(B.Y + .5);
 
 	double dx13 = 0, dx12 = 0, dx23 = 0;
 	double dz13 = 0, dz12 = 0, dz23 = 0;
-	GVector dn13;
-	GVector dn12;
-	GVector dn23;
+	Normal dn13;
+	Normal dn12;
+	Normal dn23;
 
 	if (y3 != y1)
 	{
@@ -131,17 +134,17 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector norm
 	double z = 0;
 	double dz = 0;
 
-	GVector normP;
-	GVector dnorm;
+	Normal normP;
+	Normal dnorm;
 
 	double wx1 = x1;
 	double wx2 = x1;
 	double wz1 = z1;
 	double wz2 = z1;
-	GVector wn1(normA);
-	GVector wn2(normA);
+	Normal wn1(normA);
+	Normal wn2(normA);
 
-	GVector _dn13(dn13);
+	Normal _dn13(dn13);
 	double _dx13 = dx13;
 	double _dz13 = dz13;
 
@@ -221,14 +224,13 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, GVector normA, GVector norm
 
 double Render::intencity(double X, double Y, double Z, GVector N, Vertex light)
 {
-	GVector D(light.X - X, light.Y - Y, light.Z + Z, 1);
-	D * (-1);
+	GVector D(X - light.X, Y - light.Y, Z - light.Z, 1);
 	D.normalize();
 	N.normalize();
 	double I;
-	double Iconst = 0.35;
-	double Idiff = 0.4 * max(0, GVector::scalar(N, D));
-	double Iblinn = 0;
+	double Iconst = 0.20;
+	double Idiff = 0.45 * max(0., GVector::scalar(N, D));
+	double Iblinn = 0.35 * pow(max(0., GVector::scalar(D,N)), 20);
 	I = Iconst + Idiff + Iblinn;
 	return I;
 }

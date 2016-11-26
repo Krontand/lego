@@ -40,7 +40,7 @@ public:
 	Set center around which occur modificaion
 	\param[in] center Point of modification center
 	*/
-	virtual void setCenter(Vertex* center) = 0;
+	virtual void initModification(Vertex* center) = 0;
 
 	/*!
 	Launches modification

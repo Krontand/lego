@@ -46,14 +46,14 @@ void Rotation::rotateZ(BaseObject* o)
 	}
 }
 
-void Rotation::setCenter(Vertex* center)
+void Rotation::initModification(Vertex* center)
 {
 	this->center = center;
 
 	GMatrix moveToOrigin = matrixMove(-this->center->X, -this->center->Y, -this->center->Z);
 	GMatrix moveBack = matrixMove(this->center->X, this->center->Y, this->center->Z);
 	
-	this->vMatrixRotation = moveBack * rotate;// *moveToOrigin;
+	this->vMatrixRotation = moveBack * rotate * moveToOrigin;
 
 	this->nMatrixRotation = this->vMatrixRotation;
 	this->nMatrixRotation.transposition();

@@ -13,7 +13,7 @@ public:
 
 private:
 	void line(int x0, int y0, int x1, int y1);
-	void fillFaces(Vertex A, Vertex B, Vertex C, GVector nA, GVector nB, GVector nC, COLORREF color, Vertex light);
+	void fillFaces(Vertex A, Vertex B, Vertex C, Normal nA, Normal nB, Normal nC, COLORREF color, Vertex light);
 	double intencity(double X, double Y, double Z, GVector N, Vertex light);
 	
 	unsigned long* pixels;
