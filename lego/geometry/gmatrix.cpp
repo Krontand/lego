@@ -86,15 +86,17 @@ GMatrix GMatrix::operator*(const GMatrix& other)
 {
 	GMatrix result(*this);
 	for (size_t i = 0; i <= 3; i++)
+	{
+		GVector row((*this)[i]);
 		for (size_t j = 0; j <= 3; j++)
 		{
-			GVector row((*this)[i]);
-			GVector column(other[0][j],other[1][j],other[2][j],other[3][j]);
+			GVector column(other[0][j], other[1][j], other[2][j], other[3][j]);
 			double sum = 0;
 			for (size_t k = 0; k <= 3; k++)
 				sum += row[k] * column[k];
 			result[i][j] = sum;
 		}
+	}
 	return result;
 }
 

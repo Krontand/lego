@@ -11,12 +11,12 @@ GVector::GVector()
 	}
 }
 
-GVector::GVector(double X, double Y, double Z, double lenglth)
+GVector::GVector(double X, double Y, double Z, double hc)
 {
 	this->vec.push_back(X);
 	this->vec.push_back(Y);
 	this->vec.push_back(Z);
-	this->vec.push_back(1);
+	this->vec.push_back(hc);
 }
 
 GVector::GVector(const GVector& other)
@@ -34,19 +34,7 @@ GVector::~GVector()
 	this->vec.clear();
 }
 
-GVector& GVector::operator=(GVector& other)
-{
-	this->vec = other.getVec();
-	return *this;
-}
-
-GVector& GVector::operator=(const GVector& other)
-{
-	this->vec = other.getVec();
-	return *this;
-}
-
-GVector& GVector::operator=(GVector&& other)
+GVector& GVector::operator=(GVector other)
 {
 	this->vec = other.getVec();
 	return *this;

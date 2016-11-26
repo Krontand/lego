@@ -26,22 +26,20 @@ class Normal : public GVector, public BaseObject
 public:
 	Normal();
 	Normal(const GVector& v);
-	Normal(const GVector&& v);
+	Normal(GVector&& v);
 	Normal(const Normal& other);
 	Normal(Normal&& other);
 	Normal(double X, double Y, double Z, double length);
 	~Normal();
 
-	Normal& operator=(Normal& other);
-	Normal& operator=(const Normal& other);
-	Normal& operator=(Normal&& other);
-	Normal& operator+(const Normal& other);
-	Normal& operator-(const Normal& other);
-	Normal& operator/(const double value);
-	Normal& operator*(const double value);
+	Normal& operator=(Normal other);
+	Normal operator+(const Normal& other);
+	Normal operator-(const Normal& other);
+	Normal operator/(const double value);
+	Normal operator*(const double value);
 	double& operator[](const size_t index);
 	const double& operator[](const size_t index) const;
-	Normal& operator*(GMatrix matrix);
+	Normal operator*(GMatrix matrix);
 
 	virtual void modificate(Modification* modification, Vertex* center) override;
 };

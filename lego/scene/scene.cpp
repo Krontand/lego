@@ -170,15 +170,11 @@ void Scene::AddBrick(Brick brick)
 #pragma omp parallel for
 	for (int vertexIndex = 0; vertexIndex < nbrick->vertexCount(); vertexIndex++)
 	{
-		Vertex v = nbrick->ivertex[vertexIndex];
+		Vertex v = nbrick->vertex[vertexIndex];
 
 		int nX = v.X + 1. - nbrick->center.X;
 		int nY = v.Y + 1. - nbrick->center.Y;
 		int nZ = v.Z + 1. - nbrick->center.Z;
-
-		nbrick->ivertex[vertexIndex].X = nX;
-		nbrick->ivertex[vertexIndex].Y = nY;
-		nbrick->ivertex[vertexIndex].Z = nZ;
 
 		nbrick->vertex[vertexIndex].X = nX;
 		nbrick->vertex[vertexIndex].Y = nY;
@@ -217,7 +213,7 @@ void Scene::toCam()
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				GVector tmpN = nbrick->VNormal[faceIndex][i];
+				GVector tmpN(nbrick->VNormal[faceIndex][i]);
 				nbrick->sVNormal[faceIndex][i] = tmpN;
 			}
 		}

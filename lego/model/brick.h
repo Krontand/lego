@@ -92,11 +92,9 @@ public:
 
 	Vertex center;		/*!< Brick center */
 
-	vector<Vertex> ivertex;		/*!< Source vertex array */
 	vector<Vertex> vertex;		/*!< Vertex array after modification (rotation, move) */
 	vector<Vertex> svertex;		/*!< Vertex array in scene coordinates */
 
-	vector<vector<Normal>> iVNormal;	/*!< Source normal to each vertex */
 	vector<vector<Normal>> VNormal;		/*!< Normal to each vertex after modification */
 	vector<vector<Normal>> sVNormal;	/*!< Normal to each vertex in scene coordinates*/
 

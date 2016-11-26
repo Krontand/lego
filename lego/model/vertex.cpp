@@ -37,15 +37,7 @@ Vertex::~Vertex()
 	this->Z = 0;
 }
 
-Vertex& Vertex::operator=(const Vertex& other)
-{
-	this->X = other.X;
-	this->Y = other.Y;
-	this->Z = other.Z;
-	return *this;
-}
-
-Vertex& Vertex::operator=(Vertex&& other)
+Vertex& Vertex::operator=(Vertex other)
 {
 	this->X = other.X;
 	this->Y = other.Y;
@@ -74,11 +66,14 @@ Vertex Vertex::operator*(GMatrix matrix)
 	{
 		for (size_t j = 0; j <= 3; j++)
 		{
-			result[j] = result[j] + matrix[i][j] * tmp[i];
+			result[i] = result[i] + matrix[j][i] * tmp[j];
 		}
 	}
-	(*this).X = result[0];
-	(*this).Y = result[1];
-	(*this).Z = result[2];
-	return (*this);
+
+	Vertex vresult;
+
+	vresult.X = result[0];
+	vresult.Y = result[1];
+	vresult.Z = result[2];
+	return vresult;
 }

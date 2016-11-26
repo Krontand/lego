@@ -35,7 +35,6 @@ GMatrix matrixrotationX(double angle)
 
 GMatrix matrixrotationY(double angle)
 {
-	angle *= -1;
 	double cosa = cos(angle);
 	double sina = sin(angle);
 

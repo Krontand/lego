@@ -36,9 +36,9 @@ public:
 	\param[in] X X coordinate
 	\param[in] Y Y coordinate
 	\param[in] Z Z coordinate
-	\param[in] length Length of vector
+	\param[in] hc Homogeneous coordinates
 	*/
-	GVector(double X, double Y, double Z, double length);
+	GVector(double X, double Y, double Z, double hc);
 	
 	/*!
 	Constructor. Copies incoming vector.
@@ -62,21 +62,7 @@ public:
 	\param[in] other Source vector to copy
 	\return GVector current vector
 	*/
-	GVector& operator=(GVector& other);
-
-	/*!
-	Sets vector with sourse`s vector values
-	\param[in] other Source vector to copy
-	\return GVector current vector
-	*/
-	GVector& operator=(const GVector& other);
-
-	/*!
-	Sets vector with sourse`s vector values
-	\param[in] other Source vector to transfer
-	\return GVector current vector
-	*/
-	GVector& operator=(GVector&& other);
+	GVector& operator=(GVector other);
 
 	/*!
 	Sum this vector with incoming vector values
@@ -107,14 +93,14 @@ public:
 	GVector& operator*(const double value);
 
 	/*!
-	Chooses coordinate by index: 0-X; 1-Y; 2-Z; 3-length
+	Chooses coordinate by index: 0-X; 1-Y; 2-Z; 3-homogeneous coordinates
 	\param[in] index Index of choosen coordinate
 	\return value of choosen coordinate
 	*/
 	double& operator[](const size_t index);
 
 	/*!
-	Const method. Chooses coordinate by index: 0-X; 1-Y; 2-Z; 3-length
+	Const method. Chooses coordinate by index: 0-X; 1-Y; 2-Z; 3-homogeneous coordinates
 	\param[in] index Index of choosen coordinate
 	\return value of choosen coordinate
 	*/

@@ -14,11 +14,11 @@ void Rotation::rotateX(BaseObject* o)
 {
 	if (o->isVertex())
 	{
-		*o = *(Vertex*)o * this->vMatrixRotation;
+		*(Vertex*)o = *(Vertex*)o * this->vMatrixRotation;
 	}
 	else
 	{
-		*o = *(Normal*)o * this->nMatrixRotation;
+		*(Normal*)o = *(Normal*)o * this->nMatrixRotation;
 	}
 }
 
@@ -26,11 +26,11 @@ void Rotation::rotateY(BaseObject* o)
 {
 	if (o->isVertex())
 	{
-		*o = *(Vertex*)o * this->vMatrixRotation;
+		*(Vertex*)o = *(Vertex*)o * this->vMatrixRotation;
 	}
 	else
 	{
-		*o = *(Normal*)o * this->nMatrixRotation;
+		*(Normal*)o = *(Normal*)o * this->nMatrixRotation;
 	}
 }
 
@@ -38,11 +38,11 @@ void Rotation::rotateZ(BaseObject* o)
 {
 	if (o->isVertex())
 	{
-		*o = *(Vertex*)o * this->vMatrixRotation;
+		*(Vertex*)o = *(Vertex*)o * this->vMatrixRotation;
 	}
 	else
 	{
-		*o = *(Normal*)o * this->nMatrixRotation;
+		*(Normal*)o = *(Normal*)o * this->nMatrixRotation;
 	}
 }
 
@@ -53,13 +53,11 @@ void Rotation::setCenter(Vertex* center)
 	GMatrix moveToOrigin = matrixMove(-this->center->X, -this->center->Y, -this->center->Z);
 	GMatrix moveBack = matrixMove(this->center->X, this->center->Y, this->center->Z);
 	
-	this->vMatrixRotation = moveBack * rotate  * moveToOrigin;
+	this->vMatrixRotation = moveBack * rotate;// *moveToOrigin;
+
 	this->nMatrixRotation = this->vMatrixRotation;
 	this->nMatrixRotation.transposition();
-	if (!this->nMatrixRotation.inverse())
-	{
-		//throw WrongRotationMatrix();
-	}
+	this->nMatrixRotation.inverse();
 }
 
 RotationX::RotationX()
