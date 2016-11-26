@@ -18,7 +18,7 @@ Render::~Render()
 {
 }
 
-void Render::run(Brick* brick, Camera* cam, Vertex light)
+void Render::run(Brick* brick, Camera cam, Vertex light)
 {
 	for (int i = 0; i<this->width * this->height; i++) {
 		this->zbuffer[i] = -9999999;
@@ -39,7 +39,7 @@ void Render::run(Brick* brick, Camera* cam, Vertex light)
 		Normal nB = brick->sVNormal[faceIndex][1];
 		Normal nC = brick->sVNormal[faceIndex][2];
 
-		this->fillFaces(A, B, C, nA, nB, nC, color, light);
+		this->fillFaces(A, B, C, nA, nB, nC, color, light, cam);
 	}
 }
 
@@ -80,7 +80,7 @@ void Render::line(int x0, int y0, int x1, int y1)
 	}
 }
 
-void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB, Normal normC, COLORREF color, Vertex light)
+void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB, Normal normC, COLORREF color, Vertex light, Camera cam)
 {
 	if (A.Y == B.Y && A.Y == C.Y) return;
 
@@ -190,7 +190,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 			{
 				if (this->zbuffer[pix] < z)
 				{
-					double I = this->intencity(xCoord, yCoord, z, normP, light);
+					double I = this->intencity(xCoord, yCoord, z, normP, light, cam);
 					if (this->zbuffer[pix] < z)
 					{
 						this->zbuffer[pix] = z;
@@ -222,7 +222,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 	}
 }
 
-double Render::intencity(double X, double Y, double Z, GVector N, Vertex light)
+double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, Camera cam)
 {
 	GVector D(X - light.X, Y - light.Y, Z - light.Z, 1);
 	D.normalize();
@@ -230,7 +230,15 @@ double Render::intencity(double X, double Y, double Z, GVector N, Vertex light)
 	double I;
 	double Iconst = 0.20;
 	double Idiff = 0.45 * max(0., GVector::scalar(N, D));
-	double Iblinn = 0.35 * pow(max(0., GVector::scalar(D,N)), 20);
+
+	GVector v(cam.position);
+	v.normalize();
+	GVector h(v);
+	h = h + D;
+	h.normalize();
+	double Iblinn = 0.35 * pow(max(0., GVector::scalar(h,N)), 20);
+
+
 	I = Iconst + Idiff + Iblinn;
 	return I;
 }

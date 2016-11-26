@@ -9,12 +9,12 @@ public:
 	Render(unsigned long* pixels, int height, int width);
 	~Render();
 
-	void run(Brick* brick, Camera* cam, Vertex light);
+	void run(Brick* brick, Camera cam, Vertex light);
 
 private:
 	void line(int x0, int y0, int x1, int y1);
-	void fillFaces(Vertex A, Vertex B, Vertex C, Normal nA, Normal nB, Normal nC, COLORREF color, Vertex light);
-	double intencity(double X, double Y, double Z, GVector N, Vertex light);
+	void fillFaces(Vertex A, Vertex B, Vertex C, Normal nA, Normal nB, Normal nC, COLORREF color, Vertex light, Camera cam);
+	double intencity(double X, double Y, double Z, GVector N, Vertex light, Camera cam);
 	
 	unsigned long* pixels;
 	int height;
