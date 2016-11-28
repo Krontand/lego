@@ -9,7 +9,7 @@ public:
 	Render(unsigned long* pixels, int height, int width);
 	~Render();
 
-	void run(Brick* brick, Camera cam, Vertex light);
+	void run(Composite* bricks, Camera cam, Vertex light);
 
 private:
 	void line(int x0, int y0, int x1, int y1);

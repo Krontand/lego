@@ -68,6 +68,7 @@ public:
 	Composite* bricks;	/*!< Scene bricks array */
 	Camera* cam;		/*!< Camera object */
 	Vertex light;		/*!< Light object */
+	Vertex slight;		/*!< Light object in scene coordinates */
 
 private:
 	/*!

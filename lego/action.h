@@ -121,6 +121,34 @@ private:
 	double angle;
 };
 
+class ActionBrickRotateZ : public Action
+{
+public:
+	ActionBrickRotateZ(double angle)
+	{
+		this->angle = angle;
+	}
+
+	~ActionBrickRotateZ()
+	{
+	}
+
+	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
+	{
+		RotationZ* modification = new RotationZ(this->angle);
+		BaseObject* brick = scene->bricks;
+		if (ID >= 0)
+		{
+			Composite* bricks = (Composite*)brick;
+			brick = bricks->objects[ID];
+		}
+		brick->modificate(modification);
+	}
+
+private:
+	double angle;
+};
+
 class ActionCameraRotationHorizontal : public Action
 {
 public:

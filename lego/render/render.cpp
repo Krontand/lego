@@ -18,7 +18,7 @@ Render::~Render()
 {
 }
 
-void Render::run(Brick* brick, Camera cam, Vertex light)
+void Render::run(Composite* bricks, Camera cam, Vertex light)
 {
 #pragma omp parallel
 	for (int i = 0; i<this->width * this->height; i++) {
@@ -27,26 +27,30 @@ void Render::run(Brick* brick, Camera cam, Vertex light)
 
 	COLORREF color = RGB(255,100,0);
 
-#pragma omp parallel for schedule(dynamic, 1)
-	for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
+	for (int brickIndex = 0; brickIndex < bricks->objects.size(); brickIndex++)
 	{
-		Face face = brick->faces[faceIndex];
-		
-		Vertex A(brick->svertex[face.A() - 1]);
-		Vertex B(brick->svertex[face.B() - 1]);
-		Vertex C(brick->svertex[face.C() - 1]);
-
-		Normal nA = brick->sVNormal[faceIndex][0];
-		Normal nB = brick->sVNormal[faceIndex][1];
-		Normal nC = brick->sVNormal[faceIndex][2];
-		if (faceIndex == 43)
+		Brick* brick = bricks->objects[brickIndex];
+#pragma omp parallel for schedule(dynamic, 1)
+		for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
 		{
-			int Aaa = 0;
-			Aaa++;
-			int Bbb = Aaa;
-		}
+			Face face = brick->faces[faceIndex];
 
-		this->fillFaces(A, B, C, nA, nB, nC, color, light, cam);
+			Vertex A(brick->svertex[face.A() - 1]);
+			Vertex B(brick->svertex[face.B() - 1]);
+			Vertex C(brick->svertex[face.C() - 1]);
+
+			Normal nA = brick->sVNormal[faceIndex][0];
+			Normal nB = brick->sVNormal[faceIndex][1];
+			Normal nC = brick->sVNormal[faceIndex][2];
+			if (faceIndex == 43)
+			{
+				int Aaa = 0;
+				Aaa++;
+				int Bbb = Aaa;
+			}
+
+			this->fillFaces(A, B, C, nA, nB, nC, color, light, cam);
+		}
 	}
 }
 
@@ -237,14 +241,13 @@ double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, 
 	double Iconst = 0.20;
 	double Idiff = 0.60 * max(0, GVector::scalar(N, D));
 
-	//GVector v(cam.position);
-	//v.normalize();
-	//GVector h(v);
-	//h = h + D;
-	//h.normalize();
-	double Iblinn = 0.20;// *pow(max(0, GVector::scalar(h, N)), 50);
-
+	GVector v(cam.position);
+	v.normalize();
+	GVector h(v);
+	h = h + D;
+	h.normalize();
+	double Iblinn = 0.20 * pow(max(0, GVector::scalar(h, N)), 1000);
 
 	I = Iconst + Idiff + Iblinn;
-	return Idiff;
+	return I;
 }

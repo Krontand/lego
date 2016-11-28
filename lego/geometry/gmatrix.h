@@ -33,7 +33,7 @@ public:
 	Constructor. Copies incoming matrix.
 	\param[in] other Source matrix to copy.
 	*/
-	GMatrix(GMatrix& other);
+	GMatrix(const GMatrix& other);
 
 	/*!
 	Constructor. Transfer incoming matrix.
@@ -51,14 +51,7 @@ public:
 	\param[in] other Source matrix to copy
 	\return GMatrix Current matrix
 	*/
-	GMatrix& operator=(GMatrix& other);
-
-	/*!
-	Sets matrix with sourse`s matrix values
-	\param[in] other Source matrix to transfer
-	\return GMatrix Current matrix
-	*/
-	GMatrix& operator=(GMatrix&& other);
+	GMatrix& operator=(GMatrix other);
 
 	/*!
 	Chooses row by index
@@ -78,7 +71,7 @@ public:
 	Multiply each item of matrix by (-1)
 	\return Matrix after multiply
 	*/
-	GMatrix& operator-();
+	GMatrix operator-();
 
 	/*!
 	Multiply each item of matrix by incoming value
@@ -97,6 +90,8 @@ public:
 	/*!
 	Inverse current matrix
 	\return true if success, else in other case
+	\author silent_1991 
+	\source: http://www.cyberforum.ru/cpp-beginners/thread188159.html
 	*/
 	bool inverse();
 

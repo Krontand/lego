@@ -70,6 +70,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 				ActionAddbrick* addBrick = new ActionAddbrick();
 				application->call(*addBrick, 0);
+			//	application->call(*addBrick, 0);
 			}
 			catch (BaseException& err)
 			{
@@ -101,21 +102,46 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 			case VK_UP:
 			{
-				ActionBrickRotateY* rotatey = new ActionBrickRotateY(angle);
-				application->call(*rotatey, 0);
+				ActionBrickRotateZ* rotatez = new ActionBrickRotateZ(angle);
+				application->call(*rotatez, 0);
 				application->call(*actionDraw, 0);
 			}
 			break;
 			case VK_DOWN:
 			{	
-				ActionBrickRotateY* rotatey = new ActionBrickRotateY(-angle);
-				application->call(*rotatey, 0);
+				ActionBrickRotateZ* rotatez = new ActionBrickRotateZ(-angle);
+				application->call(*rotatez, 0);
 				application->call(*actionDraw, 0);
 			}
 			break;
-			case IDM_ABOUT:
-				DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-				break;
+			case 104: // 8 NUMPAD
+			{
+				ActionCameraRotationHorizontal* rotateh = new ActionCameraRotationHorizontal(-angle);
+				application->call(*rotateh, 0);
+				application->call(*actionDraw, 0);
+			}
+			break;
+			case 98: // 2 NUMPAD
+			{
+				ActionCameraRotationHorizontal* rotateh = new ActionCameraRotationHorizontal(angle);
+				application->call(*rotateh, 0);
+				application->call(*actionDraw, 0);
+			}
+			break;
+			case 100: // 4 NUMPAD
+			{
+				ActionCameraRotationVertical* rotatev = new ActionCameraRotationVertical(-angle);
+				application->call(*rotatev, 0);
+				application->call(*actionDraw, 0);
+			}
+			break;
+			case 102: // 6 NUMPAD
+			{
+				ActionCameraRotationVertical* rotatev = new ActionCameraRotationVertical(angle);
+				application->call(*rotatev, 0);
+				application->call(*actionDraw, 0);
+			}
+			break;
 			case IDM_EXIT:
 				DestroyWindow(hWnd);
 				break;

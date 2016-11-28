@@ -11,7 +11,7 @@ GMatrix::GMatrix()
 	}
 }
 
-GMatrix::GMatrix(GMatrix& other)
+GMatrix::GMatrix(const GMatrix& other)
 {
 	for (size_t i = 0; i <= 3; i++)
 	{
@@ -32,18 +32,7 @@ GMatrix::~GMatrix()
 	this->matrix.clear();
 }
 
-GMatrix& GMatrix::operator=(GMatrix& other)
-{
-	this->matrix.clear();
-	for (size_t i = 0; i <= 3; i++)
-	{
-		this->matrix.push_back(other[i]);
-	}
-
-	return (*this);
-}
-
-GMatrix& GMatrix::operator=(GMatrix&& other)
+GMatrix& GMatrix::operator=(GMatrix other)
 {
 	this->matrix.clear();
 	for (size_t i = 0; i <= 3; i++)
@@ -64,9 +53,11 @@ const GVector& GMatrix::operator[](const unsigned long index) const
 	return this->matrix[index];
 }
 
-GMatrix& GMatrix::operator-()
+GMatrix GMatrix::operator-()
 {
-	return *this * (-1);
+	GMatrix result(*this);
+	result = result * (-1);
+	return result;;
 }
 
 GMatrix GMatrix::operator*(const double value)

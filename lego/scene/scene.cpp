@@ -75,11 +75,8 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 
 		throw AllocationMemoryError();
 	}
-	this->light.X = -1000;
-	this->light = this->light * this->cam->cameraview();
-
-	this->light.X += this->width / 2;
-	this->light.Y += this->height / 2;
+	this->light.Z = -1000;
+	//this->light.X = 1000;
 
 }
 
@@ -146,10 +143,7 @@ void Scene::DrawScene()
 
 	this->toCam();
 
-	Brick* brick = bricks->objects[0]; // temporary
-	this->render->run(brick, *this->cam, this->light);
-
-	this->pixels[0*this->width + 0] = 0x000000ff;
+	this->render->run(bricks, *this->cam, this->slight);
 
 	SelectObject(this->hdcMem, this->sBmp);
 	BitBlt(this->hdc, X, Y, this->width, this->height, this->hdcMem, 0, 0, SRCCOPY);
@@ -195,6 +189,15 @@ void Scene::toCam()
 
 	GMatrix view = this->cam->cameraview();
 
+	GMatrix nview = view;
+	nview.transposition();
+	nview.inverse();
+	
+	this->slight = this->light;// *view;
+
+	this->slight.X += this->width / 2;
+	this->slight.Y += this->height / 2;
+
 	for (int brickIndex = 0; brickIndex < this->bricks->objects.size(); brickIndex++)
 	{
 		Brick* nbrick = this->bricks->objects[brickIndex];
@@ -214,8 +217,8 @@ void Scene::toCam()
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				GVector tmpN(nbrick->VNormal[faceIndex][i]);
-				tmpN = tmpN * view;
+				GVector tmpN(nbrick->VNormal[faceIndex][i]);	
+				//tmpN = tmpN * nview;
 				nbrick->sVNormal[faceIndex][i] = tmpN;
 			}
 		}
