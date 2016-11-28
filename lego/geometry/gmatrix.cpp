@@ -72,6 +72,7 @@ GMatrix& GMatrix::operator-()
 GMatrix GMatrix::operator*(const double value)
 {
 	GMatrix result(*this);
+
 	for (size_t i = 0; i <= 3; i++)
 	{
 		for (size_t j = 0; j <= 3; j++)
@@ -85,6 +86,7 @@ GMatrix GMatrix::operator*(const double value)
 GMatrix GMatrix::operator*(const GMatrix& other)
 {
 	GMatrix result(*this);
+
 	for (size_t i = 0; i <= 3; i++)
 	{
 		GVector row((*this)[i]);

@@ -20,6 +20,7 @@ Render::~Render()
 
 void Render::run(Brick* brick, Camera cam, Vertex light)
 {
+#pragma omp parallel
 	for (int i = 0; i<this->width * this->height; i++) {
 		this->zbuffer[i] = -9999999;
 	}
@@ -38,6 +39,12 @@ void Render::run(Brick* brick, Camera cam, Vertex light)
 		Normal nA = brick->sVNormal[faceIndex][0];
 		Normal nB = brick->sVNormal[faceIndex][1];
 		Normal nC = brick->sVNormal[faceIndex][2];
+		if (faceIndex == 43)
+		{
+			int Aaa = 0;
+			Aaa++;
+			int Bbb = Aaa;
+		}
 
 		this->fillFaces(A, B, C, nA, nB, nC, color, light, cam);
 	}
@@ -148,7 +155,6 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 	double _dx13 = dx13;
 	double _dz13 = dz13;
 
-
 	if (dx13 > dx12)
 	{
 		std::swap(dn13, dn12);
@@ -176,7 +182,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 	{
 		z = wz1;
 		normP = wn1;
-
+		
 		if (wx1 != wx2)
 		{
 			dz = (wz2 - wz1) / (double)(wx2 - wx1);
@@ -217,7 +223,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 			wz1 += _dz13;
 			wz2 += dz23;
 			wn1 = wn1 + _dn13;
-			wn2 = wn1 + dn12;
+			wn2 = wn1 + dn23;
 		}
 	}
 }
@@ -229,16 +235,16 @@ double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, 
 	N.normalize();
 	double I;
 	double Iconst = 0.20;
-	double Idiff = 0.45 * max(0., GVector::scalar(N, D));
+	double Idiff = 0.60 * max(0, GVector::scalar(N, D));
 
-	GVector v(cam.position);
-	v.normalize();
-	GVector h(v);
-	h = h + D;
-	h.normalize();
-	double Iblinn = 0.35 * pow(max(0., GVector::scalar(h,N)), 20);
+	//GVector v(cam.position);
+	//v.normalize();
+	//GVector h(v);
+	//h = h + D;
+	//h.normalize();
+	double Iblinn = 0.20;// *pow(max(0, GVector::scalar(h, N)), 50);
 
 
 	I = Iconst + Idiff + Iblinn;
-	return I;
+	return Idiff;
 }
