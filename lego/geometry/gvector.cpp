@@ -40,36 +40,44 @@ GVector& GVector::operator=(GVector other)
 	return *this;
 }
 
-GVector& GVector::operator+(const GVector other)
+GVector GVector::operator+(const GVector other)
 {
-	(*this)[0] = (*this)[0] + other[0];
-	(*this)[1] = (*this)[1] + other[1];
-	(*this)[2] = (*this)[2] + other[2];
-	return *this;
+	GVector result;
+	result[0] = (*this)[0] + other[0];
+	result[1] = (*this)[1] + other[1];
+	result[2] = (*this)[2] + other[2];
+	result[3] = (*this)[3];
+	return result;
 }
 
-GVector& GVector::operator-(const GVector other)
+GVector GVector::operator-(const GVector other)
 {
-	(*this)[0] = (*this)[0] - other[0];
-	(*this)[1] = (*this)[1] - other[1];
-	(*this)[2] = (*this)[2] - other[2];
-	return *this;
+	GVector result;
+	result[0] = (*this)[0] - other[0];
+	result[1] = (*this)[1] - other[1];
+	result[2] = (*this)[2] - other[2];
+	result[3] = (*this)[3];
+	return result;
 }
 
-GVector& GVector::operator/(const double value)
+GVector GVector::operator/(const double value)
 {
-	(*this)[0] = (*this)[0] / value;
-	(*this)[1] = (*this)[1] / value;
-	(*this)[2] = (*this)[2] / value;
-	return *this;
+	GVector result;
+	result[0] = (*this)[0] / value;
+	result[1] = (*this)[1] / value;
+	result[2] = (*this)[2] / value;
+	result[3] = (*this)[3];
+	return result;
 }
 
-GVector& GVector::operator*(const double value)
+GVector GVector::operator*(const double value)
 {
-	(*this)[0] = (*this)[0] * value;
-	(*this)[1] = (*this)[1] * value;
-	(*this)[2] = (*this)[2] * value;
-	return *this;
+	GVector result;
+	result[0] = (*this)[0] * value;
+	result[1] = (*this)[1] * value;
+	result[2] = (*this)[2] * value;
+	result[3] = (*this)[3];
+	return result;
 }
 
 double& GVector::operator[](const size_t index)
@@ -106,8 +114,14 @@ double GVector::length()
 
 GVector GVector::normalize()
 {
-	double norm = 1 / (*this).length();
-	for (int i = 0; i <= 3; ++i)
+	double length = (*this).length();
+	if (length == 0)
+	{
+		return *this;
+	}
+
+	double norm = 1 / length;
+	for (int i = 0; i < 3; ++i)
 	{
 		(*this)[i] = (*this)[i] * norm;
 	}

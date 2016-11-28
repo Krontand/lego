@@ -61,19 +61,12 @@ Vertex Vertex::operator*(GMatrix matrix)
 {
 	GVector tmp(this->X, this->Y, this->Z, 1);
 
-	GVector result;
-	for (size_t i = 0; i <= 3; i++)
-	{
-		for (size_t j = 0; j <= 3; j++)
-		{
-			result[j] = result[j] + matrix[i][j] * tmp[i];
-		}
-	}
+	tmp = tmp * matrix;
 
 	Vertex vresult;
 
-	vresult.X = result[0];
-	vresult.Y = result[1];
-	vresult.Z = result[2];
+	vresult.X = tmp[0];
+	vresult.Y = tmp[1];
+	vresult.Z = tmp[2];
 	return vresult;
 }

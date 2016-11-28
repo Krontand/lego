@@ -101,14 +101,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 			case VK_UP:
 			{
-				ActionBrickRotateY* rotatey = new ActionBrickRotateY(-angle);
+				ActionBrickRotateY* rotatey = new ActionBrickRotateY(angle);
 				application->call(*rotatey, 0);
 				application->call(*actionDraw, 0);
 			}
 			break;
 			case VK_DOWN:
 			{	
-				ActionBrickRotateY* rotatey = new ActionBrickRotateY(angle);
+				ActionBrickRotateY* rotatey = new ActionBrickRotateY(-angle);
 				application->call(*rotatey, 0);
 				application->call(*actionDraw, 0);
 			}

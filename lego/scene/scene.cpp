@@ -60,7 +60,7 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 		throw AllocationMemoryError();
 	}
 
-	GVector position(0, -0, 500, 1);
+	GVector position(1000, 0, 0, 1);
 	GVector target(0, 0, 0, 1);
 
 	this->cam = new Camera(position, target);
@@ -75,12 +75,11 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 
 		throw AllocationMemoryError();
 	}
-	
+	this->light.X = -1000;
 	this->light = this->light * this->cam->cameraview();
 
 	this->light.X += this->width / 2;
 	this->light.Y += this->height / 2;
-	this->light.Z -= 1000;
 
 }
 
@@ -150,6 +149,8 @@ void Scene::DrawScene()
 	Brick* brick = bricks->objects[0]; // temporary
 	this->render->run(brick, *this->cam, this->light);
 
+	this->pixels[0*this->width + 0] = 0x000000ff;
+
 	SelectObject(this->hdcMem, this->sBmp);
 	BitBlt(this->hdc, X, Y, this->width, this->height, this->hdcMem, 0, 0, SRCCOPY);
 
@@ -214,10 +215,7 @@ void Scene::toCam()
 			for (int i = 0; i < 3; i++)
 			{
 				GVector tmpN(nbrick->VNormal[faceIndex][i]);
-				//view.transposition();
-				//view.inverse();
-				//tmpN = tmpN * view;
-				//tmpN.normalize();
+				tmpN = tmpN * view;
 				nbrick->sVNormal[faceIndex][i] = tmpN;
 			}
 		}
