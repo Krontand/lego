@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "listener.h"
-#include "interface\interface.h"
 #include "interface\drawinterface.h"
-#include "interface\button.h"
+#include "interface\interface.h"
 #include "interface\text.h"
 #include "application.h"
 
@@ -10,8 +9,10 @@
 
 extern HINSTANCE hInst;
 PAINTSTRUCT ps;
-BaseInterface* interface;
-BaseDrawInterface* drawInterface = new BaseDrawInterface;
+BaseInterface* UI;
+BaseDrawInterface* drawUI = new BaseDrawInterface;
+
+COLORREF brickColor = RGB(140, 140, 255);
 
 double angle = ROTATTION_ANGLE;
 
@@ -32,10 +33,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		
 		static ActionDraw* actionDraw = new ActionDraw();
-		static Application* application = new Application(hWnd, 270, 0, 850, 750);
+		if (!actionDraw)
+		{
+			throw AllocationMemoryError();
+		}
 
+		static Application* application = new Application(hWnd, 245, 0, 875, 750);
 		if (!application)
 		{
+			delete actionDraw;
 			throw AllocationMemoryError();
 		}
 
@@ -43,52 +49,137 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 		case WM_CREATE:
 		{
-			InterfaceCtrlInit CtrlInit(hWnd, hInst);
-			interface = new BaseInterface;
-
-			interface->button(BTN_OK)->create(10, 500, 33, 223, TEXT("OK"));
-			interface->button(BTN_OK)->setImage(BTN_ADDBRICK);
-
-			drawInterface->text(TXT_LEGO)
+			drawUI->text(TXT_LEGO)
 				->SetColor(RGB(255, 255, 255))
 				->SetWeight(800)
 				->SetHeight(36)
 				->SetSymbolWidth(13)
 				->display(20, 30, 0, 0, TEXT("LEGO"));
-			drawInterface->text(TXT_DESIGNER)
+			drawUI->text(TXT_DESIGNER)
 				->SetColor(RGB(37, 45, 74))
 				->SetWeight(400)
 				->SetHeight(36)
 				->SetSymbolWidth(11)
 				->display(95, 30, 0, 0, TEXT("DESIGNER"));
-			//interface->remove(888);
-			try
-			{
-				ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/untitled.obj");
-				//ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/one.obj");
-				application->call(*LoadFirst, 0);
+			
+			INITCOMMONCONTROLSEX init = { sizeof(INITCOMMONCONTROLSEX), ICC_WIN95_CLASSES };
+			InitCommonControlsEx(&init);
 
-				ActionAddbrick* addBrick = new ActionAddbrick();
-				application->call(*addBrick, 0);
-			//	application->call(*addBrick, 0);
-			}
-			catch (BaseException& err)
+			InterfaceCtrlInit CtrlInit(hWnd, hInst);
+			UI = new BaseInterface;
+
+			UI->combobox(CB_CHOOSEBRICK)->create(10, 250, 22, 223, TEXT("Choose brick type..."));
+
+			UI->editfield(EDIT_X)->create(10, 290, 28, 70, TEXT("0"));
+			UI->editfield(EDIT_Y)->create(87, 290, 28, 70, TEXT("0"));
+			UI->editfield(EDIT_Z)->create(164, 290, 28, 70, TEXT("0"));
+
+			drawUI->text(TXT_COLOR)
+				->SetColor(RGB(211, 220, 236))
+				->SetWeight(200)
+				->SetHeight(22)
+				->SetSymbolWidth(8)
+				->display(20, 335, 0, 0, TEXT("Color"));
+
+			drawUI->rectangle(RCT_COLOR)
+				->SetBorderColor(RGB(255, 255, 255))
+				->SetBorderWidth(1)
+				->SetColor(brickColor)
+				->display(88, 330, 156, 363, NULL);
+
+			UI->button(BTN_CHCOLOR)->create(164, 330, 33, 70, TEXT("Change!"));
+			UI->button(BTN_CHCOLOR)->setImage(BTN_COLOR);
+
+			UI->button(BTN_OK)->create(10, 500, 33, 223, TEXT("Add Brick!"));
+			UI->button(BTN_OK)->setImage(BTN_ADDBRICK);
+
+		
+			ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/untitled.obj");
+			if (!LoadFirst)
 			{
-				throw;
+				throw AllocationMemoryError();
 			}
+
+			application->call(*LoadFirst, 0);
+			UI->combobox(CB_CHOOSEBRICK)->addItem(TEXT("2x1"));
+
 		}
 		break;
+
+		case  WM_SETCURSOR:
+			if ((HWND)wParam == UI->button(BTN_OK)->getHWND())
+			{
+				SetCursor(LoadCursor(nullptr, IDC_HAND));
+				UI->button(BTN_OK)->setImage(BTN_ADDBRICK_ACTIVE);
+				return true;
+			}
+			else
+			{
+				UI->button(BTN_OK)->setImage(BTN_ADDBRICK);
+				if ((HWND)wParam == UI->button(BTN_CHCOLOR)->getHWND())
+				{
+					SetCursor(LoadCursor(nullptr, IDC_HAND));
+					UI->button(BTN_CHCOLOR)->setImage(BTN_COLOR_ACTIVE);
+					return true;
+				}
+				else
+				{
+					SetCursor(LoadCursor(nullptr, IDC_ARROW));
+					UI->button(BTN_CHCOLOR)->setImage(BTN_COLOR);
+					return true;
+				}
+			}
+			break;
 		case WM_COMMAND:
 		case WM_KEYDOWN:
 		{
-			SetFocus(hWnd);
 			int wmId = LOWORD(wParam);
 			// Разобрать выбор в меню:
 			switch (wmId)
 			{
+			case CB_CHOOSEBRICK:
+			{
+
+			}
+			break;
+			case BTN_CHCOLOR:
+			{
+				brickColor = colorDialog();
+				drawUI->rectangle(RCT_COLOR)->SetColor(brickColor);
+				RedrawWindow(hWnd, NULL, 0, RDW_INVALIDATE);
+			}
+			break;
+			case BTN_OK:
+			{
+				int brickID = UI->combobox(CB_CHOOSEBRICK)->getCurrentItem();
+				if (brickID == 0)
+				{
+					throw ModelChoosingError();
+				}
+
+				int X = UI->editfield(EDIT_X)->getInt();
+				int Y = UI->editfield(EDIT_Y)->getInt();
+				int Z = UI->editfield(EDIT_Z)->getInt();
+
+				ActionAddbrick* addBrick = new ActionAddbrick(X,Y,Z, brickColor);
+				if (!addBrick)
+				{
+					throw AllocationMemoryError();
+				}
+
+				application->call(*addBrick, brickID-1);
+				application->call(*actionDraw, 0);
+				SetFocus(hWnd);
+			}
+			break;
 			case VK_RIGHT:
 			{
 				ActionBrickRotateX* rotatex = new ActionBrickRotateX(-angle);
+				if (!rotatex)
+				{
+					throw AllocationMemoryError();
+				}
+
 				application->call(*rotatex, 0);
 				application->call(*actionDraw, 0);
 			}
@@ -96,6 +187,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case VK_LEFT:
 			{
 				ActionBrickRotateX* rotatex = new ActionBrickRotateX(angle);
+				if (!rotatex)
+				{
+					throw AllocationMemoryError();
+				}
+
 				application->call(*rotatex, 0);
 				application->call(*actionDraw, 0);
 			}
@@ -103,6 +199,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case VK_UP:
 			{
 				ActionBrickRotateZ* rotatez = new ActionBrickRotateZ(angle);
+				if (!rotatez)
+				{
+					throw AllocationMemoryError();
+				}
+
 				application->call(*rotatez, 0);
 				application->call(*actionDraw, 0);
 			}
@@ -110,6 +211,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case VK_DOWN:
 			{	
 				ActionBrickRotateZ* rotatez = new ActionBrickRotateZ(-angle);
+				if (!rotatez)
+				{
+					throw AllocationMemoryError();
+				}
+
 				application->call(*rotatez, 0);
 				application->call(*actionDraw, 0);
 			}
@@ -117,6 +223,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case 104: // 8 NUMPAD
 			{
 				ActionCameraRotationHorizontal* rotateh = new ActionCameraRotationHorizontal(-angle);
+				if (!rotateh)
+				{
+					throw AllocationMemoryError();
+				}
+
 				application->call(*rotateh, 0);
 				application->call(*actionDraw, 0);
 			}
@@ -124,6 +235,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case 98: // 2 NUMPAD
 			{
 				ActionCameraRotationHorizontal* rotateh = new ActionCameraRotationHorizontal(angle);
+				if (!rotateh)
+				{
+					throw AllocationMemoryError();
+				}
+
 				application->call(*rotateh, 0);
 				application->call(*actionDraw, 0);
 			}
@@ -131,6 +247,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case 100: // 4 NUMPAD
 			{
 				ActionCameraRotationVertical* rotatev = new ActionCameraRotationVertical(-angle);
+				if (!rotatev)
+				{
+					throw AllocationMemoryError();
+				}
+
 				application->call(*rotatev, 0);
 				application->call(*actionDraw, 0);
 			}
@@ -138,6 +259,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case 102: // 6 NUMPAD
 			{
 				ActionCameraRotationVertical* rotatev = new ActionCameraRotationVertical(angle);
+				if (!rotatev)
+				{
+					throw AllocationMemoryError();
+				}
+
 				application->call(*rotatev, 0);
 				application->call(*actionDraw, 0);
 			}
@@ -156,26 +282,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			double height = 1;
 			HDC hdc = BeginPaint(hWnd, &ps);
 			InterfaceDrawInit DrawInit(hdc);
-			drawInterface->redraw();
+			drawUI->redraw();
 			application->call(*actionDraw, 0);
-			/*
-			Brick* brick = new Brick;
-			brick = cobject->objects[0];
-			vector<Face> faces = brick->getFaces();
-			for (int i = 0; i < brick->facesCount(); i++) {
-				Face face = faces[i];
-				for (int j = 0; j < 3; j++) {
-					Vertex v0 = brick->getVertex()[face.getCurrent() - 1];
-					Vertex v1 = brick->getVertex()[face.getNext() - 1];
-					int x0 = (v0.getX())*width / 2. + 100;
-					int y0 = (v0.getY())*height / 2. + 100;
-					int x1 = (v1.getX())*width / 2. + 100;
-					int y1 = (v1.getY())*height / 2. + 100;
-					MoveToEx(hdc, x0, y0, NULL);
-					LineTo(hdc, x1, y1);
-					//line(x0, y0, x1, y1, image, white);
-				}
-			} */
 			EndPaint(hWnd, &ps);
 		}
 		break;
@@ -194,24 +302,4 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 
 	return 0;
-}
-
-// Handler for ABOUT window
-INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	UNREFERENCED_PARAMETER(lParam);
-	switch (message)
-	{
-	case WM_INITDIALOG:
-		return (INT_PTR)TRUE;
-
-	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return (INT_PTR)TRUE;
-		}
-		break;
-	}
-	return (INT_PTR)FALSE;
 }

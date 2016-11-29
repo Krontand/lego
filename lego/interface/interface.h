@@ -10,6 +10,7 @@ Provide interface for creating/removing/updating common interface items
 */
 
 #pragma once
+
 using std::vector;
 
 /*!
@@ -99,7 +100,7 @@ public:
 enum InterfaceCtrlType { 
 	EBUTTON,	///< Button
 	EEDITFIELD,	///< Edit field 
-	EIMAGE		///< Image
+	ECOMBO		///< Combobox
 };
 
 /*!
@@ -113,7 +114,13 @@ typedef struct InterfaceCtrl
 	BaseInterfaceCtrl* _BaseInterfaceCtrl;	///< Pointer to object of Ctrl
 };
 
+#include "button.h"
+#include "combobox.h"
+#include "editfield.h"
+
 class Button;
+class Combobox;
+class Editfield;
 
 /*!
 \class BaseInterface interface.h "interface/interface.h"
@@ -147,7 +154,20 @@ public:
 	\return Pointer to button object
 	*/
 	Button* button(int ID);
-	//Editfield editfield(int ID);
+	
+	/*!
+	Provides access to combobox with unique ID
+	\param[in] ID unique ID of combobox
+	\return Pointer to combobox object
+	*/
+	Combobox* combobox(int ID);
+
+	/*!
+	Provides access to editfield with unique ID
+	\param[in] ID unique ID of editfield
+	\return Pointer to editfield object
+	*/
+	Editfield* editfield(int ID);
 
 	/*!
 	Will destroy item with requested ID and free memory
@@ -158,3 +178,4 @@ private:
 	vector<InterfaceCtrl*> interfaceCtrlList; /*!< List of all interface items */
 };
 
+COLORREF colorDialog();

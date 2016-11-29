@@ -53,7 +53,7 @@ void Rotation::initModification(Vertex* center)
 	GMatrix moveToOrigin = matrixMove(-this->center->X, -this->center->Y, -this->center->Z);
 	GMatrix moveBack = matrixMove(this->center->X, this->center->Y, this->center->Z);
 	
-	this->vMatrixRotation = moveBack * rotate * moveToOrigin;
+	this->vMatrixRotation = moveToOrigin * rotate * moveBack;
 
 	this->nMatrixRotation = this->vMatrixRotation;
 	this->nMatrixRotation.transposition();

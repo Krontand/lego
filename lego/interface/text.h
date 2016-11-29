@@ -11,6 +11,7 @@ Provide interface for creating/removing custom text
 
 #pragma once
 #include "drawinterface.h"
+class BaseDrawInterfaceElement;
 
 /*!
 \class Text text.h "interface/text.h"

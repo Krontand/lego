@@ -75,8 +75,8 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 
 		throw AllocationMemoryError();
 	}
-	this->light.Z = -1000;
-	//this->light.X = 1000;
+	//this->light.Z = -1000;
+	this->light.X = -1000;
 
 }
 
@@ -154,29 +154,30 @@ void Scene::DrawScene()
 	long double dif = long double(fin.QuadPart - sta.QuadPart) / frq.QuadPart;
 	fps = 1.0 / dif;
 
-	wsprintf(fps_buf, TEXT("FPS: %d"), fps);
+	wsprintf(fps_buf, TEXT("  FPS: %d"), fps);
 	TextOut(this->hdc, this->X + 25, this->height - 50, (LPCWSTR)fps_buf, 11);
 }
 
-void Scene::AddBrick(Brick brick)
+void Scene::AddBrick(Brick brick, int X, int Y, int Z, COLORREF color)
 {
 	Brick* nbrick = new Brick(brick);
+	nbrick->color = color;
 
 #pragma omp parallel for
 	for (int vertexIndex = 0; vertexIndex < nbrick->vertexCount(); vertexIndex++)
 	{
 		Vertex v = nbrick->vertex[vertexIndex];
 
-		int nX = v.X + 1. - nbrick->center.X;
-		int nY = v.Y + 1. - nbrick->center.Y;
-		int nZ = v.Z + 1. - nbrick->center.Z;
+		int nX = v.X + 1. - nbrick->center.X + X;
+		int nY = v.Y + 1. - nbrick->center.Y + Y;
+		int nZ = v.Z + 1. - nbrick->center.Z + Z;
 
 		nbrick->vertex[vertexIndex].X = nX;
 		nbrick->vertex[vertexIndex].Y = nY;
 		nbrick->vertex[vertexIndex].Z = nZ;
 	}
 	
-	Vertex center(0, 0, 0);
+	Vertex center(X, Y, Z);
 	nbrick->center = center;
 
 	this->bricks->add(nbrick);

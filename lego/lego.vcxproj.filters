@@ -138,6 +138,15 @@
     <ClInclude Include="model\modification\transformationmatrix.h">
       <Filter>Заголовочные файлы\Model\Modification</Filter>
     </ClInclude>
+    <ClInclude Include="interface\combobox.h">
+      <Filter>Заголовочные файлы\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="interface\editfield.h">
+      <Filter>Заголовочные файлы\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="interface\rectangle.h">
+      <Filter>Заголовочные файлы\Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -205,6 +214,15 @@
     </ClCompile>
     <ClCompile Include="model\modification\transformationmatrix.cpp">
       <Filter>Файлы исходного кода\Model\Modification</Filter>
+    </ClCompile>
+    <ClCompile Include="interface\combobox.cpp">
+      <Filter>Файлы исходного кода\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="interface\editfield.cpp">
+      <Filter>Файлы исходного кода\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="interface\rectangle.cpp">
+      <Filter>Файлы исходного кода\Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

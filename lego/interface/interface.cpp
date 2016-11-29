@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "../stdafx.h"
-#include "button.h"
 #include "interface.h"
 
 HWND BaseInterfaceCtrl::hWnd;
@@ -54,6 +53,40 @@ Button* BaseInterface::button(int ID)
 	return (Button*)btn->_BaseInterfaceCtrl;
 }
 
+Combobox* BaseInterface::combobox(int ID)
+{
+	for (int i = 0; i < this->interfaceCtrlList.size(); i++)
+	{
+		if ((this->interfaceCtrlList[i]->id == ID) && (this->interfaceCtrlList[i]->type == ECOMBO))
+		{
+			return (Combobox*)this->interfaceCtrlList[i]->_BaseInterfaceCtrl;
+		}
+	}
+	InterfaceCtrl* cb = new InterfaceCtrl;
+	cb->type = ECOMBO;
+	cb->id = ID;
+	cb->_BaseInterfaceCtrl = new Combobox(ID);
+	this->interfaceCtrlList.push_back(cb);
+	return (Combobox*)cb->_BaseInterfaceCtrl;
+}
+
+Editfield* BaseInterface::editfield(int ID)
+{
+	for (int i = 0; i < this->interfaceCtrlList.size(); i++)
+	{
+		if ((this->interfaceCtrlList[i]->id == ID) && (this->interfaceCtrlList[i]->type == EEDITFIELD))
+		{
+			return (Editfield*)this->interfaceCtrlList[i]->_BaseInterfaceCtrl;
+		}
+	}
+	InterfaceCtrl* cb = new InterfaceCtrl;
+	cb->type = EEDITFIELD;
+	cb->id = ID;
+	cb->_BaseInterfaceCtrl = new Editfield(ID);
+	this->interfaceCtrlList.push_back(cb);
+	return (Editfield*)cb->_BaseInterfaceCtrl;
+}
+
 void BaseInterface::remove(int ID)
 {
 	for (int i = 0; i < this->interfaceCtrlList.size(); i++)
@@ -65,4 +98,18 @@ void BaseInterface::remove(int ID)
 			this->interfaceCtrlList.erase(this->interfaceCtrlList.begin() + i);
 		}
 	}
+}
+
+COLORREF colorDialog()
+{
+	CHOOSECOLOR cc = { 0 };
+	cc.lStructSize = sizeof(cc);
+	COLORREF cust_colors[16] = { 0 };
+	cc.lpCustColors = cust_colors;
+
+	if (ChooseColor(&cc)) {
+		return cc.rgbResult;
+	}
+
+	return RGB(255, 255, 255);
 }

@@ -5,6 +5,7 @@
 
 Brick::Brick()
 {
+	this->color = RGB(255, 255, 255);
 }
 
 Brick::Brick(const Brick& brick)
@@ -16,6 +17,7 @@ Brick::Brick(const Brick& brick)
 	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
 	this->center = brick.center;
+	this->color = brick.color;
 }
 
 Brick::Brick(Brick&& brick)
@@ -27,6 +29,7 @@ Brick::Brick(Brick&& brick)
 	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
 	this->center = brick.center;
+	this->color = brick.color;
 }
 
 Brick::~Brick()
@@ -48,6 +51,7 @@ Brick& Brick::operator=(const Brick& brick)
 	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
 	this->center = brick.center;
+	this->color = brick.color;
 	return *this;
 }
 

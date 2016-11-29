@@ -25,11 +25,12 @@ void Render::run(Composite* bricks, Camera cam, Vertex light)
 		this->zbuffer[i] = -9999999;
 	}
 
-	COLORREF color = RGB(255,100,0);
 
 	for (int brickIndex = 0; brickIndex < bricks->objects.size(); brickIndex++)
 	{
 		Brick* brick = bricks->objects[brickIndex];
+		COLORREF color = brick->color;
+
 #pragma omp parallel for schedule(dynamic, 1)
 		for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
 		{
@@ -204,7 +205,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 					if (this->zbuffer[pix] < z)
 					{
 						this->zbuffer[pix] = z;
-						this->pixels[pix] = RGB(GetRValue(color) * I, GetGValue(color) * I, GetBValue(color) * I);
+						this->pixels[pix] = RGB(GetBValue(color) * I, GetGValue(color) * I, GetRValue(color) * I);
 					}
 				}
 			}

@@ -110,7 +110,10 @@ typedef struct InterfaceDraw
 	BaseDrawInterfaceElement* _BaseInterfaceDraw;	///< Pointer to object of element
 };
 
+#include "text.h"
+#include "rectangle.h"
 class Text;
+class URectangle;
 
 /*!
 \class BaseDrawInterface drawinterface.h "interface/drawinterface.h"
@@ -144,7 +147,14 @@ public:
 	\return Pointer to text object
 	*/
 	Text* text(int ID);
-	//Editfield editfield(int ID);
+
+	/*!
+	Provides access to draw rectangle with unique ID
+	\param[in] ID unique ID of rectangle
+	\return Pointer to rectangle object
+	*/
+	URectangle* rectangle(int ID);
+	
 
 	/*!
 	Redraw all elements in array

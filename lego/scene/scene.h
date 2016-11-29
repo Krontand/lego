@@ -58,7 +58,7 @@ public:
 	Add brick into scene bricks array. Set model in (0,0,0) monitor coordinates
 	\param[in] brick Brick to add
 	*/
-	void AddBrick(Brick brick);
+	void AddBrick(Brick brick, int X, int Y, int Z, COLORREF color);
 
 	/*!
 	Transfer vertices from world to camera coordinates

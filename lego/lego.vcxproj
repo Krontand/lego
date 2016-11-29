@@ -152,8 +152,11 @@
     <ClInclude Include="geometry\gmatrix.h" />
     <ClInclude Include="geometry\gvector.h" />
     <ClInclude Include="interface\button.h" />
+    <ClInclude Include="interface\combobox.h" />
     <ClInclude Include="interface\drawinterface.h" />
+    <ClInclude Include="interface\editfield.h" />
     <ClInclude Include="interface\interface.h" />
+    <ClInclude Include="interface\rectangle.h" />
     <ClInclude Include="interface\text.h" />
     <ClInclude Include="lego.h" />
     <ClInclude Include="listener.h" />
@@ -181,8 +184,11 @@
     <ClCompile Include="geometry\gmatrix.cpp" />
     <ClCompile Include="geometry\gvector.cpp" />
     <ClCompile Include="interface\button.cpp" />
+    <ClCompile Include="interface\combobox.cpp" />
     <ClCompile Include="interface\drawinterface.cpp" />
+    <ClCompile Include="interface\editfield.cpp" />
     <ClCompile Include="interface\interface.cpp" />
+    <ClCompile Include="interface\rectangle.cpp" />
     <ClCompile Include="interface\text.cpp" />
     <ClCompile Include="lego.cpp" />
     <ClCompile Include="listener.cpp" />

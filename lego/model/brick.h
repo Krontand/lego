@@ -101,4 +101,6 @@ public:
 	vector<Normal> FNormal;	/*!< Normal to face */
 
 	vector<Face> faces;			/*!< Faces array */
+
+	COLORREF color;
 };

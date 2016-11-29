@@ -1,55 +1,55 @@
 /*!
-\file button.h "interface/button.h"
-\brief  Button interface class
+\file combobox.h "interface/combobox.h"
+\brief  Combobox interface class
 \author Dmitry Zaitsev
 \copyright © BMSTU All rights violated.
 \version 1.0
-\date 23 September 2016
+\date 29 November 2016
 
-Provide interface for creating/removing button
+Provide interface for creating/removing/updating combobox
 */
 
 #pragma once
+#include <windowsx.h>
+
 #include "interface.h"
 class BaseInterfaceCtrl;
 
 /*!
-\class Button button.h "interface/button.h"
-\brief  Button interface class
-Provide interface for creating/removing button
-
-\todo Customise button style
+\class Combobox combobox.h "interface/combobox.h"
+\brief  Combobox interface class
+Provide interface for creating/removing/updating combobox
 */
 
-class Button : public BaseInterfaceCtrl
+class Combobox : public BaseInterfaceCtrl
 {
 public:
 	/*! Empty constructor. No action. */
-	Button();
+	Combobox();
 
 	/*!
 	Constructor sets ID in 'id' variable
-	\param[in] ID Unique identify of button
+	\param[in] ID Unique identify of combobox
 	*/
-	Button(int ID);
+	Combobox(int ID);
 
 	/*!
-	Constructor create and display button
+	Constructor create and display combobox
 	\param[in] X X coordinate
 	\param[in] Y Y coordinate
 	\param[in] HEIGHT Height of the window
 	\param[in] WIDTH Width of the window
 	\param[in] TEXT Text which is displaying on element
 	*/
-	Button(int X, int Y, int HEIGHT, int WIDTH, WCHAR* TEXT = NULL);
+	Combobox(int X, int Y, int HEIGHT, int WIDTH, WCHAR* TEXT = NULL);
 
 	/*!
 	Destructor. Removes button (Does not free memory)
 	*/
-	~Button();
+	~Combobox();
 
 	/*!
-	Create and display button
+	Create and display combobox
 	\param[in] X X coordinate
 	\param[in] Y Y coordinate
 	\param[in] HEIGHT Height of the window
@@ -59,21 +59,18 @@ public:
 	*/
 	HWND create(int X, int Y, int HEIGHT, int WIDTH, WCHAR* TEXT) override;
 
-	/*!
-	Set image on button
-	\param[in] rID Resourse ID (in resource.h)
-	\return Value specifies the result of the message processing
-	*/
-	LRESULT setImage(int rID);
+	void addItem(WCHAR* item);
+
+	int getCurrentItem();
 
 	HWND getHWND();
 
 	/*!
-	Removes button (Does not free memory)
+	Removes combobox (Does not free memory)
 	*/
 	void remove() override;
 
 private:
-	int ID;				/*!< Unique identify of button */
-	HWND bhWnd = NULL;	/*!< HWND of created window */
+	int ID;				/*!< Unique identify of combobox */
+	HWND chWnd = NULL;	/*!< HWND of created window */
 };

@@ -51,6 +51,23 @@ Text* BaseDrawInterface::text(int ID)
 	return (Text*)txt->_BaseInterfaceDraw;
 }
 
+URectangle* BaseDrawInterface::rectangle(int ID)
+{
+	for (int i = 0; i < this->interfaceDrawList.size(); i++)
+	{
+		if ((this->interfaceDrawList[i]->id == ID) && (this->interfaceDrawList[i]->type == EDRECTANGLE))
+		{
+			return (URectangle*)this->interfaceDrawList[i]->_BaseInterfaceDraw;
+		}
+	}
+	InterfaceDraw* txt = new InterfaceDraw;
+	txt->type = EDRECTANGLE;
+	txt->id = ID;
+	txt->_BaseInterfaceDraw = new URectangle();
+	this->interfaceDrawList.push_back(txt);
+	return (URectangle*)txt->_BaseInterfaceDraw;
+}
+
 bool BaseDrawInterface::redraw(int ID)
 {
 	bool flag = true;

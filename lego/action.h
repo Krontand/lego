@@ -33,8 +33,12 @@ private:
 class ActionAddbrick : public Action
 {
 public:
-	ActionAddbrick()
+	ActionAddbrick(int X, int Y, int Z, COLORREF color)
 	{
+		this->X = X;
+		this->Y = Y;
+		this->Z = Z;
+		this->color = color;
 	}
 
 	~ActionAddbrick()
@@ -44,8 +48,12 @@ public:
 	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
 	{
 		Brick brick = *(loadedBricks->objects[ID]);
-		scene->AddBrick(brick);
+		scene->AddBrick(brick, this->X, this->Y, this->Z, this->color);
 	}
+
+private:
+	int X, Y, Z;
+	COLORREF color;
 };
 
 class ActionDraw : public Action
