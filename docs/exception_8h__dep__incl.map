@@ -1,0 +1,37 @@
+<map id="F:/University/Git/lego/lego/exception.h" name="F:/University/Git/lego/lego/exception.h">
+<area shape="rect" id="node2" href="$geometry_2exception_8h.html" title="F:/University/Git/lego\l/lego/geometry/exception.h" alt="" coords="121,95,299,136"/>
+<area shape="rect" id="node12" href="$application_8h.html" title="F:/University/Git/lego\l/lego/application.h" alt="" coords="200,1047,343,1088"/>
+<area shape="rect" id="node36" href="$model_2exception_8h.html" title="F:/University/Git/lego\l/lego/model/exception.h" alt="" coords="294,682,454,723"/>
+<area shape="rect" id="node3" href="$gvector_8h.html" title="Define geometric vector. " alt="" coords="140,184,304,225"/>
+<area shape="rect" id="node4" href="$gmatrix_8h.html" title="Define geometric matrix. " alt="" coords="757,273,924,315"/>
+<area shape="rect" id="node26" href="$face_8h.html" title="Define face consisting 3 links to vetices. " alt="" coords="308,474,451,515"/>
+<area shape="rect" id="node32" href="$gvector_8cpp.html" title="F:/University/Git/lego\l/lego/geometry/gvector.cpp" alt="" coords="175,370,354,411"/>
+<area shape="rect" id="node5" href="$vertex_8h.html" title="Define vertex consisting 3 double coordinates. " alt="" coords="769,370,912,411"/>
+<area shape="rect" id="node7" href="$normal_8h.html" title="Define normal (object container for GVector) " alt="" coords="889,578,1032,619"/>
+<area shape="rect" id="node17" href="$scene_8h.html" title="F:/University/Git/lego\l/lego/scene/scene.h" alt="" coords="707,868,849,909"/>
+<area shape="rect" id="node29" href="$transformationmatrix_8h.html" title="Matrix to modificate object in 3D surface. " alt="" coords="378,363,541,419"/>
+<area shape="rect" id="node31" href="$gmatrix_8cpp.html" title="F:/University/Git/lego\l/lego/geometry/gmatrix.cpp" alt="" coords="565,370,745,411"/>
+<area shape="rect" id="node33" href="$camera_8cpp.html" title="F:/University/Git/lego\l/lego/scene/camera.cpp" alt="" coords="1144,474,1305,515"/>
+<area shape="rect" id="node34" href="$cameramodification_8h.html" title="Modidy camera. " alt="" coords="937,370,1153,411"/>
+<area shape="rect" id="node6" href="$modification_8h.html" title="Base modification object class. " alt="" coords="475,467,638,523"/>
+<area shape="rect" id="node8" href="$brick_8h.html" title="Model basement. " alt="" coords="691,682,833,723"/>
+<area shape="rect" id="node28" href="$vertex_8cpp.html" title="F:/University/Git/lego\l/lego/model/vertex.cpp" alt="" coords="662,474,814,515"/>
+<area shape="rect" id="node24" href="$rotation_8h.html" title="F:/University/Git/lego\l/lego/model/modification\l/rotation.h" alt="" coords="475,571,638,627"/>
+<area shape="rect" id="node23" href="$normal_8cpp.html" title="F:/University/Git/lego\l/lego/model/normal.cpp" alt="" coords="882,682,1039,723"/>
+<area shape="rect" id="node9" href="$composite_8h.html" title="Composite class. " alt="" coords="488,779,652,820"/>
+<area shape="rect" id="node22" href="$brick_8cpp.html" title="F:/University/Git/lego\l/lego/model/brick.cpp" alt="" coords="689,779,835,820"/>
+<area shape="rect" id="node10" href="$loader_8h.html" title="F:/University/Git/lego\l/lego/model/loader.h" alt="" coords="312,868,455,909"/>
+<area shape="rect" id="node21" href="$composite_8cpp.html" title="F:/University/Git/lego\l/lego/model/composite.cpp" alt="" coords="481,868,659,909"/>
+<area shape="rect" id="node11" href="$action_8h.html" title="F:/University/Git/lego\l/lego/action.h" alt="" coords="140,957,283,999"/>
+<area shape="rect" id="node13" href="$application_8cpp.html" title="F:/University/Git/lego\l/lego/application.cpp" alt="" coords="427,1136,569,1177"/>
+<area shape="rect" id="node16" href="$loader_8cpp.html" title="F:/University/Git/lego\l/lego/model/loader.cpp" alt="" coords="307,957,460,999"/>
+<area shape="rect" id="node14" href="$lego_8cpp.html" title="F:/University/Git/lego\l/lego/lego.cpp" alt="" coords="64,1136,207,1177"/>
+<area shape="rect" id="node15" href="$listener_8cpp.html" title="F:/University/Git/lego\l/lego/listener.cpp" alt="" coords="231,1136,373,1177"/>
+<area shape="rect" id="node18" href="$render_8h.html" title="F:/University/Git/lego\l/lego/render/render.h" alt="" coords="816,957,959,999"/>
+<area shape="rect" id="node20" href="$scene_8cpp.html" title="F:/University/Git/lego\l/lego/scene/scene.cpp" alt="" coords="587,957,740,999"/>
+<area shape="rect" id="node19" href="$render_8cpp.html" title="F:/University/Git/lego\l/lego/render/render.cpp" alt="" coords="815,1047,970,1088"/>
+<area shape="rect" id="node25" href="$rotation_8cpp.html" title="F:/University/Git/lego\l/lego/model/modification\l/rotation.cpp" alt="" coords="478,675,641,731"/>
+<area shape="rect" id="node27" href="$face_8cpp.html" title="F:/University/Git/lego\l/lego/model/face.cpp" alt="" coords="308,578,451,619"/>
+<area shape="rect" id="node30" href="$transformationmatrix_8cpp.html" title="F:/University/Git/lego\l/lego/model/modification\l/transformationmatrix.cpp" alt="" coords="115,467,284,523"/>
+<area shape="rect" id="node35" href="$cameramodification_8cpp.html" title="F:/University/Git/lego\l/lego/scene/cameramodification.cpp" alt="" coords="889,474,1120,515"/>
+</map>

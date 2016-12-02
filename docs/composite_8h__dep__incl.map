@@ -1,0 +1,14 @@
+<map id="F:/University/Git/lego/lego/model/composite.h" name="F:/University/Git/lego/lego/model/composite.h">
+<area shape="rect" id="node2" href="$loader_8h.html" title="F:/University/Git/lego\l/lego/model/loader.h" alt="" coords="180,95,323,136"/>
+<area shape="rect" id="node9" href="$scene_8h.html" title="F:/University/Git/lego\l/lego/scene/scene.h" alt="" coords="440,184,583,225"/>
+<area shape="rect" id="node13" href="$composite_8cpp.html" title="F:/University/Git/lego\l/lego/model/composite.cpp" alt="" coords="506,95,685,136"/>
+<area shape="rect" id="node3" href="$action_8h.html" title="F:/University/Git/lego\l/lego/action.h" alt="" coords="248,184,391,225"/>
+<area shape="rect" id="node5" href="$application_8cpp.html" title="F:/University/Git/lego\l/lego/application.cpp" alt="" coords="123,363,265,404"/>
+<area shape="rect" id="node8" href="$loader_8cpp.html" title="F:/University/Git/lego\l/lego/model/loader.cpp" alt="" coords="5,184,159,225"/>
+<area shape="rect" id="node4" href="$application_8h.html" title="F:/University/Git/lego\l/lego/application.h" alt="" coords="285,273,428,315"/>
+<area shape="rect" id="node6" href="$lego_8cpp.html" title="F:/University/Git/lego\l/lego/lego.cpp" alt="" coords="289,363,432,404"/>
+<area shape="rect" id="node7" href="$listener_8cpp.html" title="F:/University/Git/lego\l/lego/listener.cpp" alt="" coords="456,363,599,404"/>
+<area shape="rect" id="node10" href="$render_8h.html" title="F:/University/Git/lego\l/lego/render/render.h" alt="" coords="452,273,595,315"/>
+<area shape="rect" id="node12" href="$scene_8cpp.html" title="F:/University/Git/lego\l/lego/scene/scene.cpp" alt="" coords="619,273,772,315"/>
+<area shape="rect" id="node11" href="$render_8cpp.html" title="F:/University/Git/lego\l/lego/render/render.cpp" alt="" coords="623,363,778,404"/>
+</map>

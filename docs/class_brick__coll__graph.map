@@ -1,0 +1,4 @@
+<map id="Brick" name="Brick">
+<area shape="rect" id="node2" href="$class_base_object.html" title="Base object. Virtual class. No realisation. " alt="" coords="5,5,96,32"/>
+<area shape="rect" id="node3" href="$class_vertex.html" title="Define vertex consisting 3 double coordinates. " alt="" coords="205,35,265,61"/>
+</map>

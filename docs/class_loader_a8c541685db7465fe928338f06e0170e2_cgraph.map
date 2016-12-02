@@ -1,0 +1,8 @@
+<map id="Loader::load" name="Loader::load">
+<area shape="rect" id="node2" href="$class_brick.html#a00483604c2f02f59297ec8cf084bb7dd" title="Brick::addVertex" alt="" coords="149,5,267,32"/>
+<area shape="rect" id="node3" href="$class_brick.html#affdf707e61d48ab0056dbf9b47a66523" title="Brick::addFace" alt="" coords="153,56,263,83"/>
+<area shape="rect" id="node6" href="$class_brick.html#ae01ece322e82355ac1feae8f935fa5d1" title="Brick::addNormal" alt="" coords="147,107,269,133"/>
+<area shape="rect" id="node7" href="$class_composite.html#a168cf319f86946ae16d9e9b47737a07b" title="Composite::add" alt="" coords="151,157,265,184"/>
+<area shape="rect" id="node4" href="$class_face.html#a28ac4be0dfdd95ed60cb5f2fc0e113e9" title="Face::getNormal" alt="" coords="331,31,449,57"/>
+<area shape="rect" id="node5" href="$class_face.html#afc60f45f5fdea188198a3a89721601b7" title="Face::getNextNormal" alt="" coords="317,81,463,108"/>
+</map>

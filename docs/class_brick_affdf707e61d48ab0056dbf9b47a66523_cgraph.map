@@ -1,0 +1,4 @@
+<map id="Brick::addFace" name="Brick::addFace">
+<area shape="rect" id="node2" href="$class_face.html#a28ac4be0dfdd95ed60cb5f2fc0e113e9" title="Face::getNormal" alt="" coords="177,5,296,32"/>
+<area shape="rect" id="node3" href="$class_face.html#afc60f45f5fdea188198a3a89721601b7" title="Face::getNextNormal" alt="" coords="164,56,309,83"/>
+</map>

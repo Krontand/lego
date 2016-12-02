@@ -1,0 +1,7 @@
+<map id="GVector::normalize" name="GVector::normalize">
+<area shape="rect" id="node2" href="$class_render.html#a8671f8f9c20217654a2e0047cd3be379" title="Render::run" alt="" coords="387,5,476,32"/>
+<area shape="rect" id="node5" href="$class_camera.html#a395da9aeb50707bf7234482a03040a2a" title="Camera::cameraview" alt="" coords="188,56,331,83"/>
+<area shape="rect" id="node3" href="$class_scene.html#aa1cf159cbc4a44528466c7b53ccd48f0" title="Scene::DrawScene" alt="" coords="532,31,665,57"/>
+<area shape="rect" id="node4" href="$class_action_draw.html#ac9cf3ad59aba4b8281a2a3412b15b68c" title="ActionDraw::Execute" alt="" coords="713,31,857,57"/>
+<area shape="rect" id="node6" href="$class_scene.html#a1514b276946d798733a33783482dfe14" title="Scene::toCam" alt="" coords="379,56,484,83"/>
+</map>

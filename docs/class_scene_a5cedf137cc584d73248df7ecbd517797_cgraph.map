@@ -1,0 +1,4 @@
+<map id="Scene::AddBrick" name="Scene::AddBrick">
+<area shape="rect" id="node2" href="$class_brick.html#a02b7996442927478666c10280cdb0969" title="Brick::vertexCount" alt="" coords="173,5,301,32"/>
+<area shape="rect" id="node3" href="$class_composite.html#a168cf319f86946ae16d9e9b47737a07b" title="Composite::add" alt="" coords="181,56,294,83"/>
+</map>

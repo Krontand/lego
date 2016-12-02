@@ -1,0 +1,15 @@
+<map id="F:/University/Git/lego/lego/model/loader.h" name="F:/University/Git/lego/lego/model/loader.h">
+<area shape="rect" id="node2" href="$composite_8h.html" title="Composite class. " alt="" coords="356,95,450,121"/>
+<area shape="rect" id="node15" href="$model_2exception_8h.html" title="exception.h" alt="" coords="442,169,532,196"/>
+<area shape="rect" id="node3" href="$brick_8h.html" title="Model basement. " alt="" coords="340,169,402,196"/>
+<area shape="rect" id="node4" href="$normal_8h.html" title="Define normal (object container for GVector) " alt="" coords="151,244,223,271"/>
+<area shape="rect" id="node6" href="$vertex_8h.html" title="Define vertex consisting 3 double coordinates. " alt="" coords="196,393,274,420"/>
+<area shape="rect" id="node14" href="$face_8h.html" title="Define face consisting 3 links to vetices. " alt="" coords="401,319,458,345"/>
+<area shape="rect" id="node5" href="$modification_8h.html" title="Base modification object class. " alt="" coords="100,319,274,345"/>
+<area shape="rect" id="node7" href="$baseobject_8h.html" title="Base object. " alt="" coords="230,468,326,495"/>
+<area shape="rect" id="node8" href="$gmatrix_8h.html" title="Define geometric matrix. " alt="" coords="42,468,188,495"/>
+<area shape="rect" id="node13" href="$transformationmatrix_8h.html" title="Matrix to modificate object in 3D surface. " alt="" coords="21,393,172,420"/>
+<area shape="rect" id="node9" href="$gvector_8h.html" title="Define geometric vector. " alt="" coords="376,543,451,569"/>
+<area shape="rect" id="node10" href="$geometry_2exception_8h.html" title="exception.h" alt="" coords="369,617,458,644"/>
+<area shape="rect" id="node11" href="$exception_8h.html" title="../exception.h" alt="" coords="404,692,506,719"/>
+</map>

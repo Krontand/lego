@@ -1,0 +1,7 @@
+<map id="Scene" name="Scene">
+<area shape="rect" id="node2" href="$class_vertex.html" title="Define vertex consisting 3 double coordinates. " alt="" coords="29,109,89,136"/>
+<area shape="rect" id="node3" href="$class_base_object.html" title="Base object. Virtual class. No realisation. " alt="" coords="5,5,96,32"/>
+<area shape="rect" id="node6" href="$class_composite.html" title="Contains loaded bricks. " alt="" coords="121,109,205,136"/>
+<area shape="rect" id="node4" href="$class_camera.html" title="Camera object. " alt="" coords="247,109,313,136"/>
+<area shape="rect" id="node5" href="$class_g_vector.html" title="Define geometric vector. " alt="" coords="259,5,330,32"/>
+</map>

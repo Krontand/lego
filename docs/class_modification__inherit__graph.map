@@ -1,0 +1,6 @@
+<map id="Modification" name="Modification">
+<area shape="rect" id="node2" href="$class_rotation.html" title="Base rotation class. " alt="" coords="111,80,182,107"/>
+<area shape="rect" id="node3" href="$class_rotation_x.html" title="Rotation in OX surface. " alt="" coords="5,155,83,181"/>
+<area shape="rect" id="node4" href="$class_rotation_y.html" title="Rotation in OY surface. " alt="" coords="107,155,186,181"/>
+<area shape="rect" id="node5" href="$class_rotation_z.html" title="Rotation in OZ surface. " alt="" coords="211,155,288,181"/>
+</map>

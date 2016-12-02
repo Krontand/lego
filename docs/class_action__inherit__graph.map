@@ -1,0 +1,10 @@
+<map id="Action" name="Action">
+<area shape="rect" id="node2" href="$class_action_addbrick.html" title="ActionAddbrick" alt="" coords="162,5,273,32"/>
+<area shape="rect" id="node3" href="$class_action_brick_rotate_x.html" title="ActionBrickRotateX" alt="" coords="150,56,285,83"/>
+<area shape="rect" id="node4" href="$class_action_brick_rotate_y.html" title="ActionBrickRotateY" alt="" coords="149,107,285,133"/>
+<area shape="rect" id="node5" href="$class_action_brick_rotate_z.html" title="ActionBrickRotateZ" alt="" coords="150,157,285,184"/>
+<area shape="rect" id="node6" href="$class_action_camera_rotation_horizontal.html" title="ActionCameraRotationHorizontal" alt="" coords="112,208,323,235"/>
+<area shape="rect" id="node7" href="$class_action_camera_rotation_vertical.html" title="ActionCameraRotationVertical" alt="" coords="119,259,315,285"/>
+<area shape="rect" id="node8" href="$class_action_draw.html" title="ActionDraw" alt="" coords="173,309,261,336"/>
+<area shape="rect" id="node9" href="$class_action_loadbrick.html" title="ActionLoadbrick" alt="" coords="160,360,275,387"/>
+</map>

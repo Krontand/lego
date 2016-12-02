@@ -1,0 +1,9 @@
+<map id="Render::run" name="Render::run">
+<area shape="rect" id="node2" href="$class_brick.html#ab4074fd3fdb1bc237358b8215624683e" title="Brick::facesCount" alt="" coords="147,5,273,32"/>
+<area shape="rect" id="node3" href="$class_face.html#a5052c02277ca6ca0d8dc12f476cfe051" title="Face::A" alt="" coords="176,56,244,83"/>
+<area shape="rect" id="node4" href="$class_face.html#ad874821f84059f325db7d0790ca707ec" title="Face::B" alt="" coords="176,107,244,133"/>
+<area shape="rect" id="node5" href="$class_face.html#acb5aa58f50e6b78bdd0df9ef303169fc" title="Face::C" alt="" coords="176,157,244,184"/>
+<area shape="rect" id="node6" href="$class_g_vector.html#ad63b071df790f527274dcecc895cc018" title="GVector::normalize" alt="" coords="143,208,277,235"/>
+<area shape="rect" id="node8" href="$class_g_vector.html#ae0c332c6b01e3ad366276844fb9210a1" title="GVector::scalar" alt="" coords="153,259,267,285"/>
+<area shape="rect" id="node7" href="$class_g_vector.html#a9d1a1760b7322556918a42090ff5a73e" title="GVector::length" alt="" coords="325,208,439,235"/>
+</map>

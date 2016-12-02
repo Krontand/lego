@@ -1,0 +1,11 @@
+<map id="F:/University/Git/lego/lego/model/face.h" name="F:/University/Git/lego/lego/model/face.h">
+<area shape="rect" id="node2" href="$vertex_8h.html" title="Define vertex consisting 3 double coordinates. " alt="" coords="148,95,215,121"/>
+<area shape="rect" id="node7" href="$gvector_8h.html" title="Define geometric vector. " alt="" coords="99,393,173,420"/>
+<area shape="rect" id="node3" href="$modification_8h.html" title="Base modification object class. " alt="" coords="94,169,269,196"/>
+<area shape="rect" id="node5" href="$baseobject_8h.html" title="Base object. " alt="" coords="53,319,149,345"/>
+<area shape="rect" id="node6" href="$gmatrix_8h.html" title="Define geometric matrix. " alt="" coords="193,319,340,345"/>
+<area shape="rect" id="node4" href="$normal_8h.html" title="Define normal (object container for GVector) " alt="" coords="94,244,178,271"/>
+<area shape="rect" id="node11" href="$transformationmatrix_8h.html" title="Matrix to modificate object in 3D surface. " alt="" coords="202,244,353,271"/>
+<area shape="rect" id="node8" href="$geometry_2exception_8h.html" title="exception.h" alt="" coords="91,468,181,495"/>
+<area shape="rect" id="node9" href="$exception_8h.html" title="../exception.h" alt="" coords="85,543,187,569"/>
+</map>

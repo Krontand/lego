@@ -1,0 +1,6 @@
+<map id="matrixrotation" name="matrixrotation">
+<area shape="rect" id="node2" href="$class_camera.html#ac9c3cd76cf46ada1112145965566ea92" title="Camera::rotateHorizontal\lSphere" alt="" coords="168,8,335,49"/>
+<area shape="rect" id="node4" href="$class_camera.html#ae09b3cf3bede7430fd79c64ce8adbe64" title="Camera::rotateVerticalSphere" alt="" coords="155,75,348,102"/>
+<area shape="rect" id="node3" href="$class_action_camera_rotation_horizontal.html#a8facf590028b618143db45a3918a2523" title="ActionCameraRotationHorizontal\l::Execute" alt="" coords="396,5,607,47"/>
+<area shape="rect" id="node5" href="$class_action_camera_rotation_vertical.html#a18cfd5b9eea82e6ca8a84406f9dc7c5d" title="ActionCameraRotationVertical\l::Execute" alt="" coords="403,71,599,112"/>
+</map>

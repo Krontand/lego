@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_base_draw_interface_element.html" title="Base draw interface class. Parent of basic draw classes. " alt="" coords="5,56,184,83"/>
+<area shape="rect" id="node2" href="$class_interface_draw_init.html" title="InterfaceDrawInit" alt="" coords="232,5,349,32"/>
+<area shape="rect" id="node3" href="$class_text.html" title="Button interface class Provide interface for creating/removing custom text. " alt="" coords="267,56,314,83"/>
+<area shape="rect" id="node4" href="$class_u_rectangle.html" title="Rectangle interface class Provide interface for creating/removing custom rectangle. " alt="" coords="246,107,335,133"/>
+</map>

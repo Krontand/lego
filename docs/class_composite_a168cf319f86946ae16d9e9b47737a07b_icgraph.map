@@ -1,0 +1,6 @@
+<map id="Composite::add" name="Composite::add">
+<area shape="rect" id="node2" href="$class_loader.html#a8c541685db7465fe928338f06e0170e2" title="Loader::load" alt="" coords="180,5,273,32"/>
+<area shape="rect" id="node4" href="$class_scene.html#a5cedf137cc584d73248df7ecbd517797" title="Scene::AddBrick" alt="" coords="167,56,287,83"/>
+<area shape="rect" id="node3" href="$class_action_loadbrick.html#aa1674ae2537ff9648c7d298b998a54f6" title="ActionLoadbrick::Execute" alt="" coords="335,5,505,32"/>
+<area shape="rect" id="node5" href="$class_action_addbrick.html#a944ed0c553a986874577c219878ae69f" title="ActionAddbrick::Execute" alt="" coords="337,56,503,83"/>
+</map>

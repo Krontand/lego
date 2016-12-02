@@ -1,0 +1,5 @@
+<map id="BaseDrawInterfaceElement" name="BaseDrawInterfaceElement">
+<area shape="rect" id="node2" href="$class_interface_draw_init.html" title="InterfaceDrawInit" alt="" coords="5,80,123,107"/>
+<area shape="rect" id="node3" href="$class_text.html" title="Button interface class Provide interface for creating/removing custom text. " alt="" coords="147,80,194,107"/>
+<area shape="rect" id="node4" href="$class_u_rectangle.html" title="Rectangle interface class Provide interface for creating/removing custom rectangle. " alt="" coords="218,80,307,107"/>
+</map>

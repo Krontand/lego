@@ -1,0 +1,30 @@
+<map id="WndProc" name="WndProc">
+<area shape="rect" id="node2" href="$class_base_draw_interface.html#acad023b511d2598595983998816a2b6d" title="BaseDrawInterface::text" alt="" coords="144,5,304,32"/>
+<area shape="rect" id="node3" href="$class_text.html#abc837a81ea585495bf179c797d70948f" title="Text::SetColor" alt="" coords="171,56,277,83"/>
+<area shape="rect" id="node4" href="$class_text.html#ad96822e951aa9566ea23895c5b1fc53b" title="Text::SetWeight" alt="" coords="166,107,282,133"/>
+<area shape="rect" id="node5" href="$class_text.html#abdebb287dd7bc45a235f08dd47eda39d" title="Text::SetHeight" alt="" coords="168,157,280,184"/>
+<area shape="rect" id="node6" href="$class_text.html#aab0d1affea47d943b86fab4f4e8d4dc0" title="Text::SetSymbolWidth" alt="" coords="147,208,301,235"/>
+<area shape="rect" id="node7" href="$class_text.html#ad471d85cbcbd6f79d9e44b142861ec23" title="Text::display" alt="" coords="176,259,272,285"/>
+<area shape="rect" id="node8" href="$class_base_interface.html#a9ad3f6c74bdae3a4ba2cbef545a1c488" title="BaseInterface::combobox" alt="" coords="139,309,309,336"/>
+<area shape="rect" id="node9" href="$class_combobox.html#a07250b4912c53258988648a6532cefdd" title="Combobox::create" alt="" coords="160,360,288,387"/>
+<area shape="rect" id="node10" href="$class_combobox.html#ae6f3b05b2901cc34b9db2e200dcb3336" title="Combobox::addItem" alt="" coords="367,385,505,412"/>
+<area shape="rect" id="node11" href="$class_base_interface.html#add5a573cbe695f17baa66134e0e08493" title="BaseInterface::editfield" alt="" coords="147,461,301,488"/>
+<area shape="rect" id="node12" href="$class_editfield.html#a864388bc31a3b998cb97a87b84f1b032" title="Editfield::create" alt="" coords="168,512,280,539"/>
+<area shape="rect" id="node13" href="$class_base_draw_interface.html#a590bc9206cc0e75a30748d58a0428882" title="BaseDrawInterface::\lrectangle" alt="" coords="155,563,293,605"/>
+<area shape="rect" id="node14" href="$class_u_rectangle.html#a3085d745efca61443c759d0855e853cb" title="URectangle::SetBorderColor" alt="" coords="131,629,317,656"/>
+<area shape="rect" id="node15" href="$class_u_rectangle.html#ab2437f730e7267b8469424df3f00e9f8" title="URectangle::SetBorderWidth" alt="" coords="129,680,319,707"/>
+<area shape="rect" id="node16" href="$class_u_rectangle.html#aa446ade57a5113db870fdf43785d5474" title="URectangle::SetColor" alt="" coords="151,731,297,757"/>
+<area shape="rect" id="node17" href="$class_u_rectangle.html#ac7b7773bfa8d52499d865508d953ab50" title="URectangle::display" alt="" coords="155,781,293,808"/>
+<area shape="rect" id="node18" href="$class_base_interface.html#a6625b95a4180dd0d78e44f6a574ab64c" title="BaseInterface::button" alt="" coords="151,832,297,859"/>
+<area shape="rect" id="node19" href="$class_button.html#af7193cc73574817e97e3f06af267619f" title="Button::create" alt="" coords="172,883,276,909"/>
+<area shape="rect" id="node20" href="$class_button.html#aa8d2fa6ad6159815c694c04273a858cd" title="Button::setImage" alt="" coords="163,933,285,960"/>
+<area shape="rect" id="node21" href="$class_application.html#a90c31052719ad1902fdf2f92ceee385e" title="Application::call" alt="" coords="167,984,281,1011"/>
+<area shape="rect" id="node23" href="$class_button.html#a98a3d14d62327c65e7d92eb14828f160" title="Button::getHWND" alt="" coords="161,1035,287,1061"/>
+<area shape="rect" id="node24" href="$interface_8cpp.html#abed6e5a47df47cd5acfafc1f9ad701b1" title="colorDialog" alt="" coords="181,1085,267,1112"/>
+<area shape="rect" id="node25" href="$class_combobox.html#af774b9d0b9c3f54a49ba6b09c4d6fea6" title="Combobox::getCurrentItem" alt="" coords="135,1136,313,1163"/>
+<area shape="rect" id="node26" href="$class_editfield.html#a3548feaca00fe5071e66570ecda83b90" title="Editfield::getInt" alt="" coords="170,1187,278,1213"/>
+<area shape="rect" id="node28" href="$class_base_draw_interface.html#ad5df021f042dddf05e1110b5e6bbdc5e" title="BaseDrawInterface::\lredraw" alt="" coords="155,1238,293,1279"/>
+<area shape="rect" id="node29" href="$class_base_exception.html#ad70840ac7d0dec4980b4370c25beea7b" title="BaseException::what" alt="" coords="151,1304,297,1331"/>
+<area shape="rect" id="node22" href="$class_action.html#ad8cb35b690b787618acf2628568b774e" title="Action::Execute" alt="" coords="379,984,493,1011"/>
+<area shape="rect" id="node27" href="$class_editfield.html#ab6222eb5a0f30c1ec19a7a7fde682f88" title="Editfield::getText" alt="" coords="377,1187,495,1213"/>
+</map>

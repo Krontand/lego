@@ -1,0 +1,5 @@
+<map id="Rotation::initModification" name="Rotation::initModification">
+<area shape="rect" id="node2" href="$transformationmatrix_8cpp.html#a69f6e38d90edde6dee870ccdf96cf40d" title="matrixMove" alt="" coords="249,5,337,32"/>
+<area shape="rect" id="node3" href="$class_g_matrix.html#abf3bc0e4a6748a41fd48fe7b8acff1fb" title="GMatrix::transposition" alt="" coords="217,56,368,83"/>
+<area shape="rect" id="node4" href="$class_g_matrix.html#a1b1ed816c1b21b3a4b894f755eeaf400" title="GMatrix::inverse" alt="" coords="235,107,351,133"/>
+</map>

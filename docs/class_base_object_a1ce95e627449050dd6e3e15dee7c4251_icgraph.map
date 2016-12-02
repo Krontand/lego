@@ -1,0 +1,5 @@
+<map id="BaseObject::modificate" name="BaseObject::modificate">
+<area shape="rect" id="node2" href="$class_action_brick_rotate_x.html#a66327e631a56dd436cfcbaac7804595b" title="ActionBrickRotateX\l::Execute" alt="" coords="211,5,346,47"/>
+<area shape="rect" id="node3" href="$class_action_brick_rotate_y.html#aea5ab36315929281191fac2c0bee0ffa" title="ActionBrickRotateY\l::Execute" alt="" coords="211,71,347,112"/>
+<area shape="rect" id="node4" href="$class_action_brick_rotate_z.html#a6f563b557c436a51a86c8b85529dd0e9" title="ActionBrickRotateZ\l::Execute" alt="" coords="211,136,346,177"/>
+</map>

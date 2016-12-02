@@ -1,0 +1,8 @@
+<map id="Brick::vertexCount" name="Brick::vertexCount">
+<area shape="rect" id="node2" href="$class_brick.html#ae28407f46ad16a15384415429f1bd080" title="Brick::modificate" alt="" coords="182,5,301,32"/>
+<area shape="rect" id="node3" href="$class_scene.html#a5cedf137cc584d73248df7ecbd517797" title="Scene::AddBrick" alt="" coords="181,56,301,83"/>
+<area shape="rect" id="node5" href="$class_scene.html#a1514b276946d798733a33783482dfe14" title="Scene::toCam" alt="" coords="189,107,294,133"/>
+<area shape="rect" id="node4" href="$class_action_addbrick.html#a944ed0c553a986874577c219878ae69f" title="ActionAddbrick::Execute" alt="" coords="349,56,516,83"/>
+<area shape="rect" id="node6" href="$class_scene.html#aa1cf159cbc4a44528466c7b53ccd48f0" title="Scene::DrawScene" alt="" coords="366,107,499,133"/>
+<area shape="rect" id="node7" href="$class_action_draw.html#ac9cf3ad59aba4b8281a2a3412b15b68c" title="ActionDraw::Execute" alt="" coords="564,107,708,133"/>
+</map>

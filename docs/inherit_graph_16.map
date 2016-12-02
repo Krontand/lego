@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_modification.html" title="Base modification object class. " alt="" coords="5,56,96,83"/>
+<area shape="rect" id="node2" href="$class_rotation.html" title="Base rotation class. " alt="" coords="144,56,215,83"/>
+<area shape="rect" id="node3" href="$class_rotation_x.html" title="Rotation in OX surface. " alt="" coords="263,5,341,32"/>
+<area shape="rect" id="node4" href="$class_rotation_y.html" title="Rotation in OY surface. " alt="" coords="263,56,341,83"/>
+<area shape="rect" id="node5" href="$class_rotation_z.html" title="Rotation in OZ surface. " alt="" coords="263,107,341,133"/>
+</map>

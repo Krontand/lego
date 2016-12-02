@@ -1,0 +1,5 @@
+<map id="ActionAddbrick::Execute" name="ActionAddbrick::Execute">
+<area shape="rect" id="node2" href="$class_scene.html#a5cedf137cc584d73248df7ecbd517797" title="Scene::AddBrick" alt="" coords="220,31,340,57"/>
+<area shape="rect" id="node3" href="$class_brick.html#a02b7996442927478666c10280cdb0969" title="Brick::vertexCount" alt="" coords="388,5,516,32"/>
+<area shape="rect" id="node4" href="$class_composite.html#a168cf319f86946ae16d9e9b47737a07b" title="Composite::add" alt="" coords="395,56,509,83"/>
+</map>

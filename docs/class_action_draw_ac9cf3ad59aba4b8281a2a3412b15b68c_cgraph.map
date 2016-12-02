@@ -1,0 +1,17 @@
+<map id="ActionDraw::Execute" name="ActionDraw::Execute">
+<area shape="rect" id="node2" href="$class_scene.html#aa1cf159cbc4a44528466c7b53ccd48f0" title="Scene::DrawScene" alt="" coords="197,205,331,232"/>
+<area shape="rect" id="node3" href="$class_scene.html#a1514b276946d798733a33783482dfe14" title="Scene::toCam" alt="" coords="379,307,484,333"/>
+<area shape="rect" id="node13" href="$class_render.html#a8671f8f9c20217654a2e0047cd3be379" title="Render::run" alt="" coords="387,129,476,156"/>
+<area shape="rect" id="node4" href="$class_camera.html#a395da9aeb50707bf7234482a03040a2a" title="Camera::cameraview" alt="" coords="536,332,679,359"/>
+<area shape="rect" id="node9" href="$class_g_matrix.html#abf3bc0e4a6748a41fd48fe7b8acff1fb" title="GMatrix::transposition" alt="" coords="532,281,683,308"/>
+<area shape="rect" id="node10" href="$class_g_matrix.html#a1b1ed816c1b21b3a4b894f755eeaf400" title="GMatrix::inverse" alt="" coords="549,383,665,409"/>
+<area shape="rect" id="node11" href="$class_brick.html#a02b7996442927478666c10280cdb0969" title="Brick::vertexCount" alt="" coords="543,433,671,460"/>
+<area shape="rect" id="node12" href="$class_brick.html#ab4074fd3fdb1bc237358b8215624683e" title="Brick::facesCount" alt="" coords="545,231,670,257"/>
+<area shape="rect" id="node5" href="$class_g_vector.html#ad63b071df790f527274dcecc895cc018" title="GVector::normalize" alt="" coords="731,41,865,68"/>
+<area shape="rect" id="node7" href="$class_g_vector.html#afe069f543ae5df7aae6d3df10c636aaa" title="GVector::cross" alt="" coords="743,332,853,359"/>
+<area shape="rect" id="node8" href="$class_g_vector.html#ae0c332c6b01e3ad366276844fb9210a1" title="GVector::scalar" alt="" coords="741,219,855,245"/>
+<area shape="rect" id="node6" href="$class_g_vector.html#a9d1a1760b7322556918a42090ff5a73e" title="GVector::length" alt="" coords="913,41,1027,68"/>
+<area shape="rect" id="node14" href="$class_face.html#a5052c02277ca6ca0d8dc12f476cfe051" title="Face::A" alt="" coords="573,79,641,105"/>
+<area shape="rect" id="node15" href="$class_face.html#ad874821f84059f325db7d0790ca707ec" title="Face::B" alt="" coords="573,129,641,156"/>
+<area shape="rect" id="node16" href="$class_face.html#acb5aa58f50e6b78bdd0df9ef303169fc" title="Face::C" alt="" coords="573,180,641,207"/>
+</map>

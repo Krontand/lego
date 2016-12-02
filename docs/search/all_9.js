@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['id',['id',['../struct_interface_draw.html#ac8990ba786b17fce017fc501a0281da8',1,'InterfaceDraw::id()'],['../struct_interface_ctrl.html#addc18e6e5ede4b2c9352b9bb27180468',1,'InterfaceCtrl::id()'],['../class_base_object.html#ab4c3aa56c35e80135f2d26f70f2675ff',1,'BaseObject::ID()']]],
+  ['idc_5flego',['IDC_LEGO',['../_resource_8h.html#a8b6d836ffe913a3cc88ad22043b0dae6',1,'Resource.h']]],
+  ['idc_5fmyicon',['IDC_MYICON',['../_resource_8h.html#abb326bd165140b31acf04b893ef655ca',1,'Resource.h']]],
+  ['idc_5fstatic',['IDC_STATIC',['../_resource_8h.html#ac93033490bc8943cfc82ec3b40e5cd74',1,'Resource.h']]],
+  ['idd_5faboutbox',['IDD_ABOUTBOX',['../_resource_8h.html#a77a06326b569136edbb6c766bc98c33c',1,'Resource.h']]],
+  ['idd_5flego_5fdialog',['IDD_LEGO_DIALOG',['../_resource_8h.html#a94003a729c323882416e6356420e6c0f',1,'Resource.h']]],
+  ['idi_5flego',['IDI_LEGO',['../_resource_8h.html#a813b6428d5857996a0d901a4b0574d0d',1,'Resource.h']]],
+  ['idi_5fsmall',['IDI_SMALL',['../_resource_8h.html#a861a8cb71616b4615a5823bcf4bff6e3',1,'Resource.h']]],
+  ['idm_5fabout',['IDM_ABOUT',['../_resource_8h.html#a589e0105bc3e8681893dbf51210ceeec',1,'Resource.h']]],
+  ['idm_5fexit',['IDM_EXIT',['../_resource_8h.html#a79aeed168a959b22b32169e25f8c1f4d',1,'Resource.h']]],
+  ['idr_5fmainframe',['IDR_MAINFRAME',['../_resource_8h.html#a9772c84d39896ad00b9aeb34b15d324d',1,'Resource.h']]],
+  ['ids_5fapp_5ftitle',['IDS_APP_TITLE',['../_resource_8h.html#a636c9aea2a8d16b73e43df39b3e0e7bd',1,'Resource.h']]],
+  ['initinstance',['InitInstance',['../lego_8cpp.html#a49ecdbe81d4d8d95d6a85a36717b9e00',1,'InitInstance(HINSTANCE hInstance, int nCmdShow):&#160;lego.cpp'],['../lego_8h.html#a5f77d4e3e5569ff9d236463fd80ebe28',1,'InitInstance(HINSTANCE, int):&#160;lego.cpp'],['../listener_8h.html#a5f77d4e3e5569ff9d236463fd80ebe28',1,'InitInstance(HINSTANCE, int):&#160;lego.cpp']]],
+  ['initmodification',['initModification',['../class_modification.html#a5d4621bdc68df318a8a2185b737a8da3',1,'Modification::initModification()'],['../class_rotation.html#a1f2f659dacda86f34f6140d021c2c194',1,'Rotation::initModification()']]],
+  ['interface_2ecpp',['interface.cpp',['../interface_8cpp.html',1,'']]],
+  ['interface_2eh',['interface.h',['../interface_8h.html',1,'']]],
+  ['interfacectrl',['InterfaceCtrl',['../struct_interface_ctrl.html',1,'']]],
+  ['interfacectrlinit',['InterfaceCtrlInit',['../class_interface_ctrl_init.html',1,'InterfaceCtrlInit'],['../class_interface_ctrl_init.html#a1ed9f1923f8f66cd3425b72e34f11186',1,'InterfaceCtrlInit::InterfaceCtrlInit()'],['../class_interface_ctrl_init.html#abf9c2dae68a3897b4e6bf93fd158f7c4',1,'InterfaceCtrlInit::InterfaceCtrlInit(HWND hWnd, HINSTANCE hInst)']]],
+  ['interfacectrltype',['InterfaceCtrlType',['../interface_8h.html#acbbc71546ae2dbb46d8e7c892e4fd563',1,'interface.h']]],
+  ['interfacedraw',['InterfaceDraw',['../struct_interface_draw.html',1,'']]],
+  ['interfacedrawinit',['InterfaceDrawInit',['../class_interface_draw_init.html',1,'InterfaceDrawInit'],['../class_interface_draw_init.html#af2579b8da13154898023b4ce0808c667',1,'InterfaceDrawInit::InterfaceDrawInit()'],['../class_interface_draw_init.html#a91e05c1cb37dcc958a028d7ca2f4b1c5',1,'InterfaceDrawInit::InterfaceDrawInit(HDC hdc)']]],
+  ['interfacedrawtype',['InterfaceDrawType',['../drawinterface_8h.html#a88e168e6b082e2bbbba21b6a18eb260a',1,'drawinterface.h']]],
+  ['inverse',['inverse',['../class_g_matrix.html#a1b1ed816c1b21b3a4b894f755eeaf400',1,'GMatrix']]],
+  ['isvertex',['isVertex',['../class_base_object.html#a8358834e1606d4dace91d36acad59a94',1,'BaseObject::isVertex()'],['../class_vertex.html#a714b8b9cd777228d02861286bbf898ab',1,'Vertex::isVertex()']]]
+];

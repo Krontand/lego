@@ -1,0 +1,21 @@
+<map id="F:/University/Git/lego/lego/application.h" name="F:/University/Git/lego/lego/application.h">
+<area shape="rect" id="node2" href="$scene_8h.html" title="scene\\scene.h" alt="" coords="173,169,280,196"/>
+<area shape="rect" id="node6" href="$exception_8h.html" title="../exception.h" alt="" coords="539,856,640,883"/>
+<area shape="rect" id="node19" href="$action_8h.html" title="action.h" alt="" coords="398,95,466,121"/>
+<area shape="rect" id="node3" href="$gmatrix_8h.html" title="Define geometric matrix. " alt="" coords="393,632,540,659"/>
+<area shape="rect" id="node8" href="$composite_8h.html" title="Composite class. " alt="" coords="532,244,676,271"/>
+<area shape="rect" id="node17" href="$camera_8h.html" title="Camera object. " alt="" coords="189,244,265,271"/>
+<area shape="rect" id="node18" href="$render_8h.html" title="../render/render.h" alt="" coords="43,244,165,271"/>
+<area shape="rect" id="node4" href="$gvector_8h.html" title="Define geometric vector. " alt="" coords="552,707,627,733"/>
+<area shape="rect" id="node5" href="$geometry_2exception_8h.html" title="exception.h" alt="" coords="545,781,634,808"/>
+<area shape="rect" id="node9" href="$brick_8h.html" title="Model basement. " alt="" coords="579,319,640,345"/>
+<area shape="rect" id="node16" href="$model_2exception_8h.html" title="exception.h" alt="" coords="669,319,758,345"/>
+<area shape="rect" id="node10" href="$normal_8h.html" title="Define normal (object container for GVector) " alt="" coords="521,401,593,427"/>
+<area shape="rect" id="node12" href="$vertex_8h.html" title="Define vertex consisting 3 double coordinates. " alt="" coords="566,557,645,584"/>
+<area shape="rect" id="node15" href="$face_8h.html" title="Define face consisting 3 links to vetices. " alt="" coords="699,483,757,509"/>
+<area shape="rect" id="node11" href="$modification_8h.html" title="Base modification object class. " alt="" coords="398,483,573,509"/>
+<area shape="rect" id="node13" href="$baseobject_8h.html" title="Base object. " alt="" coords="583,632,679,659"/>
+<area shape="rect" id="node14" href="$transformationmatrix_8h.html" title="Matrix to modificate object in 3D surface. " alt="" coords="391,557,542,584"/>
+<area shape="rect" id="node20" href="$loader_8h.html" title="model\\loader.h" alt="" coords="551,169,657,196"/>
+<area shape="rect" id="node21" href="$rotation_8h.html" title="model\\modification\l\\rotation.h" alt="" coords="367,393,497,435"/>
+</map>

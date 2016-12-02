@@ -1,0 +1,25 @@
+<map id="F:/University/Git/lego/lego/application.cpp" name="F:/University/Git/lego/lego/application.cpp">
+<area shape="rect" id="node2" href="$stdafx_8h.html" title="stdafx.h" alt="" coords="705,95,773,121"/>
+<area shape="rect" id="node19" href="$application_8h.html" title="application.h" alt="" coords="1513,95,1607,121"/>
+<area shape="rect" id="node20" href="$scene_8h.html" title="scene\\scene.h" alt="" coords="1985,169,2092,196"/>
+<area shape="rect" id="node38" href="$loader_8h.html" title="model\\loader.h" alt="" coords="1535,244,1641,271"/>
+<area shape="rect" id="node3" href="$targetver_8h.html" title="targetver.h" alt="" coords="253,169,336,196"/>
+<area shape="rect" id="node13" href="$_resource_8h.html" title="Resource.h" alt="" coords="1163,169,1251,196"/>
+<area shape="rect" id="node24" href="$exception_8h.html" title="../exception.h" alt="" coords="1497,931,1599,957"/>
+<area shape="rect" id="node37" href="$action_8h.html" title="action.h" alt="" coords="1554,169,1622,196"/>
+<area shape="rect" id="node21" href="$gmatrix_8h.html" title="Define geometric matrix. " alt="" coords="1801,707,1948,733"/>
+<area shape="rect" id="node26" href="$composite_8h.html" title="Composite class. " alt="" coords="1616,326,1760,353"/>
+<area shape="rect" id="node35" href="$camera_8h.html" title="Camera object. " alt="" coords="2077,244,2153,271"/>
+<area shape="rect" id="node36" href="$render_8h.html" title="../render/render.h" alt="" coords="2177,244,2298,271"/>
+<area shape="rect" id="node22" href="$gvector_8h.html" title="Define geometric vector. " alt="" coords="1593,781,1668,808"/>
+<area shape="rect" id="node23" href="$geometry_2exception_8h.html" title="exception.h" alt="" coords="1586,856,1675,883"/>
+<area shape="rect" id="node27" href="$brick_8h.html" title="Model basement. " alt="" coords="1655,408,1716,435"/>
+<area shape="rect" id="node34" href="$model_2exception_8h.html" title="exception.h" alt="" coords="1535,408,1625,435"/>
+<area shape="rect" id="node28" href="$normal_8h.html" title="Define normal (object container for GVector) " alt="" coords="1748,483,1820,509"/>
+<area shape="rect" id="node30" href="$vertex_8h.html" title="Define vertex consisting 3 double coordinates. " alt="" coords="1697,632,1775,659"/>
+<area shape="rect" id="node33" href="$face_8h.html" title="Define face consisting 3 links to vetices. " alt="" coords="1586,557,1643,584"/>
+<area shape="rect" id="node29" href="$modification_8h.html" title="Base modification object class. " alt="" coords="1770,557,1945,584"/>
+<area shape="rect" id="node31" href="$baseobject_8h.html" title="Base object. " alt="" coords="1664,707,1760,733"/>
+<area shape="rect" id="node32" href="$transformationmatrix_8h.html" title="Matrix to modificate object in 3D surface. " alt="" coords="1799,632,1950,659"/>
+<area shape="rect" id="node39" href="$rotation_8h.html" title="model\\modification\l\\rotation.h" alt="" coords="1787,319,1917,360"/>
+</map>

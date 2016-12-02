@@ -1,0 +1,10 @@
+<map id="BaseException" name="BaseException">
+<area shape="rect" id="node3" href="$class_allocation_memory_error.html" title="AllocationMemoryError" alt="" coords="322,5,477,32"/>
+<area shape="rect" id="node4" href="$class_composite_add_n_u_l_l_error.html" title="CompositeAddNULLError" alt="" coords="316,56,483,83"/>
+<area shape="rect" id="node5" href="$class_loader_bad_file.html" title="LoaderBadFile" alt="" coords="347,107,452,133"/>
+<area shape="rect" id="node6" href="$class_loader_error.html" title="LoaderError" alt="" coords="355,157,444,184"/>
+<area shape="rect" id="node7" href="$class_loader_open_file_error.html" title="LoaderOpenFileError" alt="" coords="329,208,470,235"/>
+<area shape="rect" id="node8" href="$class_model_choosing_error.html" title="ModelChoosingError" alt="" coords="330,259,469,285"/>
+<area shape="rect" id="node9" href="$class_vector_index_error.html" title="VectorIndexError" alt="" coords="340,309,459,336"/>
+<area shape="rect" id="node10" href="$class_vector_size_error.html" title="VectorSizeError" alt="" coords="342,360,457,387"/>
+</map>

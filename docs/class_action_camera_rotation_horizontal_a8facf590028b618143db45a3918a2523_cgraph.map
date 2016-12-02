@@ -1,0 +1,5 @@
+<map id="ActionCameraRotationHorizontal::Execute" name="ActionCameraRotationHorizontal::Execute">
+<area shape="rect" id="node2" href="$class_camera.html#ac9c3cd76cf46ada1112145965566ea92" title="Camera::rotateHorizontal\lSphere" alt="" coords="264,23,431,65"/>
+<area shape="rect" id="node3" href="$cameramodification_8cpp.html#a4211d51afeed051bcd5a72d4abc20b4e" title="matrixrotation" alt="" coords="487,5,588,32"/>
+<area shape="rect" id="node4" href="$cameramodification_8cpp.html#ad61227698c695d6ab60db26e558071d4" title="matrixmovement" alt="" coords="479,56,596,83"/>
+</map>

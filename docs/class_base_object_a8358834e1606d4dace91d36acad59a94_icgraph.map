@@ -1,0 +1,8 @@
+<map id="BaseObject::isVertex" name="BaseObject::isVertex">
+<area shape="rect" id="node2" href="$class_rotation.html#aa5085ec07882562b5519a1cfe41ed81e" title="Rotation::rotateX" alt="" coords="201,5,319,32"/>
+<area shape="rect" id="node4" href="$class_rotation.html#adac70519115d80140a20af0d9e96df9e" title="Rotation::rotateY" alt="" coords="200,56,320,83"/>
+<area shape="rect" id="node6" href="$class_rotation.html#ac99776548b3877b6f324c93539b2fd57" title="Rotation::rotateZ" alt="" coords="201,107,319,133"/>
+<area shape="rect" id="node3" href="$class_rotation_x.html#a6134c834a5fafec87c13c040fdde84f9" title="RotationX::run" alt="" coords="369,5,472,32"/>
+<area shape="rect" id="node5" href="$class_rotation_y.html#a733816a591dc58743a915c6fe3c03067" title="RotationY::run" alt="" coords="368,56,473,83"/>
+<area shape="rect" id="node7" href="$class_rotation_z.html#a46b8cba8192a2aeca1ea3db53a4fefff" title="RotationZ::run" alt="" coords="369,107,472,133"/>
+</map>

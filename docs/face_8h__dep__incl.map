@@ -1,0 +1,18 @@
+<map id="F:/University/Git/lego/lego/model/face.h" name="F:/University/Git/lego/lego/model/face.h">
+<area shape="rect" id="node2" href="$brick_8h.html" title="Model basement. " alt="" coords="487,95,629,136"/>
+<area shape="rect" id="node17" href="$face_8cpp.html" title="F:/University/Git/lego\l/lego/model/face.cpp" alt="" coords="653,95,796,136"/>
+<area shape="rect" id="node3" href="$composite_8h.html" title="Composite class. " alt="" coords="387,184,551,225"/>
+<area shape="rect" id="node16" href="$brick_8cpp.html" title="F:/University/Git/lego\l/lego/model/brick.cpp" alt="" coords="575,184,722,225"/>
+<area shape="rect" id="node4" href="$loader_8h.html" title="F:/University/Git/lego\l/lego/model/loader.h" alt="" coords="180,273,323,315"/>
+<area shape="rect" id="node11" href="$scene_8h.html" title="F:/University/Git/lego\l/lego/scene/scene.h" alt="" coords="440,363,583,404"/>
+<area shape="rect" id="node15" href="$composite_8cpp.html" title="F:/University/Git/lego\l/lego/model/composite.cpp" alt="" coords="506,273,685,315"/>
+<area shape="rect" id="node5" href="$action_8h.html" title="F:/University/Git/lego\l/lego/action.h" alt="" coords="248,363,391,404"/>
+<area shape="rect" id="node7" href="$application_8cpp.html" title="F:/University/Git/lego\l/lego/application.cpp" alt="" coords="123,541,265,583"/>
+<area shape="rect" id="node10" href="$loader_8cpp.html" title="F:/University/Git/lego\l/lego/model/loader.cpp" alt="" coords="5,363,159,404"/>
+<area shape="rect" id="node6" href="$application_8h.html" title="F:/University/Git/lego\l/lego/application.h" alt="" coords="285,452,428,493"/>
+<area shape="rect" id="node8" href="$lego_8cpp.html" title="F:/University/Git/lego\l/lego/lego.cpp" alt="" coords="289,541,432,583"/>
+<area shape="rect" id="node9" href="$listener_8cpp.html" title="F:/University/Git/lego\l/lego/listener.cpp" alt="" coords="456,541,599,583"/>
+<area shape="rect" id="node12" href="$render_8h.html" title="F:/University/Git/lego\l/lego/render/render.h" alt="" coords="452,452,595,493"/>
+<area shape="rect" id="node14" href="$scene_8cpp.html" title="F:/University/Git/lego\l/lego/scene/scene.cpp" alt="" coords="619,452,772,493"/>
+<area shape="rect" id="node13" href="$render_8cpp.html" title="F:/University/Git/lego\l/lego/render/render.cpp" alt="" coords="623,541,778,583"/>
+</map>
