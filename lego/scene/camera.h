@@ -55,6 +55,7 @@ public:
 	GMatrix cameraview();
 
 	GVector position;	/*!< Camera position */
+	GVector ñposition;	/*!< Camera position in camera system*/
 	GVector target;		/*! Point on which looks camera */
 
 private:

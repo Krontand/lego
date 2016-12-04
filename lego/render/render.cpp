@@ -236,25 +236,20 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 
 double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, Camera cam)
 {
-	GVector vlight(light.X, light.Y, light.Z, 1);
-	GVector vpoint(X, Y, Z, 1);
-	vlight.normalize();
-	vpoint.normalize();
-	GVector D = vpoint;
-	D = D - vlight;
-	//GVector D(X - light.X, Y - light.Y, Z - light.Z, 0);
+	GVector D(light.X - X, light.Y - Y, light.Z - Z, 0);
 	D.normalize();
 	N.normalize();
 	double I;
 	double Iconst = 0.20;
 	double Idiff = 0.60 * max(0, GVector::scalar(N, D));
 
-	GVector v(cam.position);
+
+	GVector v(cam.�position);
 	v.normalize();
 	GVector h(v);
 	h = h + D;
 	h.normalize();
-	double Iblinn = 0.20 * pow(max(0, GVector::scalar(h, N)), 1000);
+	double Iblinn = 0.20 * pow(max(0, GVector::scalar(h, N)), 500);
 
 	I = Iconst + Idiff + Iblinn;
 	return I;

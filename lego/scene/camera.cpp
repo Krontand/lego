@@ -73,33 +73,6 @@ GMatrix Camera::cameraview()
 	}
 
 	view.transposition();
+	this->ñposition = this->position * view;
 	return view;
-
-	/*GVector z = (this->position - this->target).normalize();
-	GVector x = GVector::cross(this->up, z).normalize();
-	GVector y = GVector::cross(z, x).normalize();
-	GMatrix Minv;
-	GMatrix Tr;
-	for (int i = 0; i < 4; i++)
-	{
-	for (int j = 0; j < 4; j++)
-	if (i == j)
-	{
-	Minv[i][j] = 1;
-	Tr[i][j] = 1;
-	}
-	else
-	{
-	Minv[i][j] = 0;
-	Tr[i][j] = 0;
-	}
-	}
-	for (int i = 0; i < 3; i++)
-	{
-	Minv[0][i] = x[i];
-	Minv[1][i] = y[i];
-	Minv[2][i] = z[i];
-	Tr[i][3] = (this->target[i]) * (-1);
-	}
-	GMatrix view = Minv * Tr;*/
 }
