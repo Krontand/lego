@@ -20,12 +20,6 @@ Render::~Render()
 
 void Render::run(Composite* bricks, Camera cam, Vertex light)
 {
-	this->maxx = -999999;
-	this->maxy = -999999;
-	this->maxz = -999999;
-	this->minx = 999999;
-	this->miny = 999999;
-	this->minz = 999999;
 #pragma omp parallel
 	for (int i = 0; i<this->width * this->height; i++) {
 		this->zbuffer[i] = -9999999;
@@ -206,12 +200,6 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 			int pix = yCoord * this->width + xCoord;
 			if (pix >= 0 && pix <= this->width * this->height)
 			{
-				if (xCoord > maxx) maxx = xCoord;
-				if (xCoord < minx) minx = xCoord;
-				if (yCoord > maxy) maxy = yCoord;
-				if (yCoord < miny) miny = yCoord;
-				if (z > maxz) maxz = z;
-				if (z < minz) minz = z;
 				if (this->zbuffer[pix] < z)
 				{
 					double I = this->intencity(xCoord, yCoord, z, normP, light, cam);

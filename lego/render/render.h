@@ -22,6 +22,4 @@ private:
 
 	int* zbuffer;
 
-	int maxx, maxy, maxz, minx, miny, minz;
-
 }; 
