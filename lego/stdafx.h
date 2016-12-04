@@ -45,4 +45,9 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #define EDIT_Z 893
 #define TXT_COLOR 894
 #define RCT_COLOR 895
-#define BTN_CHCOLOR 889
+#define BTN_CHCOLOR 896
+#define RCT_SEPARATE 897
+#define CB_CHOOSEBRICK 898
+#define CB_CHOOSEACTIVE	899
+#define TXT_MODORDELETE 900
+#define BTN_DELETE 901

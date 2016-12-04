@@ -11,7 +11,6 @@ Contains links to verices
 
 #pragma once
 
-#include "vertex.h"
 #include "../geometry/gvector.h"
 
 using std::vector;

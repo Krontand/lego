@@ -60,7 +60,7 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 		throw AllocationMemoryError();
 	}
 
-	GVector position(1000, 0, 0, 1);
+	GVector position(1000, 1000, 1000, 1);
 	GVector target(0, 0, 0, 1);
 
 	this->cam = new Camera(position, target);
@@ -75,8 +75,9 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 
 		throw AllocationMemoryError();
 	}
-	//this->light.Z = -1000;
-	this->light.X = -1000;
+	this->light.X = -200;
+	this->light.Y = -200;
+	this->light.Z = -200;
 
 }
 
@@ -190,14 +191,21 @@ void Scene::toCam()
 
 	GMatrix view = this->cam->cameraview();
 
-	GMatrix nview = view;
+	GMatrix nview(view);
 	nview.transposition();
 	nview.inverse();
-	
-	this->slight = this->light;// *view;
 
-	this->slight.X += this->width / 2;
-	this->slight.Y += this->height / 2;
+	GMatrix scenecoord = matrixMove(xCenter, yCenter, 0);
+	GMatrix nscenecoord = scenecoord;
+	nscenecoord.transposition().inverse();
+	
+	// I don't know why, but if I put
+	// light and normals in camera system coordinates
+	// they don't work. I guess something here is answer
+	// why cylinders lighting works not very good...
+	this->slight = this->light;
+	//this->slight = this->slight * view;
+	this->slight = this->slight * scenecoord;
 
 	for (int brickIndex = 0; brickIndex < this->bricks->objects.size(); brickIndex++)
 	{
@@ -207,8 +215,7 @@ void Scene::toCam()
 		{
 			Vertex tmpVertex = nbrick->vertex[vertexIndex];
 			tmpVertex = tmpVertex * view;
-			tmpVertex.X = tmpVertex.X + xCenter;
-			tmpVertex.Y = tmpVertex.Y + yCenter;
+			tmpVertex = tmpVertex * scenecoord;
 
 			nbrick->svertex[vertexIndex] = tmpVertex;
 		}
@@ -220,6 +227,8 @@ void Scene::toCam()
 			{
 				GVector tmpN(nbrick->VNormal[faceIndex][i]);	
 				//tmpN = tmpN * nview;
+				//tmpN = tmpN * nscenecoord;
+				tmpN.normalize();
 				nbrick->sVNormal[faceIndex][i] = tmpN;
 			}
 		}

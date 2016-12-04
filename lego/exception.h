@@ -21,6 +21,15 @@ class ModelChoosingError : public BaseException
 public:
 	virtual const char* what() const
 	{
-		return "Choose model from select field first!";
+		return "Choose model to add from top select field!";
+	}
+};
+
+class BrickChoosingError : public BaseException
+{
+public:
+	virtual const char* what() const
+	{
+		return "Choose brick to modifiate from bottom select field!";
 	}
 };

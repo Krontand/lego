@@ -41,6 +41,11 @@ HWND Combobox::create(int X, int Y, int HEIGHT, int WIDTH, WCHAR* TEXT)
 	return this->chWnd;
 }
 
+void Combobox::resetSelect()
+{
+	SendMessage(this->chWnd, CB_SETCURSEL, 0, 0L);
+}
+
 void Combobox::addItem(WCHAR* item)
 {
 	WCHAR buf[100];
@@ -48,6 +53,11 @@ void Combobox::addItem(WCHAR* item)
 	wcscpy_s(buf, sizeof(buf) / sizeof(WCHAR), (WCHAR*)item);
 	SendMessage(this->chWnd, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	SendMessage(this->chWnd, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+}
+
+void Combobox::deleteItem(int ID)
+{
+	SendMessage(this->chWnd, CB_DELETESTRING, (WPARAM)ID, (LPARAM)0L);
 }
 
 int Combobox::getCurrentItem()

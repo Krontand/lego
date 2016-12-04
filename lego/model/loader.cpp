@@ -44,9 +44,9 @@ Vertex Loader::readVertex()
 		throw LoaderBadFile();
 	}
 
-	tmpX *= 0.5;
-	tmpY *= 0.5;
-	tmpZ *= 0.5;
+	tmpX *= 2.5;
+	tmpY *= 2.5;
+	tmpZ *= 2.5;
 
 	Vertex v(tmpX, tmpY, tmpZ);
 

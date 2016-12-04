@@ -59,7 +59,11 @@ public:
 	*/
 	HWND create(int X, int Y, int HEIGHT, int WIDTH, WCHAR* TEXT) override;
 
+	void resetSelect();
+
 	void addItem(WCHAR* item);
+
+	void deleteItem(int ID);
 
 	int getCurrentItem();
 

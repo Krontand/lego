@@ -98,6 +98,8 @@ void Brick::modificate(Modification* modification, Vertex* center)
 
 	modification->initModification(center);
 
+	this->center.modificate(modification, center);
+
 #pragma omp parallel for
 	for(int i = 0; i < this->vertexCount(); i++)
 	{

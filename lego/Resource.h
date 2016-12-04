@@ -16,11 +16,13 @@
 #define IDC_MYICON				2
 #ifndef IDC_STATIC
 #define IDC_STATIC				-1
-#define CB_CHOOSEBRICK		120
+
 #define BTN_ADDBRICK	121
 #define BTN_ADDBRICK_ACTIVE	122
 #define BTN_COLOR	123
 #define BTN_COLOR_ACTIVE	124
+#define BTN_DELETEBRICK	125
+#define BTN_DELETEBRICK_ACTIVE	126
 #endif
 // Следующие стандартные значения для новых объектов
 //

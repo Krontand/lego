@@ -1,53 +1,53 @@
 /*!
-\file rotation.h "model/modification/rotation.h"
-\brief  Rotation classes
+\file movement.h "model/modification/movement.h"
+\brief  Movement classes
 \author Dmitry Zaitsev
 \copyright © BMSTU All rights violated.
 \version 1.0
-\date 22 October 2016
+\date 03 December 2016
 
-OX OY and OZ rotation classes
+OX OY and OZ movement classes
 */
 
 #pragma once
 #include "modification.h"
 
 /*!
-\class Rotation rotation.h "model/modification/rotation.h"
-\brief Base rotation class
+\class Movement movement.h "model/modification/movement.h"
+\brief Base movement class
 
-Define rotation methods
+Define movement methods
 */
-class Rotation : public Modification
+class Movement : public Modification
 {
 public:
 	/*!
 	Emty constructor. No action.
 	*/
-	Rotation();
+	Movement();
 
 	/*!
 	Destructor. No action.
 	*/
-	~Rotation();
+	~Movement();
 
 	/*!
-	Provide rotation in OX surface
+	Provide movement in OX surface
 	\param[in] o Object to transform
 	*/
-	void rotateX(BaseObject* o);
+	void moveX(BaseObject* o);
 
 	/*!
-	Provide rotation in OY surface
+	Provide movement in OY surface
 	\param[in] o Object to transform
 	*/
-	void rotateY(BaseObject* o);
+	void moveY(BaseObject* o);
 
 	/*!
-	Provide rotation in OZ surface
+	Provide movement in OZ surface
 	\param[in] o Object to transform
 	*/
-	void rotateZ(BaseObject* o);
+	void moveZ(BaseObject* o);
 
 	/*!
 	Set center around which occur modificaion and calculate transform matrix
@@ -63,37 +63,41 @@ public:
 
 
 protected:
-	Vertex* center;				/*!< Rotation center */
-	double angle;				/*!< Rotation angle in degrees */
-	GMatrix rotate;				/*!< Rotation matrix */
-	GMatrix vMatrixRotation;	/*!< Matrix to change vertex */
-	GMatrix nMatrixRotation;	/*!< Matrix to change normal */
+	double shift;				/*!< Movement koefficient */
+	GMatrix move;				/*!< Movement matrix */
+	
+	// The idea is that normals movement 
+	// won't change normals at all. But
+	// I'm gonna make this because I have
+	// no idea what's wrong with cylinders lighting
+	// Maybe this will help? I don't think so...
+	GMatrix nmove;				/*!< Movement matrix (for normals)*/
 };
 
 /*!
-\class RotationX rotation.h "model/modification/rotation.h"
-\brief Rotation in OX surface
+\class MovementX movement.h "model/modification/movement.h"
+\brief MovementX in OX surface
 
-Provide rotation in OX surface
+Provide movementX in OX surface
 */
-class RotationX : public Rotation
+class MovementX : public Movement
 {
 public:
 	/*!
 	Emty constructor. No action.
 	*/
-	RotationX();
+	MovementX();
 
 	/*!
 	Constructor. Set rotation angle.
 	\param[in] angle Rotation angle
 	*/
-	RotationX(double angle);
+	MovementX(double angle);
 
 	/*!
 	Destructor. No action.
 	*/
-	~RotationX();
+	~MovementX();
 
 	/*!
 	Launches modification
@@ -104,61 +108,62 @@ public:
 };
 
 /*!
-\class RotationY rotation.h "model/modification/rotation.h"
-\brief Rotation in OY surface
+\class MovementY movement.h "model/modification/movement.h"
+\brief MovementY in OY surface
 
-Provide rotation in OY surface
+Provide movementY in OY surface
 */
-class RotationY : public Rotation
+class MovementY : public Movement
 {
 public:
 	/*!
 	Emty constructor. No action.
 	*/
-	RotationY();
+	MovementY();
 
 	/*!
 	Constructor. Set rotation angle.
 	\param[in] angle Rotation angle
 	*/
-	RotationY(double angle);
+	MovementY(double angle);
 
 	/*!
 	Destructor. No action.
 	*/
-	~RotationY();
+	~MovementY();
 
 	/*!
 	Launches modification
 	\param[in] o Object to modificate
 	*/
 	virtual void run(BaseObject* o) override;
+
 };
 
 /*!
-\class RotationZ rotation.h "model/modification/rotation.h"
-\brief Rotation in OZ surface
+\class MovementZ movement.h "model/modification/movement.h"
+\brief MovementZ in OZ surface
 
-Provide rotation in OZ surface
+Provide movementZ in OZ surface
 */
-class RotationZ : public Rotation
+class MovementZ : public Movement
 {
 public:
 	/*!
 	Emty constructor. No action.
 	*/
-	RotationZ();
+	MovementZ();
 
 	/*!
 	Constructor. Set rotation angle.
 	\param[in] angle Rotation angle
 	*/
-	RotationZ(double angle);
+	MovementZ(double angle);
 
 	/*!
 	Destructor. No action.
 	*/
-	~RotationZ();
+	~MovementZ();
 
 	/*!
 	Launches modification

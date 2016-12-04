@@ -15,6 +15,8 @@ BaseDrawInterface* drawUI = new BaseDrawInterface;
 COLORREF brickColor = RGB(140, 140, 255);
 
 double angle = ROTATTION_ANGLE;
+double shift = 5;
+int bcount = 0;
 
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -93,6 +95,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			UI->button(BTN_OK)->create(10, 500, 33, 223, TEXT("Add Brick!"));
 			UI->button(BTN_OK)->setImage(BTN_ADDBRICK);
 
+			drawUI->rectangle(RCT_SEPARATE)
+				->SetBorderWidth(0)
+				->SetColor(RGB(160, 170, 207))
+				->display(0, 550, 246, 555, NULL);
+
+			drawUI->text(TXT_MODORDELETE)
+				->SetColor(RGB(211, 220, 236))
+				->SetWeight(200)
+				->SetHeight(22)
+				->SetSymbolWidth(8)
+				->display(10, 585, 0, 0, TEXT("Modificate or delete brick:"));
+
+			UI->combobox(CB_CHOOSEACTIVE)->create(10, 625, 22, 223, TEXT("Choose active brick..."));
+
+			UI->button(BTN_DELETE)->create(10, 670, 33, 223, TEXT("Delete Brick!"));
+			UI->button(BTN_DELETE)->setImage(BTN_DELETEBRICK);
 		
 			ActionLoadbrick* LoadFirst = new ActionLoadbrick("objs/untitled.obj");
 			if (!LoadFirst)
@@ -124,24 +142,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 				else
 				{
-					SetCursor(LoadCursor(nullptr, IDC_ARROW));
 					UI->button(BTN_CHCOLOR)->setImage(BTN_COLOR);
-					return true;
+					if ((HWND)wParam == UI->button(BTN_DELETE)->getHWND())
+					{
+						SetCursor(LoadCursor(nullptr, IDC_HAND));
+						UI->button(BTN_DELETE)->setImage(BTN_DELETEBRICK_ACTIVE);
+						return true;
+					}
+					else
+					{
+						SetCursor(LoadCursor(nullptr, IDC_ARROW));
+						UI->button(BTN_DELETE)->setImage(BTN_DELETEBRICK);
+						return true;
+					}
 				}
 			}
 			break;
 		case WM_COMMAND:
 		case WM_KEYDOWN:
 		{
+			if (HIWORD(wParam) == CBN_SELCHANGE)
+			{
+				// After focusing combobox we need set focus on main window
+				SetFocus(hWnd);
+			}
 			int wmId = LOWORD(wParam);
-			// Разобрать выбор в меню:
+			
 			switch (wmId)
 			{
-			case CB_CHOOSEBRICK:
-			{
-
-			}
-			break;
 			case BTN_CHCOLOR:
 			{
 				brickColor = colorDialog();
@@ -169,7 +197,109 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 				application->call(*addBrick, brickID-1);
 				application->call(*actionDraw, 0);
+
+				bcount++;
+				wchar_t wbcount[256];
+				swprintf_s(wbcount, L"%d", bcount);
+				UI->combobox(CB_CHOOSEACTIVE)->addItem(wbcount);
 				SetFocus(hWnd);
+			}
+			break;
+			case BTN_DELETE:
+			{
+				int brickID = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				if (brickID == 0)
+				{
+					throw BrickChoosingError();
+				}
+
+				int X = UI->editfield(EDIT_X)->getInt();
+				int Y = UI->editfield(EDIT_Y)->getInt();
+				int Z = UI->editfield(EDIT_Z)->getInt();
+
+				ActionDeletebrick* delBrick = new ActionDeletebrick(brickID - 1);
+				if (!delBrick)
+				{
+					throw AllocationMemoryError();
+				}
+
+				application->call(*delBrick, brickID - 1);
+				application->call(*actionDraw, 0);
+
+				UI->combobox(CB_CHOOSEACTIVE)->deleteItem(bcount);
+				UI->combobox(CB_CHOOSEACTIVE)->resetSelect();
+				bcount--;
+				
+				SetFocus(hWnd);
+			}
+			break;
+
+			case 0x57: // W key
+			{
+				ActionBrickMoveY* movey = new ActionBrickMoveY(shift);
+				if (!movey)
+				{
+					throw AllocationMemoryError();
+				}
+
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				if (brickActive == 0)
+				{
+					throw BrickChoosingError();
+				}
+				application->call(*movey, brickActive - 1);
+				application->call(*actionDraw, 0);
+			}
+			break;
+			case 0x53: // S key
+			{
+				ActionBrickMoveY* movey = new ActionBrickMoveY(-shift);
+				if (!movey)
+				{
+					throw AllocationMemoryError();
+				}
+
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				if (brickActive == 0)
+				{
+					throw BrickChoosingError();
+				}
+				application->call(*movey, brickActive - 1);
+				application->call(*actionDraw, 0);
+			}
+			break;
+			case 0x41: // A key
+			{
+				ActionBrickMoveX* movex = new ActionBrickMoveX(-shift);
+				if (!movex)
+				{
+					throw AllocationMemoryError();
+				}
+
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				if (brickActive == 0)
+				{
+					throw BrickChoosingError();
+				}
+				application->call(*movex, brickActive - 1);
+				application->call(*actionDraw, 0);
+			}
+			break;
+			case 0x44: // D key
+			{
+				ActionBrickMoveX* movex = new ActionBrickMoveX(shift);
+				if (!movex)
+				{
+					throw AllocationMemoryError();
+				}
+
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				if (brickActive == 0)
+				{
+					throw BrickChoosingError();
+				}
+				application->call(*movex, brickActive - 1);
+				application->call(*actionDraw, 0);
 			}
 			break;
 			case VK_RIGHT:
@@ -180,7 +310,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw AllocationMemoryError();
 				}
 
-				application->call(*rotatex, 0);
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				if (brickActive == 0)
+				{
+					throw BrickChoosingError();
+				}
+				application->call(*rotatex, brickActive - 1);
 				application->call(*actionDraw, 0);
 			}
 			break;
@@ -192,7 +327,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw AllocationMemoryError();
 				}
 
-				application->call(*rotatex, 0);
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				if (brickActive == 0)
+				{
+					throw BrickChoosingError();
+				}
+				application->call(*rotatex, brickActive - 1);
 				application->call(*actionDraw, 0);
 			}
 			break;
@@ -204,7 +344,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw AllocationMemoryError();
 				}
 
-				application->call(*rotatez, 0);
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				if (brickActive == 0)
+				{
+					throw BrickChoosingError();
+				}
+				application->call(*rotatez, brickActive - 1);
 				application->call(*actionDraw, 0);
 			}
 			break;
@@ -216,7 +361,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw AllocationMemoryError();
 				}
 
-				application->call(*rotatez, 0);
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				if (brickActive == 0)
+				{
+					throw BrickChoosingError();
+				}
+				application->call(*rotatez, brickActive  - 1);
 				application->call(*actionDraw, 0);
 			}
 			break;

@@ -1,6 +1,7 @@
 #pragma once
 #include "model\loader.h"
 #include "model\modification\rotation.h"
+#include "model\modification\movement.h"
 
 class Action
 {
@@ -54,6 +55,28 @@ public:
 private:
 	int X, Y, Z;
 	COLORREF color;
+};
+
+class ActionDeletebrick : public Action
+{
+public:
+	ActionDeletebrick(int ID)
+	{
+		this->ID = ID;
+	}
+
+	~ActionDeletebrick()
+	{
+	}
+
+	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
+	{
+		delete scene->bricks->objects[this->ID];
+		scene->bricks->objects.erase(scene->bricks->objects.begin() + this->ID);
+	}
+
+private:
+	int ID;
 };
 
 class ActionDraw : public Action
@@ -155,6 +178,90 @@ public:
 
 private:
 	double angle;
+};
+
+class ActionBrickMoveX : public Action
+{
+public:
+	ActionBrickMoveX(double shift)
+	{
+		this->shift = shift;
+	}
+
+	~ActionBrickMoveX()
+	{
+	}
+
+	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
+	{
+		MovementX* modification = new MovementX(this->shift);
+		BaseObject* brick = scene->bricks;
+		if (ID >= 0)
+		{
+			Composite* bricks = (Composite*)brick;
+			brick = bricks->objects[ID];
+		}
+		brick->modificate(modification);
+	}
+
+private:
+	double shift;
+};
+
+class ActionBrickMoveY : public Action
+{
+public:
+	ActionBrickMoveY(double shift)
+	{
+		this->shift = shift;
+	}
+
+	~ActionBrickMoveY()
+	{
+	}
+
+	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
+	{
+		MovementY* modification = new MovementY(this->shift);
+		BaseObject* brick = scene->bricks;
+		if (ID >= 0)
+		{
+			Composite* bricks = (Composite*)brick;
+			brick = bricks->objects[ID];
+		}
+		brick->modificate(modification);
+	}
+
+private:
+	double shift;
+};
+
+class ActionBrickMoveZ : public Action
+{
+public:
+	ActionBrickMoveZ(double shift)
+	{
+		this->shift = shift;
+	}
+
+	~ActionBrickMoveZ()
+	{
+	}
+
+	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
+	{
+		MovementZ* modification = new MovementZ(this->shift);
+		BaseObject* brick = scene->bricks;
+		if (ID >= 0)
+		{
+			Composite* bricks = (Composite*)brick;
+			brick = bricks->objects[ID];
+		}
+		brick->modificate(modification);
+	}
+
+private:
+	double shift;
 };
 
 class ActionCameraRotationHorizontal : public Action
