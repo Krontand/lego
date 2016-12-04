@@ -73,6 +73,6 @@ GMatrix Camera::cameraview()
 	}
 
 	view.transposition();
-	this->ñposition = this->position * view;
+	this->cposition = this->position * view;
 	return view;
 }

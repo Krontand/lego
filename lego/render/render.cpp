@@ -244,7 +244,6 @@ double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, 
 	double Idiff = 0.60 * max(0, GVector::scalar(N, D));
 
 
-	GVector v(cam.�position);
 	v.normalize();
 	GVector h(v);
 	h = h + D;
