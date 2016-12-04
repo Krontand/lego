@@ -5,7 +5,7 @@
 
 GVector::GVector()
 {
-	for (int i = 0; i <= 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		this->vec.push_back(0);
 	}
@@ -46,7 +46,7 @@ GVector GVector::operator+(const GVector other)
 	result[0] = (*this)[0] + other[0];
 	result[1] = (*this)[1] + other[1];
 	result[2] = (*this)[2] + other[2];
-	result[3] = (*this)[3];
+	result[3] = (*this)[3] + other[3];
 	return result;
 }
 
@@ -56,7 +56,7 @@ GVector GVector::operator-(const GVector other)
 	result[0] = (*this)[0] - other[0];
 	result[1] = (*this)[1] - other[1];
 	result[2] = (*this)[2] - other[2];
-	result[3] = (*this)[3];
+	result[3] = (*this)[3] - other[3];
 	return result;
 }
 
@@ -66,7 +66,7 @@ GVector GVector::operator/(const double value)
 	result[0] = (*this)[0] / value;
 	result[1] = (*this)[1] / value;
 	result[2] = (*this)[2] / value;
-	result[3] = (*this)[3];
+	result[3] = (*this)[3] / value;
 	return result;
 }
 
@@ -76,7 +76,7 @@ GVector GVector::operator*(const double value)
 	result[0] = (*this)[0] * value;
 	result[1] = (*this)[1] * value;
 	result[2] = (*this)[2] * value;
-	result[3] = (*this)[3];
+	result[3] = (*this)[3] * value;
 	return result;
 }
 
@@ -135,7 +135,7 @@ GVector GVector::cross(GVector first, GVector second)
 	result[0] = first[1] * second[2] - first[2] * second[1]; // new X = Y1 * Z2 - Z1 * Y2
 	result[1] = first[2] * second[0] - first[0] * second[2]; // new Y = Z1 * X2 - X1 * Z2
 	result[2] = first[0] * second[1] - first[1] * second[0]; // new Z = X1 * Y2 - Y1 * X2
-	result[3] = 1;
+	result[3] = 0;
 
 	return result;
 }
@@ -161,9 +161,9 @@ double GVector::angle(GVector first, GVector second)
 GVector GVector::operator*(GMatrix matrix)
 {
 	GVector result;
-	for (size_t i = 0; i <= 3; i++)
+	for (size_t i = 0; i < 4; i++)
 	{
-		for (size_t j = 0; j <= 3; j++)
+		for (size_t j = 0; j < 4; j++)
 		{
 			result[i] = result[i] + matrix[j][i] * this->vec[j];
 		}

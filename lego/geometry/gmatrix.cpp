@@ -4,7 +4,7 @@
 
 GMatrix::GMatrix()
 {
-	for (size_t i = 0; i <= 3; i++)
+	for (size_t i = 0; i < 4; i++)
 	{
 		GVector tmp;
 		this->matrix.push_back(tmp);
@@ -13,7 +13,7 @@ GMatrix::GMatrix()
 
 GMatrix::GMatrix(const GMatrix& other)
 {
-	for (size_t i = 0; i <= 3; i++)
+	for (size_t i = 0; i < 4; i++)
 	{
 		this->matrix.push_back(other[i]);
 	}
@@ -21,7 +21,7 @@ GMatrix::GMatrix(const GMatrix& other)
 
 GMatrix::GMatrix(GMatrix&& other)
 {
-	for (size_t i = 0; i <= 3; i++)
+	for (size_t i = 0; i < 4; i++)
 	{
 		this->matrix.push_back(other[i]);
 	}
@@ -35,7 +35,7 @@ GMatrix::~GMatrix()
 GMatrix& GMatrix::operator=(GMatrix other)
 {
 	this->matrix.clear();
-	for (size_t i = 0; i <= 3; i++)
+	for (size_t i = 0; i < 4; i++)
 	{
 		this->matrix.push_back(other[i]);
 	}
@@ -64,9 +64,9 @@ GMatrix GMatrix::operator*(const double value)
 {
 	GMatrix result(*this);
 
-	for (size_t i = 0; i <= 3; i++)
+	for (size_t i = 0; i < 4; i++)
 	{
-		for (size_t j = 0; j <= 3; j++)
+		for (size_t j = 0; j < 4; j++)
 		{
 			result[i][j] = result[i][j] * value;
 		}
@@ -78,10 +78,10 @@ GMatrix GMatrix::operator*(const GMatrix& other)
 {
 	GMatrix result(*this);
 
-	for (size_t i = 0; i <= 3; i++)
+	for (size_t i = 0; i < 4; i++)
 	{
 		GVector row((*this)[i]);
-		for (size_t j = 0; j <= 3; j++)
+		for (size_t j = 0; j < 4; j++)
 		{
 			GVector column(other[0][j], other[1][j], other[2][j], other[3][j]);
 			double sum = 0;
@@ -97,9 +97,9 @@ bool GMatrix::inverse()
 {
 	GMatrix result;
 
-	for (int i = 0; i <= 3; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
-		for (int j = 0; j <= 3; ++j)
+		for (int j = 0; j < 4; ++j)
 			result[i][j] = 0.0;
 
 		result[i][i] = 1.0;
@@ -108,12 +108,12 @@ bool GMatrix::inverse()
 
 	GMatrix tmp(*this);
 
-	for (int k = 0; k <= 3; ++k)
+	for (int k = 0; k < 4; ++k)
 	{
 		if (fabs(tmp[k][k]) < 1e-8)
 		{
 			bool changed = false;
-			for (int i = k + 1; i <= 3; ++i)
+			for (int i = k + 1; i < 4; ++i)
 			{
 				if (fabs(tmp[i][k]) > 1e-8)
 				{
@@ -133,16 +133,16 @@ bool GMatrix::inverse()
 
 
 		double div = tmp[k][k];
-		for (int j = 0; j <= 3; ++j)
+		for (int j = 0; j < 4; ++j)
 		{
 			tmp[k][j] /= div;
 			result[k][j] /= div;
 		}
 
-		for (int i = k + 1; i <= 3; ++i)
+		for (int i = k + 1; i < 4; ++i)
 		{
 			double multi = tmp[i][k];
-			for (int j = 0; j <= 3; ++j)
+			for (int j = 0; j < 4; ++j)
 			{
 				tmp[i][j] -= multi * tmp[k][j];
 				result[i][j] -= multi * result[k][j];
@@ -155,7 +155,7 @@ bool GMatrix::inverse()
 		for (int i = k - 1; i + 1 > 0; --i)
 		{
 			double multi = tmp[i][k];
-			for (int j = 0; j <= 3; ++j)
+			for (int j = 0; j < 4; ++j)
 			{
 				tmp[i][j] -= multi * tmp[k][j];
 				result[i][j] -= multi * result[k][j];
@@ -171,9 +171,9 @@ bool GMatrix::inverse()
 GMatrix GMatrix::transposition()
 {
 	GMatrix result;
-	for (int i = 0; i <= 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		for (int j = 0; j <= 3; j++)
+		for (int j = 0; j < 4; j++)
 		{
 			result[i][j] = this->matrix[j][i];
 		}

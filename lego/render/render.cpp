@@ -236,7 +236,13 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 
 double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, Camera cam)
 {
-	GVector D(X - light.X, Y - light.Y, Z - light.Z, 1);
+	GVector vlight(light.X, light.Y, light.Z, 1);
+	GVector vpoint(X, Y, Z, 1);
+	vlight.normalize();
+	vpoint.normalize();
+	GVector D = vpoint;
+	D = D - vlight;
+	//GVector D(X - light.X, Y - light.Y, Z - light.Z, 0);
 	D.normalize();
 	N.normalize();
 	double I;

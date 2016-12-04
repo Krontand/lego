@@ -47,7 +47,7 @@ Vertex& Vertex::operator=(Vertex other)
 
 GVector Vertex::vector()
 {
-	GVector vec(this->X, this->Y, this->Z, 1);
+	GVector vec(this->X, this->Y, this->Z, 0);
 	return vec;
 }
 
@@ -65,8 +65,9 @@ Vertex Vertex::operator*(GMatrix matrix)
 
 	Vertex vresult;
 
-	vresult.X = tmp[0];
-	vresult.Y = tmp[1];
-	vresult.Z = tmp[2];
+	vresult.X = tmp[0] / tmp[3];
+	vresult.Y = tmp[1] / tmp[3];
+	vresult.Z = tmp[2] / tmp[3];
+
 	return vresult;
 }

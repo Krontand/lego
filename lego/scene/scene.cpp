@@ -60,7 +60,7 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 		throw AllocationMemoryError();
 	}
 
-	GVector position(1000, 1000, 1000, 1);
+	GVector position(0, 1000, 1000, 1);
 	GVector target(0, 0, 0, 1);
 
 	this->cam = new Camera(position, target);
@@ -75,9 +75,9 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 
 		throw AllocationMemoryError();
 	}
-	this->light.X = -200;
-	this->light.Y = -200;
-	this->light.Z = -200;
+	this->light.X = 0;
+	this->light.Y = 0;
+	this->light.Z = 1000;
 
 }
 
@@ -164,18 +164,23 @@ void Scene::AddBrick(Brick brick, int X, int Y, int Z, COLORREF color)
 	Brick* nbrick = new Brick(brick);
 	nbrick->color = color;
 
+	GMatrix movetoorigin = matrixMove(-nbrick->center.X + X, -nbrick->center.Y + Y, -nbrick->center.Z + Z);
+
 #pragma omp parallel for
 	for (int vertexIndex = 0; vertexIndex < nbrick->vertexCount(); vertexIndex++)
 	{
-		Vertex v = nbrick->vertex[vertexIndex];
+		nbrick->vertex[vertexIndex] = nbrick->vertex[vertexIndex] * movetoorigin;
+	}
 
-		int nX = v.X + 1. - nbrick->center.X + X;
-		int nY = v.Y + 1. - nbrick->center.Y + Y;
-		int nZ = v.Z + 1. - nbrick->center.Z + Z;
+	movetoorigin.transposition().inverse();
 
-		nbrick->vertex[vertexIndex].X = nX;
-		nbrick->vertex[vertexIndex].Y = nY;
-		nbrick->vertex[vertexIndex].Z = nZ;
+#pragma omp parallel for
+	for (int faceIndex = 0; faceIndex < nbrick->facesCount(); faceIndex++)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			//nbrick->VNormal[faceIndex][i] = nbrick->VNormal[faceIndex][i] * movetoorigin;
+		}
 	}
 	
 	Vertex center(X, Y, Z);
@@ -191,25 +196,27 @@ void Scene::toCam()
 
 	GMatrix view = this->cam->cameraview();
 
-	GMatrix nview(view);
+	GMatrix nview = view;
 	nview.transposition();
 	nview.inverse();
 
 	GMatrix scenecoord = matrixMove(xCenter, yCenter, 0);
 	GMatrix nscenecoord = scenecoord;
-	nscenecoord.transposition().inverse();
+	nscenecoord.transposition();
+	nscenecoord.inverse();
 	
 	// I don't know why, but if I put
 	// light and normals in camera system coordinates
 	// they don't work. I guess something here is answer
 	// why cylinders lighting works not very good...
 	this->slight = this->light;
-	//this->slight = this->slight * view;
+	this->slight = this->slight * view;
 	this->slight = this->slight * scenecoord;
 
 	for (int brickIndex = 0; brickIndex < this->bricks->objects.size(); brickIndex++)
 	{
 		Brick* nbrick = this->bricks->objects[brickIndex];
+
 #pragma omp parallel for
 		for (int vertexIndex = 0; vertexIndex < nbrick->vertexCount(); vertexIndex++)
 		{
@@ -225,9 +232,9 @@ void Scene::toCam()
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				GVector tmpN(nbrick->VNormal[faceIndex][i]);	
-				//tmpN = tmpN * nview;
-				//tmpN = tmpN * nscenecoord;
+				GVector tmpN(nbrick->VNormal[faceIndex][i]);
+				tmpN = tmpN * nview;
+				tmpN = tmpN * nscenecoord;
 				tmpN.normalize();
 				nbrick->sVNormal[faceIndex][i] = tmpN;
 			}
