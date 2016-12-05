@@ -46,7 +46,7 @@ GVector GVector::operator+(const GVector other)
 	result[0] = (*this)[0] + other[0];
 	result[1] = (*this)[1] + other[1];
 	result[2] = (*this)[2] + other[2];
-	result[3] = (*this)[3];
+	result[3] = (*this)[3] + other[3];
 	return result;
 }
 
@@ -56,7 +56,7 @@ GVector GVector::operator-(const GVector other)
 	result[0] = (*this)[0] - other[0];
 	result[1] = (*this)[1] - other[1];
 	result[2] = (*this)[2] - other[2];
-	result[3] = (*this)[3];
+	result[3] = (*this)[3] - other[3];
 	return result;
 }
 
@@ -66,7 +66,7 @@ GVector GVector::operator/(const double value)
 	result[0] = (*this)[0] / value;
 	result[1] = (*this)[1] / value;
 	result[2] = (*this)[2] / value;
-	result[3] = (*this)[3];
+	result[3] = (*this)[3] / value;
 	return result;
 }
 
@@ -76,7 +76,7 @@ GVector GVector::operator*(const double value)
 	result[0] = (*this)[0] * value;
 	result[1] = (*this)[1] * value;
 	result[2] = (*this)[2] * value;
-	result[3] = (*this)[3];
+	result[3] = (*this)[3] * value;
 	return result;
 }
 

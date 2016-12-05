@@ -16,12 +16,12 @@ Camera::Camera(GVector position, GVector target)
 	this->right[0] = 1;
 	this->right[1] = 0;
 	this->right[2] = 0;
-	this->right[3] = 1;
+	this->right[3] = 0;
 
 	this->up[0] = 0;
 	this->up[1] = 1;
 	this->up[2] = 0;
-	this->up[3] = 1;
+	this->up[3] = 0;
 
 	this->direction = this->position - this->target;
 }
@@ -31,8 +31,9 @@ void Camera::rotateHorizontalSphere(double angle)
 	GMatrix rotation = matrixrotation(this->right[0], this->right[1], this->right[2], angle);
 	this->up = this->up * rotation;
 	this->direction = this->direction * rotation;
-	GMatrix movement = matrixmovement(this->target[0], this->target[1], this->target[2]);
-	this->position = this->position * (-movement) * rotation * movement;
+	GMatrix movementtoorigin = matrixmovement(this->target[0], this->target[1], this->target[2]);
+	GMatrix movementback = matrixmovement(-this->target[0], -this->target[1], -this->target[2]);
+	this->position = this->position * movementback * rotation * movementtoorigin;
 }
 
 void Camera::rotateVerticalSphere(double angle)
@@ -40,8 +41,9 @@ void Camera::rotateVerticalSphere(double angle)
 	GMatrix rotation = matrixrotation(this->up[0], this->up[1], this->up[2], angle);
 	this->right = this->right * rotation;
 	this->direction = this->direction * rotation;
-	GMatrix movement = matrixmovement(this->target[0], this->target[1], this->target[2]);
-	this->position = this->position * (-movement) * rotation * movement;
+	GMatrix movementtoorigin = matrixmovement(this->target[0], this->target[1], this->target[2]);
+	GMatrix movementback = matrixmovement(-this->target[0], -this->target[1], -this->target[2]);
+	this->position = this->position * movementback * rotation * movementtoorigin;
 }
 
 GMatrix Camera::cameraview()
