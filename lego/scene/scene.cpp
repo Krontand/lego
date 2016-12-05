@@ -60,7 +60,7 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 		throw AllocationMemoryError();
 	}
 
-	GVector position(0, 1000, 1000, 1);
+	GVector position(0, 400, 400, 1);
 	GVector target(0, 0, 0, 1);
 
 	this->cam = new Camera(position, target);
@@ -200,6 +200,12 @@ void Scene::toCam()
 	nview.transposition();
 	nview.inverse();
 
+	GVector d = this->cam->target;
+	d = d - this->cam->position;
+	double dl = d.length();
+
+	GMatrix proj = matrixProjection(dl);
+
 	GMatrix scenecoord = matrixMove(xCenter, yCenter, 0);
 	GMatrix nscenecoord = scenecoord;
 	nscenecoord.transposition();
@@ -222,6 +228,7 @@ void Scene::toCam()
 		{
 			Vertex tmpVertex = nbrick->vertex[vertexIndex];
 			tmpVertex = tmpVertex * view;
+			tmpVertex = tmpVertex * proj;
 			tmpVertex = tmpVertex * scenecoord;
 
 			nbrick->svertex[vertexIndex] = tmpVertex;

@@ -39,3 +39,9 @@ Move object
 \param[in] z Move on Z coordinate
 */
 GMatrix matrixMove(double X, double Y, double Z);
+
+/*!
+Move object
+\param[in] d Length of camera direction vector
+*/
+GMatrix matrixProjection(double d);
