@@ -58,9 +58,10 @@ public:
 	GVector cposition;	/*!< Camera position in camera system*/
 	GVector target;		/*! Point on which looks camera */
 
+	GVector direction;	/*! "Z" axis of camera coordinate system */
+
 private:
 	GVector right;		/*! "X" axis of camera coordinate system */
 	GVector up;			/*! "Y" axis of camera coordinate system */
-	GVector direction;	/*! "Z" axis of camera coordinate system */
 
 };

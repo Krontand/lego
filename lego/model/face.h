@@ -124,6 +124,8 @@ public:
 	vector<int> Vertices;			/*!< Links array */
 	vector<int> Normals;			/*!< Links array */
 
+	bool visible;
+
 private:
 	vector<int>::iterator viterator;	/*!< Iterator for links array */
 	vector<int>::iterator niterator;	/*!< Iterator for links array */

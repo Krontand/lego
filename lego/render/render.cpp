@@ -12,6 +12,10 @@ Render::Render(unsigned long* pixels, int height, int width)
 	{
 		throw AllocationMemoryError();
 	}
+#pragma omp parallel
+	for (int i = 0; i<this->width * this->height; i++) {
+		this->zbuffer[i] = -9999999;
+	}
 }
 
 Render::~Render()
@@ -20,12 +24,6 @@ Render::~Render()
 
 void Render::run(Composite* bricks, Camera cam, Vertex light)
 {
-#pragma omp parallel
-	for (int i = 0; i<this->width * this->height; i++) {
-		this->zbuffer[i] = -9999999;
-	}
-
-
 	for (int brickIndex = 0; brickIndex < bricks->objects.size(); brickIndex++)
 	{
 		Brick* brick = bricks->objects[brickIndex];
@@ -43,22 +41,20 @@ void Render::run(Composite* bricks, Camera cam, Vertex light)
 			Normal nA = brick->sVNormal[faceIndex][0];
 			Normal nB = brick->sVNormal[faceIndex][1];
 			Normal nC = brick->sVNormal[faceIndex][2];
-			if (faceIndex == 43)
-			{
-				int Aaa = 0;
-				Aaa++;
-				int Bbb = Aaa;
-			}
 
 			this->fillFaces(A, B, C, nA, nB, nC, color, light, cam);
 		}
 	}
-	bricks->ID = 0;
+#pragma omp parallel
+	for (int i = 0; i<this->width * this->height; i++) {
+		this->zbuffer[i] = -9999999;
+	}
 }
 
-void Render::line(int x0, int y0, int x1, int y1)
+void Render::line(int x0, int y0, int x1, int y1, int z0, int z1)
 {
 	bool step = false;
+	bool started = false;
 	if (abs(x0 - x1) < abs(y0 - y1)) {
 		std::swap(x0, y0);
 		std::swap(x1, y1);
@@ -68,6 +64,7 @@ void Render::line(int x0, int y0, int x1, int y1)
 	if (x0 > x1) {
 		std::swap(x0, x1);
 		std::swap(y0, y1);
+		std::swap(z0, z1);
 	}
 
 	int dx = x1 - x0;
@@ -75,17 +72,45 @@ void Render::line(int x0, int y0, int x1, int y1)
 	int derror2 = abs(dy) * 2;
 	int error2 = 0;
 
+	float dz = (float)(z1 - z0) / dx;
+
 	int y = y0;
+	float z = z0;
 
 	for (int x = x0; x <= x1; x++) {
 		if (step) {
-			this->pixels[x*this->width + y] = 0x00ffffff;
+			if (x < this->height && x > 0 && y > 0 && y < this->width)
+			{
+				if (this->zbuffer[x*this->width + y] < z)
+				{
+					this->pixels[x*this->width + y] = 0x00ffffff;
+					this->zbuffer[x*this->width + y] = z;
+				}
+				started = true;
+			}
+			else
+			{
+				if (started) return;
+			}
 		}
 		else {
-			this->pixels[y*this->width + x] = 0x00ffffff;
-		}
-		error2 += derror2;
 
+			if (x < this->width && x > 0 && y > 0 && y < this->height)
+			{
+				if (this->zbuffer[y*this->width + x] < z)
+				{
+					this->pixels[y*this->width + x] = 0x00ffffff;
+					this->zbuffer[y*this->width + x] = z;
+				}
+				started = true;
+			}
+			else
+			{
+				if (started) return;
+			}
+		}
+		z += dz;
+		error2 += derror2;
 		if (error2 > dx) {
 			y += (y1 > y0 ? 1 : -1);
 			error2 -= dx * 2;
@@ -96,6 +121,7 @@ void Render::line(int x0, int y0, int x1, int y1)
 void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB, Normal normC, COLORREF color, Vertex light, Camera cam)
 {
 	if (A.Y == B.Y && A.Y == C.Y) return;
+	if (normA[2] + normB[2] + normC[2] <= 0) return;
 
 	if (A.Y > B.Y) { std::swap(A, B); std::swap(normA, normB); }
 	if (A.Y > C.Y) { std::swap(A, C); std::swap(normA, normC); }

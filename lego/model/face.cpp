@@ -15,6 +15,7 @@ Face::Face()
 		this->Normals.push_back(0);
 	}
 	this->niterator = this->Normals.begin();
+	this->visible = true;
 }
 
 Face::Face(int A, int nA, int B, int nB, int C, int nC)
@@ -28,6 +29,7 @@ Face::Face(int A, int nA, int B, int nB, int C, int nC)
 
 	this->viterator = this->Vertices.begin();
 	this->niterator = this->Normals.begin();
+	this->visible = true;
 }
 
 Face::Face(const Face& other)
@@ -36,6 +38,7 @@ Face::Face(const Face& other)
 	this->viterator = this->Vertices.begin();
 	this->Normals = other.Normals;
 	this->niterator = this->Normals.begin();
+	this->visible = other.visible;
 }
 
 Face::Face(Face&& other)
@@ -44,6 +47,7 @@ Face::Face(Face&& other)
 	this->viterator = this->Vertices.begin();
 	this->Normals = other.Normals;
 	this->niterator = this->Normals.begin();
+	this->visible = other.visible;
 }
 
 Face::~Face()
@@ -56,6 +60,7 @@ Face& Face::operator=(const Face& face)
 	this->viterator = this->Vertices.begin();
 	this->Normals = face.Normals;
 	this->niterator = this->Normals.begin();
+	this->visible = face.visible;
 	return *this;
 }
 

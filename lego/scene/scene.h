@@ -81,6 +81,17 @@ private:
 	int width;	/*!< Bitmap width */
 	int height;	/*!< Bitmap height */
 
+	vector<Vertex> floorX; /*!< Array of x vertices -> sharped floor */
+	vector<Vertex> floorZ; /*!< Array of x vertices -> sharped floor */
+
+	vector<Vertex> floorXSC; /*!< Array of x vertices -> sharped floor */
+	vector<Vertex> floorZSC; /*!< Array of x vertices -> sharped floor */
+	
+	/*!
+	Fills floor array with vertices coordinates
+	*/
+	void initFloor();
+
 	unsigned long* pixels;	/*!< Direct access to bitmap. Filling array = drawing */
 
 	BITMAPINFO sBmInfo;	/*! Bitmap settings */

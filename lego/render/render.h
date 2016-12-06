@@ -11,8 +11,9 @@ public:
 
 	void run(Composite* bricks, Camera cam, Vertex light);
 
+	void line(int x0, int y0, int x1, int y1, int z0, int z1);
+
 private:
-	void line(int x0, int y0, int x1, int y1);
 	void fillFaces(Vertex A, Vertex B, Vertex C, Normal nA, Normal nB, Normal nC, COLORREF color, Vertex light, Camera cam);
 	double intencity(double X, double Y, double Z, GVector N, Vertex light, Camera cam);
 	

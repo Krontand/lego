@@ -79,6 +79,8 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 	this->light.Y = 0;
 	this->light.Z = 1000;
 
+	this->initFloor();
+
 }
 
 Scene::~Scene()
@@ -117,6 +119,26 @@ void Scene::InitBitmap()
 		);
 }
 
+void Scene::initFloor()
+{
+	int floorsize = this->width - 100;
+	int sharpSize = this->width / 20;
+	for (int x = -floorsize; x < floorsize; x += sharpSize)
+	{
+		floorX.push_back(Vertex(x, 0, -floorsize));
+		floorX.push_back(Vertex(x, 0, floorsize));
+		floorXSC.push_back(Vertex(x, 0, -floorsize));
+		floorXSC.push_back(Vertex(x, 0, floorsize));
+	}
+	for (int z = -floorsize; z < floorsize; z += sharpSize)
+	{
+		floorZ.push_back(Vertex(-floorsize, 0, z));
+		floorZ.push_back(Vertex(floorsize, 0, z));
+		floorZSC.push_back(Vertex(-floorsize, 0, z));
+		floorZSC.push_back(Vertex(floorsize, 0, z));
+	}
+}
+
 void Scene::DrawScene()
 {
 	int fps;
@@ -143,6 +165,27 @@ void Scene::DrawScene()
 	}
 
 	this->toCam();
+
+	for (int i = 0; i < this->floorXSC.size(); i+=2)
+	{
+		int x1 = this->floorXSC[i].X;
+		int y1 = this->floorXSC[i].Y;
+		int z1 = this->floorXSC[i].Z;
+		int x2 = this->floorXSC[i + 1].X;
+		int y2 = this->floorXSC[i + 1].Y;
+		int z2 = this->floorXSC[i + 1].Z;
+		this->render->line(x1, y1, x2, y2, z1, z2);
+	}
+	for (int i = 0; i < this->floorZSC.size(); i += 2)
+	{
+		int x1 = this->floorZSC[i].X;
+		int y1 = this->floorZSC[i].Y;
+		int z1 = this->floorZSC[i].Z;
+		int x2 = this->floorZSC[i + 1].X;
+		int y2 = this->floorZSC[i + 1].Y;
+		int z2 = this->floorZSC[i + 1].Z;
+		this->render->line(x1, y1, x2, y2, z1, z2);
+	}
 
 	this->render->run(bricks, *this->cam, this->slight);
 
@@ -205,16 +248,32 @@ void Scene::toCam()
 	double dl = d.length();
 
 	GMatrix proj = matrixProjection(dl);
+	GMatrix nproj = proj;
+	nproj.transposition();
+	nproj.inverse();
 
 	GMatrix scenecoord = matrixMove(xCenter, yCenter, 0);
 	GMatrix nscenecoord = scenecoord;
 	nscenecoord.transposition();
 	nscenecoord.inverse();
 	
-	// I don't know why, but if I put
-	// light and normals in camera system coordinates
-	// they don't work. I guess something here is answer
-	// why cylinders lighting works not very good...
+	for (int i = 0; i < this->floorX.size(); i++)
+	{
+		Vertex tmp = this->floorX[i];
+		tmp = tmp * view;
+		tmp = tmp * proj;
+		tmp = tmp * scenecoord;
+		this->floorXSC[i] = tmp;
+	}
+	for (int i = 0; i < this->floorZ.size(); i++)
+	{
+		Vertex tmp = this->floorZ[i];
+		tmp = tmp * view;
+		tmp = tmp * proj;
+		tmp = tmp * scenecoord;
+		this->floorZSC[i] = tmp;
+	}
+
 	this->slight = this->light;
 	this->slight = this->slight * view;
 	this->slight = this->slight * scenecoord;
