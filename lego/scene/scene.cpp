@@ -76,10 +76,13 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 		throw AllocationMemoryError();
 	}
 	this->light.X = 0;
-	this->light.Y = 0;
-	this->light.Z = 1000;
+	this->light.Y = -500;
+	this->light.Z = 0;
 
 	this->initFloor();
+	
+	this->activeIntencity = 0;
+	this->activeGrow = true;
 
 }
 
@@ -139,13 +142,8 @@ void Scene::initFloor()
 	}
 }
 
-void Scene::DrawScene()
+void Scene::drawBG()
 {
-	int fps;
-	WCHAR fps_buf[11] = { 0 };
-	LARGE_INTEGER sta, fin, frq;
-	QueryPerformanceCounter(&sta);
-
 #pragma omp parallel for
 	for (int i = 0; i < this->width; i++)
 	{
@@ -163,10 +161,11 @@ void Scene::DrawScene()
 			this->pixels[j*this->width + i] = 0x00a0aacf;
 		}
 	}
+}
 
-	this->toCam();
-
-	for (int i = 0; i < this->floorXSC.size(); i+=2)
+void Scene::drawFloor()
+{
+	for (int i = 0; i < this->floorXSC.size(); i += 2)
 	{
 		int x1 = this->floorXSC[i].X;
 		int y1 = this->floorXSC[i].Y;
@@ -176,6 +175,7 @@ void Scene::DrawScene()
 		int z2 = this->floorXSC[i + 1].Z;
 		this->render->line(x1, y1, x2, y2, z1, z2);
 	}
+
 	for (int i = 0; i < this->floorZSC.size(); i += 2)
 	{
 		int x1 = this->floorZSC[i].X;
@@ -186,12 +186,35 @@ void Scene::DrawScene()
 		int z2 = this->floorZSC[i + 1].Z;
 		this->render->line(x1, y1, x2, y2, z1, z2);
 	}
+}
 
-	this->render->run(bricks, *this->cam, this->slight);
+void Scene::DrawScene(int ActiveBrick)
+{
+	int fps;
+	WCHAR fps_buf[11] = { 0 };
+	LARGE_INTEGER sta, fin, frq;
+	QueryPerformanceCounter(&sta);
+
+	this->toCam();
+
+	//
+	// Draw scene
+	//
+	this->drawBG();
+	this->drawFloor();
+
+	if (ActiveBrick >= 0)
+	{
+		this->changeActiveBrick();
+	}
+	this->render->run(bricks, *this->cam, this->slight, ActiveBrick, this->activeIntencity);
 
 	SelectObject(this->hdcMem, this->sBmp);
 	BitBlt(this->hdc, X, Y, this->width, this->height, this->hdcMem, 0, 0, SRCCOPY);
 
+	//
+	// Count FPS
+	//
 	QueryPerformanceCounter(&fin);
 	QueryPerformanceFrequency(&frq);
 
@@ -221,51 +244,92 @@ void Scene::AddBrick(Brick brick, int X, int Y, int Z, COLORREF color)
 	this->bricks->add(nbrick);
 }
 
+void Scene::changeActiveBrick()
+{
+	if (this->activeGrow)
+	{
+		this->activeIntencity += 0.015;
+		if (this->activeIntencity > 0.3)
+		{
+			this->activeGrow = false;
+		}
+	}
+	else
+	{
+		this->activeIntencity -= 0.015;
+		if (this->activeIntencity < -0.3)
+		{
+			this->activeGrow = true;
+		}
+	}
+}
+
+bool Scene::checkFaceVisibility(Brick* nbrick, int faceIndex, GMatrix nresult)
+{
+	GVector check;
+	double minZ = 9999999;
+	for (int i = 0; i < 3; i++)
+	{
+		GVector tmpN(nbrick->VNormal[faceIndex][i]);
+		tmpN = tmpN * nresult;
+		check = check + tmpN;
+
+		if (nbrick->svertex[nbrick->faces[faceIndex].Vertices[i]].Z < minZ)
+		{
+			minZ = nbrick->svertex[nbrick->faces[faceIndex].Vertices[i]].Z;
+		}
+	}
+	if (/*don't work as good as we want: check[2] <= 0 || */minZ > this->cam->cposition.length())
+	{
+		nbrick->faces[faceIndex].visible = false;
+		return false;
+	}
+	else
+	{
+		nbrick->faces[faceIndex].visible = true;
+		return true;
+	}
+}
+
 void Scene::toCam()
 {
 	int xCenter = this->width / 2;
 	int yCenter = this->height / 2;
 
 	GMatrix view = this->cam->cameraview();
-
 	GMatrix nview = view;
 	nview.transposition();
 	nview.inverse();
 
 	GVector d = this->cam->target;
 	d = d - this->cam->position;
-	double dl = d.length();
 
-	GMatrix proj = matrixProjection(dl);
-	GMatrix nproj = proj;
-	nproj.transposition();
-	nproj.inverse();
-
+	GMatrix proj = matrixProjection(d.length());
 	GMatrix scenecoord = matrixMove(xCenter, yCenter, 0);
 	GMatrix nscenecoord = scenecoord;
 	nscenecoord.transposition();
 	nscenecoord.inverse();
-	
+
+	GMatrix result = view * proj * scenecoord;
+	GMatrix nresult = result;
+	nresult.transposition();
+	nresult.inverse();
+
 	for (int i = 0; i < this->floorX.size(); i++)
 	{
 		Vertex tmp = this->floorX[i];
-		tmp = tmp * view;
-		tmp = tmp * proj;
-		tmp = tmp * scenecoord;
+		tmp = tmp * result;
 		this->floorXSC[i] = tmp;
 	}
 	for (int i = 0; i < this->floorZ.size(); i++)
 	{
 		Vertex tmp = this->floorZ[i];
-		tmp = tmp * view;
-		tmp = tmp * proj;
-		tmp = tmp * scenecoord;
+		tmp = tmp * result;
 		this->floorZSC[i] = tmp;
 	}
 
 	this->slight = this->light;
-	this->slight = this->slight * view;
-	this->slight = this->slight * scenecoord;
+	this->slight = this->slight * result;
 
 	for (int brickIndex = 0; brickIndex < this->bricks->objects.size(); brickIndex++)
 	{
@@ -275,9 +339,7 @@ void Scene::toCam()
 		for (int vertexIndex = 0; vertexIndex < nbrick->vertexCount(); vertexIndex++)
 		{
 			Vertex tmpVertex = nbrick->vertex[vertexIndex];
-			tmpVertex = tmpVertex * view;
-			tmpVertex = tmpVertex * proj;
-			tmpVertex = tmpVertex * scenecoord;
+			tmpVertex = tmpVertex * result;
 
 			nbrick->svertex[vertexIndex] = tmpVertex;
 		}
@@ -288,32 +350,11 @@ void Scene::toCam()
 			for (int i = 0; i < 3; i++)
 			{
 				GVector tmpN(nbrick->VNormal[faceIndex][i]);
-				tmpN = tmpN * nview;
-				tmpN = tmpN * nscenecoord;
-				tmpN.normalize();
+				tmpN = tmpN * nview * nscenecoord;;
 				nbrick->sVNormal[faceIndex][i] = tmpN;
 			}
+			this->checkFaceVisibility(nbrick, faceIndex, nresult);
 
-			// Check face visibility
-
-			GVector check;
-			for (int i = 0; i < 3; i++)
-			{
-				GVector tmpN(nbrick->VNormal[faceIndex][i]);
-				tmpN = tmpN * nview;
-				tmpN = tmpN * nproj;
-				tmpN = tmpN * nscenecoord;
-				tmpN.normalize();
-				check = check + tmpN;
-			}
-			if (check[2] <= 0)
-			{
-				nbrick->faces[faceIndex].visible = false;
-			}
-			else
-			{
-				nbrick->faces[faceIndex].visible = true;
-			}
 		}
 	}
 

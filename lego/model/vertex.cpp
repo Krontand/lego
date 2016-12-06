@@ -65,6 +65,8 @@ Vertex Vertex::operator*(GMatrix matrix)
 
 	Vertex vresult;
 
+	if (tmp[3] < 0.1) tmp[3] = 0.1;
+
 	vresult.X = tmp[0] / tmp[3];
 	vresult.Y = tmp[1] / tmp[3];
 	vresult.Z = tmp[2] / tmp[3];

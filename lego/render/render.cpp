@@ -22,12 +22,22 @@ Render::~Render()
 {
 }
 
-void Render::run(Composite* bricks, Camera cam, Vertex light)
+void Render::run(Composite* bricks, Camera cam, Vertex light, int activeBrick, double actIntCft)
 {
+	double intencityCoeffitient = 0;
 	for (int brickIndex = 0; brickIndex < bricks->objects.size(); brickIndex++)
 	{
 		Brick* brick = bricks->objects[brickIndex];
 		COLORREF color = brick->color;
+
+		if (brickIndex == activeBrick)
+		{
+			intencityCoeffitient = actIntCft;
+		}
+		else
+		{
+			intencityCoeffitient = 0;
+		}
 
 #pragma omp parallel for schedule(dynamic, 1)
 		for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
@@ -43,10 +53,13 @@ void Render::run(Composite* bricks, Camera cam, Vertex light)
 				Normal nB = brick->sVNormal[faceIndex][1];
 				Normal nC = brick->sVNormal[faceIndex][2];
 
-				this->fillFaces(A, B, C, nA, nB, nC, color, light, cam);
+				this->fillFaces(A, B, C, nA, nB, nC, color, light, cam, intencityCoeffitient);
 			}
 		}
 	}
+
+	this->sun(light.X, light.Y, 5, light.Z);
+
 #pragma omp parallel
 	for (int i = 0; i<this->width * this->height; i++) {
 		this->zbuffer[i] = -9999999;
@@ -85,7 +98,7 @@ void Render::line(int x0, int y0, int x1, int y1, int z0, int z1)
 			{
 				if (this->zbuffer[x*this->width + y] < z)
 				{
-					this->pixels[x*this->width + y] = 0x00ffffff;
+					this->pixels[x*this->width + y] = 0x00a0aacf;
 					this->zbuffer[x*this->width + y] = z;
 				}
 				started = true;
@@ -101,7 +114,7 @@ void Render::line(int x0, int y0, int x1, int y1, int z0, int z1)
 			{
 				if (this->zbuffer[y*this->width + x] < z)
 				{
-					this->pixels[y*this->width + x] = 0x00ffffff;
+					this->pixels[y*this->width + x] = 0x00a0aacf;
 					this->zbuffer[y*this->width + x] = z;
 				}
 				started = true;
@@ -120,10 +133,66 @@ void Render::line(int x0, int y0, int x1, int y1, int z0, int z1)
 	}
 }
 
-void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB, Normal normC, COLORREF color, Vertex light, Camera cam)
+void Render::sun(int x0, int y0, int r, int z)
+{
+	COLORREF c = 0x00FF0000;
+	for (; r >= 0; r--)
+	{
+		int x = 0, y = r;
+		int k = r * r;
+		if (x0 < this->width && x0 > 0 && y0 + y > 0 && y0 + y < this->height)
+			if (this->zbuffer[(y0 + y)*this->width + x0] < z)
+			{
+				this->pixels[(y0 + y)*this->width + x0] = c;
+				this->zbuffer[(y0 + y)*this->width + x0] = z;
+			}
+		if (x0 < this->width && x0 > 0 && y0 - y > 0 && y0 - y < this->height)
+			
+			if (this->zbuffer[(y0 - y)*this->width + x0] < z)
+			{
+				this->pixels[(y0 - y)*this->width + x0] = c;
+				this->zbuffer[(y0 - y)*this->width + x0] = z;
+			}
+		while (y >= 0)
+		{
+			int d = (x + 1) * (x + 1) + (y - 1) * (y - 1) - k;
+			if (d >= 0)
+				y--;
+			if (d <= 0)
+				x++;
+			if (x0 + x < this->width && x0 + x > 0 && y0 + y > 0 && y0 + y < this->height)
+				if (this->zbuffer[(y0 + y)*this->width + x0 + x] < z)
+				{
+					this->pixels[(y0 + y)*this->width + x0 + x] = c;
+					this->zbuffer[(y0 + y)*this->width + x0 + x] = z;
+				}
+			if (x0 - x < this->width && x0 - x > 0 && y0 + y > 0 && y0 + y < this->height)
+				if (this->zbuffer[(y0 + y)*this->width + x0 - x] < z)
+				{
+					this->pixels[(y0 + y)*this->width + x0 - x] = c;
+					this->zbuffer[(y0 + y)*this->width + x0 - x] = z;
+				}
+			if (x0 + x < this->width && x0 + x > 0 && y0 - y > 0 && y0 - y < this->height)
+				if (this->zbuffer[(y0 - y)*this->width + x0 + x] < z)
+				{
+					this->pixels[(y0 - y)*this->width + x0 + x] = c;
+					this->zbuffer[(y0 - y)*this->width + x0 + x] = z;
+				}
+			if (x0 - x < this->width && x0 - x > 0 && y0 - y > 0 && y0 - y < this->height)
+				if (this->zbuffer[(y0 - y)*this->width + x0 - x] < z)
+				{
+					this->pixels[(y0 - y)*this->width + x0 - x] = c;
+					this->zbuffer[(y0 - y)*this->width + x0 - x] = z;
+				}
+		}
+		if(c < 0x00FFFF00)
+			c += 0x00003300;
+	}
+}
+
+void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB, Normal normC, COLORREF color, Vertex light, Camera cam, double intCoef)
 {
 	if (A.Y == B.Y && A.Y == C.Y) return;
-
 	if (A.Y > B.Y) { std::swap(A, B); std::swap(normA, normB); }
 	if (A.Y > C.Y) { std::swap(A, C); std::swap(normA, normC); }
 	if (B.Y > C.Y) { std::swap(B, C); std::swap(normB, normC); }
@@ -224,12 +293,12 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 
 		for (int xCoord = wx1; xCoord < wx2; xCoord++)
 		{
-			int pix = yCoord * this->width + xCoord;
-			if (pix >= 0 && pix <= this->width * this->height)
+			if (xCoord < this->width && xCoord > 0 && yCoord > 0 && yCoord < this->height && z < cam.cposition.length())
 			{
+				int pix = yCoord * this->width + xCoord;
 				if (this->zbuffer[pix] < z)
 				{
-					double I = this->intencity(xCoord, yCoord, z, normP, light, cam);
+					double I = this->intencity(xCoord, yCoord, z, normP, light, cam, intCoef);
 					if (this->zbuffer[pix] < z)
 					{
 						this->zbuffer[pix] = z;
@@ -261,7 +330,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 	}
 }
 
-double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, Camera cam)
+double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, Camera cam, double K)
 {
 	GVector D(light.X - X, light.Y - Y, light.Z - Z, 0);
 	D.normalize();
@@ -279,5 +348,8 @@ double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, 
 	double Iblinn = 0.20 * pow(max(0, GVector::scalar(h, N)), 500);
 
 	I = Iconst + Idiff + Iblinn;
+	I += K;
+	if (I < 0) I = 0;
+	if (I > 1) I = 1;
 	return I;
 }

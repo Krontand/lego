@@ -92,7 +92,7 @@ public:
 
 	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
 	{
-		scene->DrawScene();
+		scene->DrawScene(ID);
 	}
 };
 

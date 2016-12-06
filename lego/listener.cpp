@@ -202,7 +202,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				wchar_t wbcount[256];
 				swprintf_s(wbcount, L"%d", bcount);
 				UI->combobox(CB_CHOOSEACTIVE)->addItem(wbcount);
+				KillTimer(hWnd, 0);
 				SetFocus(hWnd);
+			}
+			break;
+			case CB_CHOOSEACTIVE:
+			{
+				if (HIWORD(wParam) == CBN_SELCHANGE)
+				{
+					KillTimer(hWnd, 0);
+					SetTimer(hWnd, 0, 20, NULL);
+					SetFocus(hWnd);
+				}
 			}
 			break;
 			case BTN_DELETE:
@@ -230,6 +241,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				UI->combobox(CB_CHOOSEACTIVE)->resetSelect();
 				bcount--;
 				
+				KillTimer(hWnd, 0);
 				SetFocus(hWnd);
 			}
 			break;
@@ -248,7 +260,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw BrickChoosingError();
 				}
 				application->call(*movey, brickActive - 1);
-				application->call(*actionDraw, 0);
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case 0x53: // S key
@@ -265,7 +277,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw BrickChoosingError();
 				}
 				application->call(*movey, brickActive - 1);
-				application->call(*actionDraw, 0);
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case 0x41: // A key
@@ -282,7 +294,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw BrickChoosingError();
 				}
 				application->call(*movex, brickActive - 1);
-				application->call(*actionDraw, 0);
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case 0x44: // D key
@@ -299,7 +311,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw BrickChoosingError();
 				}
 				application->call(*movex, brickActive - 1);
-				application->call(*actionDraw, 0);
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case VK_RIGHT:
@@ -316,7 +328,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw BrickChoosingError();
 				}
 				application->call(*rotatex, brickActive - 1);
-				application->call(*actionDraw, 0);
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case VK_LEFT:
@@ -333,7 +345,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw BrickChoosingError();
 				}
 				application->call(*rotatex, brickActive - 1);
-				application->call(*actionDraw, 0);
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case VK_UP:
@@ -350,7 +362,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw BrickChoosingError();
 				}
 				application->call(*rotatez, brickActive - 1);
-				application->call(*actionDraw, 0);
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case VK_DOWN:
@@ -367,7 +379,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					throw BrickChoosingError();
 				}
 				application->call(*rotatez, brickActive  - 1);
-				application->call(*actionDraw, 0);
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case 104: // 8 NUMPAD
@@ -379,7 +391,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 
 				application->call(*rotateh, 0);
-				application->call(*actionDraw, 0);
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case 98: // 2 NUMPAD
@@ -391,7 +404,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 
 				application->call(*rotateh, 0);
-				application->call(*actionDraw, 0);
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case 100: // 4 NUMPAD
@@ -403,7 +417,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 
 				application->call(*rotatev, 0);
-				application->call(*actionDraw, 0);
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case 102: // 6 NUMPAD
@@ -415,7 +430,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 
 				application->call(*rotatev, 0);
-				application->call(*actionDraw, 0);
+				int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+				application->call(*actionDraw, brickActive - 1);
 			}
 			break;
 			case IDM_EXIT:
@@ -426,6 +442,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		break;
+		case WM_TIMER:
+		{
+			int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
+			application->call(*actionDraw, brickActive-1);
+		}
+		break;
 		case WM_PAINT:
 		{
 			double width = 1;
@@ -433,7 +455,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			HDC hdc = BeginPaint(hWnd, &ps);
 			InterfaceDrawInit DrawInit(hdc);
 			drawUI->redraw();
-			application->call(*actionDraw, 0);
+			application->call(*actionDraw, -1);
 			EndPaint(hWnd, &ps);
 		}
 		break;

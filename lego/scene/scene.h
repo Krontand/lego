@@ -52,7 +52,7 @@ public:
 	/*!
 	Draws background and launch render to draw bricks
 	*/
-	void DrawScene();
+	void DrawScene(int ActiveBrick = -1);
 
 	/*!
 	Add brick into scene bricks array. Set model in (0,0,0) monitor coordinates
@@ -91,6 +91,20 @@ private:
 	Fills floor array with vertices coordinates
 	*/
 	void initFloor();
+	
+	/*!
+	Fill background with blue color
+	*/
+	void drawBG();
+
+	/*!
+	Draw floor lines from array
+	*/
+	void drawFloor();
+
+	void changeActiveBrick();
+
+	bool checkFaceVisibility(Brick* nbrick, int faceIndex, GMatrix nresult);
 
 	unsigned long* pixels;	/*!< Direct access to bitmap. Filling array = drawing */
 
@@ -101,5 +115,8 @@ private:
 	HWND hWnd;			/*! Global HWND */
 
 	Render* render;		/*! Render class. Calculate image */
+
+	double activeIntencity;
+	bool activeGrow;
 
 };
