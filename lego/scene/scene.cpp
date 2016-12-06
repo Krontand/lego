@@ -215,17 +215,6 @@ void Scene::AddBrick(Brick brick, int X, int Y, int Z, COLORREF color)
 		nbrick->vertex[vertexIndex] = nbrick->vertex[vertexIndex] * movetoorigin;
 	}
 
-	movetoorigin.transposition().inverse();
-
-#pragma omp parallel for
-	for (int faceIndex = 0; faceIndex < nbrick->facesCount(); faceIndex++)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			//nbrick->VNormal[faceIndex][i] = nbrick->VNormal[faceIndex][i] * movetoorigin;
-		}
-	}
-	
 	Vertex center(X, Y, Z);
 	nbrick->center = center;
 
@@ -303,6 +292,27 @@ void Scene::toCam()
 				tmpN = tmpN * nscenecoord;
 				tmpN.normalize();
 				nbrick->sVNormal[faceIndex][i] = tmpN;
+			}
+
+			// Check face visibility
+
+			GVector check;
+			for (int i = 0; i < 3; i++)
+			{
+				GVector tmpN(nbrick->VNormal[faceIndex][i]);
+				tmpN = tmpN * nview;
+				tmpN = tmpN * nproj;
+				tmpN = tmpN * nscenecoord;
+				tmpN.normalize();
+				check = check + tmpN;
+			}
+			if (check[2] <= 0)
+			{
+				nbrick->faces[faceIndex].visible = false;
+			}
+			else
+			{
+				nbrick->faces[faceIndex].visible = true;
 			}
 		}
 	}

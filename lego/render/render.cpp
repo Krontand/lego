@@ -33,16 +33,18 @@ void Render::run(Composite* bricks, Camera cam, Vertex light)
 		for (int faceIndex = 0; faceIndex < brick->facesCount(); faceIndex++)
 		{
 			Face face = brick->faces[faceIndex];
+			if (face.visible)
+			{
+				Vertex A(brick->svertex[face.A() - 1]);
+				Vertex B(brick->svertex[face.B() - 1]);
+				Vertex C(brick->svertex[face.C() - 1]);
 
-			Vertex A(brick->svertex[face.A() - 1]);
-			Vertex B(brick->svertex[face.B() - 1]);
-			Vertex C(brick->svertex[face.C() - 1]);
+				Normal nA = brick->sVNormal[faceIndex][0];
+				Normal nB = brick->sVNormal[faceIndex][1];
+				Normal nC = brick->sVNormal[faceIndex][2];
 
-			Normal nA = brick->sVNormal[faceIndex][0];
-			Normal nB = brick->sVNormal[faceIndex][1];
-			Normal nC = brick->sVNormal[faceIndex][2];
-
-			this->fillFaces(A, B, C, nA, nB, nC, color, light, cam);
+				this->fillFaces(A, B, C, nA, nB, nC, color, light, cam);
+			}
 		}
 	}
 #pragma omp parallel
@@ -121,7 +123,6 @@ void Render::line(int x0, int y0, int x1, int y1, int z0, int z1)
 void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB, Normal normC, COLORREF color, Vertex light, Camera cam)
 {
 	if (A.Y == B.Y && A.Y == C.Y) return;
-	if (normA[2] + normB[2] + normC[2] <= 0) return;
 
 	if (A.Y > B.Y) { std::swap(A, B); std::swap(normA, normB); }
 	if (A.Y > C.Y) { std::swap(A, C); std::swap(normA, normC); }
