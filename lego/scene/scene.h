@@ -102,8 +102,6 @@ private:
 	*/
 	void drawFloor();
 
-	void changeActiveBrick();
-
 	bool checkFaceVisibility(Brick* nbrick, int faceIndex, GMatrix nresult);
 
 	unsigned long* pixels;	/*!< Direct access to bitmap. Filling array = drawing */
@@ -115,8 +113,5 @@ private:
 	HWND hWnd;			/*! Global HWND */
 
 	Render* render;		/*! Render class. Calculate image */
-
-	double activeIntencity;
-	bool activeGrow;
 
 };

@@ -17,6 +17,7 @@ COLORREF brickColor = RGB(140, 140, 255);
 double angle = ROTATTION_ANGLE;
 double shift = 5;
 int bcount = 0;
+bool redraw = true;
 
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -445,7 +446,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_TIMER:
 		{
 			int brickActive = UI->combobox(CB_CHOOSEACTIVE)->getCurrentItem();
-			application->call(*actionDraw, brickActive-1);
+			if (brickActive != 0)
+			{
+				redraw = true;
+				application->call(*actionDraw, brickActive - 1);
+			}
+			else
+			{
+				if (redraw)
+				{
+					application->call(*actionDraw, -1);
+					redraw = false;
+				}
+			}
+
 		}
 		break;
 		case WM_PAINT:

@@ -80,10 +80,6 @@ Scene::Scene(HWND hWnd, int x, int y, int width, int height)
 	this->light.Z = 0;
 
 	this->initFloor();
-	
-	this->activeIntencity = 0;
-	this->activeGrow = true;
-
 }
 
 Scene::~Scene()
@@ -203,11 +199,7 @@ void Scene::DrawScene(int ActiveBrick)
 	this->drawBG();
 	this->drawFloor();
 
-	if (ActiveBrick >= 0)
-	{
-		this->changeActiveBrick();
-	}
-	this->render->run(bricks, *this->cam, this->slight, ActiveBrick, this->activeIntencity);
+	this->render->run(bricks, *this->cam, this->slight, ActiveBrick);
 
 	SelectObject(this->hdcMem, this->sBmp);
 	BitBlt(this->hdc, X, Y, this->width, this->height, this->hdcMem, 0, 0, SRCCOPY);
@@ -242,26 +234,6 @@ void Scene::AddBrick(Brick brick, int X, int Y, int Z, COLORREF color)
 	nbrick->center = center;
 
 	this->bricks->add(nbrick);
-}
-
-void Scene::changeActiveBrick()
-{
-	if (this->activeGrow)
-	{
-		this->activeIntencity += 0.015;
-		if (this->activeIntencity > 0.3)
-		{
-			this->activeGrow = false;
-		}
-	}
-	else
-	{
-		this->activeIntencity -= 0.015;
-		if (this->activeIntencity < -0.3)
-		{
-			this->activeGrow = true;
-		}
-	}
 }
 
 bool Scene::checkFaceVisibility(Brick* nbrick, int faceIndex, GMatrix nresult)

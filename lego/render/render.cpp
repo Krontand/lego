@@ -16,13 +16,17 @@ Render::Render(unsigned long* pixels, int height, int width)
 	for (int i = 0; i<this->width * this->height; i++) {
 		this->zbuffer[i] = -9999999;
 	}
+
+	this->activeIntencity = 0;
+	this->activeGrow = true;
+	this->activeBrick = false;
 }
 
 Render::~Render()
 {
 }
 
-void Render::run(Composite* bricks, Camera cam, Vertex light, int activeBrick, double actIntCft)
+void Render::run(Composite* bricks, Camera cam, Vertex light, int activeBrick)
 {
 	double intencityCoeffitient = 0;
 	for (int brickIndex = 0; brickIndex < bricks->objects.size(); brickIndex++)
@@ -30,13 +34,10 @@ void Render::run(Composite* bricks, Camera cam, Vertex light, int activeBrick, d
 		Brick* brick = bricks->objects[brickIndex];
 		COLORREF color = brick->color;
 
-		if (brickIndex == activeBrick)
+		this->activeBrick = (brickIndex == activeBrick);
+		if(this->activeBrick)
 		{
-			intencityCoeffitient = actIntCft;
-		}
-		else
-		{
-			intencityCoeffitient = 0;
+			this->actBrickIntencity();
 		}
 
 #pragma omp parallel for schedule(dynamic, 1)
@@ -53,7 +54,7 @@ void Render::run(Composite* bricks, Camera cam, Vertex light, int activeBrick, d
 				Normal nB = brick->sVNormal[faceIndex][1];
 				Normal nC = brick->sVNormal[faceIndex][2];
 
-				this->fillFaces(A, B, C, nA, nB, nC, color, light, cam, intencityCoeffitient);
+				this->fillFaces(A, B, C, nA, nB, nC, color, light, cam);
 			}
 		}
 	}
@@ -190,7 +191,7 @@ void Render::sun(int x0, int y0, int r, int z)
 	}
 }
 
-void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB, Normal normC, COLORREF color, Vertex light, Camera cam, double intCoef)
+void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB, Normal normC, COLORREF color, Vertex light, Camera cam)
 {
 	if (A.Y == B.Y && A.Y == C.Y) return;
 	if (A.Y > B.Y) { std::swap(A, B); std::swap(normA, normB); }
@@ -298,7 +299,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 				int pix = yCoord * this->width + xCoord;
 				if (this->zbuffer[pix] < z)
 				{
-					double I = this->intencity(xCoord, yCoord, z, normP, light, cam, intCoef);
+					double I = this->intencity(xCoord, yCoord, z, normP, light, cam);
 					if (this->zbuffer[pix] < z)
 					{
 						this->zbuffer[pix] = z;
@@ -330,7 +331,27 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 	}
 }
 
-double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, Camera cam, double K)
+void Render::actBrickIntencity()
+{
+	if (this->activeGrow)
+	{
+		this->activeIntencity += 0.015;
+		if (this->activeIntencity > 0.3)
+		{
+			this->activeGrow = false;
+		}
+	}
+	else
+	{
+		this->activeIntencity -= 0.015;
+		if (this->activeIntencity < -0.3)
+		{
+			this->activeGrow = true;
+		}
+	}
+}
+
+double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, Camera cam)
 {
 	GVector D(light.X - X, light.Y - Y, light.Z - Z, 0);
 	D.normalize();
@@ -348,8 +369,11 @@ double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, 
 	double Iblinn = 0.20 * pow(max(0, GVector::scalar(h, N)), 500);
 
 	I = Iconst + Idiff + Iblinn;
-	I += K;
-	if (I < 0) I = 0;
-	if (I > 1) I = 1;
+	if (this->activeBrick)
+	{
+		I += this->activeIntencity;
+		if (I < 0) I = 0;
+		if (I > 1) I = 1;
+	}
 	return I;
 }
