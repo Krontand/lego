@@ -49,7 +49,9 @@ public:
 	Modificate brick in array
 	\param[in] modiffication Modification object
 	*/
-	virtual void modificate(Modification* modification, Vertex* center) override;
+	virtual BaseObject* modificate(Modification* modification, Vertex* center) override;
+
+	virtual void applyModification() override {};
 
 	/*!
 	Clears objects array and free memory.

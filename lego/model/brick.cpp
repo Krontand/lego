@@ -10,9 +10,11 @@ Brick::Brick()
 
 Brick::Brick(const Brick& brick)
 {
+	this->sourceVertex = brick.sourceVertex;
 	this->vertex = brick.vertex;
 	this->svertex = brick.svertex;
 	this->faces = brick.faces;
+	this->sourceNormal = brick.sourceNormal;
 	this->VNormal = brick.VNormal;
 	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
@@ -22,9 +24,11 @@ Brick::Brick(const Brick& brick)
 
 Brick::Brick(Brick&& brick)
 {
+	this->sourceVertex = brick.sourceVertex;
 	this->vertex = brick.vertex;
 	this->svertex = brick.svertex;
 	this->faces = brick.faces;
+	this->sourceNormal = brick.sourceNormal;
 	this->VNormal = brick.VNormal;
 	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
@@ -34,6 +38,8 @@ Brick::Brick(Brick&& brick)
 
 Brick::~Brick()
 {
+	this->sourceVertex.clear();
+	this->sourceNormal.clear();
 	this->vertex.clear();
 	this->svertex.clear();
 	this->faces.clear();
@@ -42,11 +48,13 @@ Brick::~Brick()
 	this->FNormal.clear();
 }
 
-Brick& Brick::operator=(const Brick& brick)
+Brick& Brick::operator=(Brick brick)
 {
+	this->sourceVertex = brick.sourceVertex;
 	this->vertex = brick.vertex;
 	this->svertex = brick.svertex;
 	this->faces = brick.faces;
+	this->sourceNormal = brick.sourceNormal;
 	this->VNormal = brick.VNormal;
 	this->sVNormal = brick.sVNormal;
 	this->FNormal = brick.FNormal;
@@ -57,6 +65,7 @@ Brick& Brick::operator=(const Brick& brick)
 
 void Brick::addVertex(Vertex v)
 {
+	this->sourceVertex.push_back(v);
 	this->vertex.push_back(v);
 	this->svertex.push_back(v);
 }
@@ -70,6 +79,7 @@ void Brick::addFace(Face face)
 		tmp.push_back(Normal(this->FNormal[face.getNormal() - 1]));
 		face.getNextNormal();
 	}
+	this->sourceNormal.push_back(tmp);
 	this->VNormal.push_back(tmp);
 	this->sVNormal.push_back(tmp);
 }
@@ -89,8 +99,8 @@ int Brick::facesCount()
 	return this->faces.size();
 }
 
-void Brick::modificate(Modification* modification, Vertex* center)
-{
+BaseObject* Brick::modificate(Modification* modification, Vertex* center)
+{	
 	if (!center)
 	{
 		center = &this->center;
@@ -98,20 +108,31 @@ void Brick::modificate(Modification* modification, Vertex* center)
 
 	modification->initModification(center);
 
-	this->center.modificate(modification, center);
-
 #pragma omp parallel for
 	for(int i = 0; i < this->vertexCount(); i++)
 	{
-		this->vertex[i].modificate(modification, center);	
+		this->sourceVertex[i] = this->vertex[i];
+		this->sourceVertex[i].modificate(modification, center);
 	}
 
 	for (int i = 0; i < this->facesCount(); i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			this->VNormal[i][j].modificate(modification, center);
+			this->sourceNormal[i][j] = this->VNormal[i][j];
+			this->sourceNormal[i][j].modificate(modification, center);
 		}
 	}
 
-}	
+	this->sourceCenter = this->center;
+	this->sourceCenter.modificate(modification, center);
+
+	return this;
+}
+
+void Brick::applyModification()
+{
+	this->vertex = this->sourceVertex;
+	this->VNormal = this->sourceNormal;
+	this->center = this->sourceCenter;
+}

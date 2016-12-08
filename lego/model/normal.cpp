@@ -51,7 +51,8 @@ Normal Normal::operator*(GMatrix matrix)
 	return result;
 }
 
-void Normal::modificate(Modification* modification, Vertex* center)
+BaseObject* Normal::modificate(Modification* modification, Vertex* center)
 {
 	modification->run(this);
+	return this;
 }

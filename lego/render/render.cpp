@@ -335,16 +335,16 @@ void Render::actBrickIntencity()
 {
 	if (this->activeGrow)
 	{
-		this->activeIntencity += 0.015;
-		if (this->activeIntencity > 0.3)
+		this->activeIntencity += 0.007;
+		if (this->activeIntencity > 0.1)
 		{
 			this->activeGrow = false;
 		}
 	}
 	else
 	{
-		this->activeIntencity -= 0.015;
-		if (this->activeIntencity < -0.3)
+		this->activeIntencity -= 0.007;
+		if (this->activeIntencity < -0.1)
 		{
 			this->activeGrow = true;
 		}
@@ -366,14 +366,14 @@ double Render::intencity(double X, double Y, double Z, GVector N, Vertex light, 
 	GVector h(v);
 	h = h + D;
 	h.normalize();
-	double Iblinn = 0.20 * pow(max(0, GVector::scalar(h, N)), 500);
+	double Iblinn = 0.20 * pow(max(0, GVector::scalar(h, N)), 5);
 
 	I = Iconst + Idiff + Iblinn;
 	if (this->activeBrick)
 	{
 		I += this->activeIntencity;
-		if (I < 0) I = 0;
-		if (I > 1) I = 1;
+		//if (I < 0) I = 0;
+		//if (I > 1) I = 1;
 	}
 	return I;
 }

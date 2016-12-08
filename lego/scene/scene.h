@@ -12,6 +12,7 @@ Provide interface to bricks on scene and camera
 #pragma once
 
 #include "../geometry\gmatrix.h"
+#include "../geometry\stereometry.h"
 #include "../model/composite.h"
 #include "camera.h"
 //#include "light.h"
@@ -58,12 +59,14 @@ public:
 	Add brick into scene bricks array. Set model in (0,0,0) monitor coordinates
 	\param[in] brick Brick to add
 	*/
-	void AddBrick(Brick brick, int X, int Y, int Z, COLORREF color);
+	bool AddBrick(Brick brick, int X, int Y, int Z, COLORREF color);
 
 	/*!
 	Transfer vertices from world to camera coordinates
 	*/
 	void toCam();
+
+	bool checkCollision(int ID);
 	
 	Composite* bricks;	/*!< Scene bricks array */
 	Camera* cam;		/*!< Camera object */

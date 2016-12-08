@@ -3,6 +3,8 @@
 #include "model\modification\rotation.h"
 #include "model\modification\movement.h"
 
+#define COLLISION_EPS 0.5
+
 class Action
 {
 public:
@@ -49,7 +51,10 @@ public:
 	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
 	{
 		Brick brick = *(loadedBricks->objects[ID]);
-		scene->AddBrick(brick, this->X, this->Y, this->Z, this->color);
+		if (!scene->AddBrick(brick, this->X, this->Y, this->Z, this->color))
+		{
+			throw AddBrickCollisionError();
+		}
 	}
 
 private:
@@ -118,6 +123,30 @@ public:
 			brick = bricks->objects[ID];
 		}
 		brick->modificate(modification);
+		Brick* currentBrick = (Brick*)brick;
+		if (!scene->checkCollision(ID))
+		{
+			brick->applyModification();
+		}
+		else
+		{
+			this->angle /= 2;
+			bool collision = false;
+			while (abs(this->angle) > COLLISION_EPS)
+			{
+				Rotation* closer = new RotationX(this->angle);
+				brick->modificate(closer);
+				collision = (scene->checkCollision(ID) == 1);
+				if (collision)
+				{
+					this->angle /= 2;
+				}
+				else
+				{
+					brick->applyModification();
+				}
+			}
+		}
 	}
 
 private:
@@ -146,6 +175,30 @@ public:
 			brick = bricks->objects[ID];
 		}
 		brick->modificate(modification);
+		Brick* currentBrick = (Brick*)brick;
+		if (!scene->checkCollision(ID))
+		{
+			brick->applyModification();
+		}
+		else
+		{
+			this->angle /= 2;
+			bool collision = false;
+			while (abs(this->angle) > COLLISION_EPS)
+			{
+				Rotation* closer = new RotationY(this->angle);
+				brick->modificate(closer);
+				collision = (scene->checkCollision(ID) == 1);
+				if (collision)
+				{
+					this->angle /= 2;
+				}
+				else
+				{
+					brick->applyModification();
+				}
+			}
+		}
 	}
 
 private:
@@ -174,6 +227,30 @@ public:
 			brick = bricks->objects[ID];
 		}
 		brick->modificate(modification);
+		Brick* currentBrick = (Brick*)brick;
+		if (!scene->checkCollision(ID))
+		{
+			brick->applyModification();
+		}
+		else
+		{
+			this->angle /= 2;
+			bool collision = false;
+			while (abs(this->angle) > COLLISION_EPS)
+			{
+				Rotation* closer = new RotationZ(this->angle);
+				brick->modificate(closer);
+				collision = (scene->checkCollision(ID) == 1);
+				if (collision)
+				{
+					this->angle /= 2;
+				}
+				else
+				{
+					brick->applyModification();
+				}
+			}
+		}
 	}
 
 private:
@@ -202,6 +279,30 @@ public:
 			brick = bricks->objects[ID];
 		}
 		brick->modificate(modification);
+		Brick* currentBrick = (Brick*)brick;
+		if (!scene->checkCollision(ID))
+		{
+			brick->applyModification();
+		}
+		else
+		{
+			this->shift /= 2;
+			bool collision = false;
+			while (abs(this->shift) > COLLISION_EPS)
+			{
+				Movement* closer = new MovementX(this->shift);
+				brick->modificate(closer);
+				collision = (scene->checkCollision(ID) == 1);
+				if (collision)
+				{
+					this->shift /= 2;
+				}
+				else
+				{
+					brick->applyModification();
+				}
+			}
+		}
 	}
 
 private:
@@ -230,6 +331,30 @@ public:
 			brick = bricks->objects[ID];
 		}
 		brick->modificate(modification);
+		Brick* currentBrick = (Brick*)brick;
+		if (!scene->checkCollision(ID))
+		{
+			brick->applyModification();
+		}
+		else
+		{
+			this->shift /= 2;
+			bool collision = false;
+			while (abs(this->shift) > COLLISION_EPS)
+			{
+				Movement* closer = new MovementY(this->shift);
+				brick->modificate(closer);
+				collision = (scene->checkCollision(ID) == 1);
+				if (collision)
+				{
+					this->shift /= 2;
+				}
+				else
+				{
+					brick->applyModification();
+				}
+			}
+		}
 	}
 
 private:
@@ -258,6 +383,30 @@ public:
 			brick = bricks->objects[ID];
 		}
 		brick->modificate(modification);
+		Brick* currentBrick = (Brick*)brick;
+		if (!scene->checkCollision(ID))
+		{
+			brick->applyModification();
+		}
+		else
+		{
+			this->shift /= 2;
+			bool collision = false;
+			while (abs(this->shift) > COLLISION_EPS)
+			{
+				Movement* closer = new MovementZ(this->shift);
+				brick->modificate(closer);
+				collision = (scene->checkCollision(ID) == 1);
+				if (collision)
+				{
+					this->shift /= 2;
+				}
+				else
+				{
+					brick->applyModification();
+				}
+			}
+		}
 	}
 
 private:

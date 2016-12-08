@@ -217,7 +217,7 @@ void Scene::DrawScene(int ActiveBrick)
 	TextOut(this->hdc, this->X + 25, this->height - 50, (LPCWSTR)fps_buf, 11);
 }
 
-void Scene::AddBrick(Brick brick, int X, int Y, int Z, COLORREF color)
+bool Scene::AddBrick(Brick brick, int X, int Y, int Z, COLORREF color)
 {
 	Brick* nbrick = new Brick(brick);
 	nbrick->color = color;
@@ -227,13 +227,20 @@ void Scene::AddBrick(Brick brick, int X, int Y, int Z, COLORREF color)
 #pragma omp parallel for
 	for (int vertexIndex = 0; vertexIndex < nbrick->vertexCount(); vertexIndex++)
 	{
+		nbrick->sourceVertex[vertexIndex] = nbrick->sourceVertex[vertexIndex] * movetoorigin;
 		nbrick->vertex[vertexIndex] = nbrick->vertex[vertexIndex] * movetoorigin;
 	}
 
 	Vertex center(X, Y, Z);
 	nbrick->center = center;
-
+	nbrick->sourceCenter = center;
 	this->bricks->add(nbrick);
+	if (this->checkCollision(this->bricks->objects.size() - 1) == 1)
+	{
+		this->bricks->objects.pop_back();
+		return false;
+	}
+	return true;
 }
 
 bool Scene::checkFaceVisibility(Brick* nbrick, int faceIndex, GMatrix nresult)
@@ -246,9 +253,9 @@ bool Scene::checkFaceVisibility(Brick* nbrick, int faceIndex, GMatrix nresult)
 		tmpN = tmpN * nresult;
 		check = check + tmpN;
 
-		if (nbrick->svertex[nbrick->faces[faceIndex].Vertices[i]].Z < minZ)
+		if (nbrick->svertex[nbrick->faces[faceIndex].Vertices[i]-1].Z < minZ)
 		{
-			minZ = nbrick->svertex[nbrick->faces[faceIndex].Vertices[i]].Z;
+			minZ = nbrick->svertex[nbrick->faces[faceIndex].Vertices[i]-1].Z;
 		}
 	}
 	if (/*don't work as good as we want: check[2] <= 0 || */minZ > this->cam->cposition.length())
@@ -330,4 +337,31 @@ void Scene::toCam()
 		}
 	}
 
+}
+
+bool Scene::checkCollision(int ID)
+{
+	bool collision = false;
+	Brick* currentBrick = this->bricks->objects[ID];
+	for (int currentBrickFaceCount = 0; currentBrickFaceCount < currentBrick->facesCount() && !collision; currentBrickFaceCount++)
+	{
+		Vertex A1 = currentBrick->sourceVertex[currentBrick->faces[currentBrickFaceCount].A() - 1];
+		Vertex B1 = currentBrick->sourceVertex[currentBrick->faces[currentBrickFaceCount].B() - 1];
+		Vertex C1 = currentBrick->sourceVertex[currentBrick->faces[currentBrickFaceCount].C() - 1];
+		for (int bricksCount = 0; bricksCount < this->bricks->objects.size() && !collision; bricksCount++)
+		{
+			if (bricksCount != ID)
+			{
+				Brick* otherBrick = this->bricks->objects[bricksCount];
+				for (int otherBrickFaceCount = 0; otherBrickFaceCount < otherBrick->facesCount() && !collision; otherBrickFaceCount++)
+				{
+					Vertex A2 = otherBrick->vertex[otherBrick->faces[otherBrickFaceCount].A() - 1];
+					Vertex B2 = otherBrick->vertex[otherBrick->faces[otherBrickFaceCount].B() - 1];
+					Vertex C2 = otherBrick->vertex[otherBrick->faces[otherBrickFaceCount].C() - 1];
+					collision = (PolygonCompare(A1, B1, C1, A2, B2, C2) == 1);
+				}
+			}
+		}
+	}
+	return collision;
 }

@@ -151,6 +151,7 @@
     <ClInclude Include="geometry\exception.h" />
     <ClInclude Include="geometry\gmatrix.h" />
     <ClInclude Include="geometry\gvector.h" />
+    <ClInclude Include="geometry\stereometry.h" />
     <ClInclude Include="interface\button.h" />
     <ClInclude Include="interface\combobox.h" />
     <ClInclude Include="interface\drawinterface.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="application.cpp" />
     <ClCompile Include="geometry\gmatrix.cpp" />
     <ClCompile Include="geometry\gvector.cpp" />
+    <ClCompile Include="geometry\stereometry.cpp" />
     <ClCompile Include="interface\button.cpp" />
     <ClCompile Include="interface\combobox.cpp" />
     <ClCompile Include="interface\drawinterface.cpp" />

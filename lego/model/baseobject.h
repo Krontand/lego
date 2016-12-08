@@ -28,7 +28,13 @@ public:
 	\param[in] modification Type of modification
 	\param[in] center Modification center
 	*/
-	virtual void modificate(Modification* modification, Vertex* center = nullptr) = 0;
+	virtual BaseObject* modificate(Modification* modification, Vertex* center = nullptr) { return this; };
+
+	/*!
+	Brick object doesn't modificate itself but safes new vertices/normals
+	This function set modified parameters for whole object
+	*/
+	virtual void applyModification() = 0;
 
 	/*!
 	In modification methods we need to know 

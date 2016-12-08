@@ -51,9 +51,10 @@ GVector Vertex::vector()
 	return vec;
 }
 
-void Vertex::modificate(Modification* modification, Vertex* center)
+BaseObject* Vertex::modificate(Modification* modification, Vertex* center)
 {
 	modification->run(this);
+	return this;
 }
 
 Vertex Vertex::operator*(GMatrix matrix)

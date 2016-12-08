@@ -52,7 +52,7 @@ public:
 	\param[in] brick Source model to copy.
 	\return Link to this object.
 	*/
-	Brick& operator=(const Brick& brick);
+	Brick& operator=(Brick brick);
 
 	/*!
 	Adds vertex in model.
@@ -88,19 +88,24 @@ public:
 	Modificate coordinates (rotate/zoom etc)
 	\param[in] modification Modification object
 	*/
-	virtual void modificate(Modification* modification, Vertex* center) override;
+	virtual BaseObject* modificate(Modification* modification, Vertex* center) override;
 
-	Vertex center;		/*!< Brick center */
+	virtual void applyModification() override;
 
-	vector<Vertex> vertex;		/*!< Vertex array after modification (rotation, move) */
-	vector<Vertex> svertex;		/*!< Vertex array in scene coordinates */
+	Vertex sourceCenter;	/*!< Brick center after modification */
+	Vertex center;			/*!< Brick center */
 
-	vector<vector<Normal>> VNormal;		/*!< Normal to each vertex after modification */
-	vector<vector<Normal>> sVNormal;	/*!< Normal to each vertex in scene coordinates*/
+	vector<Vertex> sourceVertex;	/*!< Vertex array after modification */
+	vector<Vertex> vertex;			/*!< Vertex array before modification (rotation, move) */
+	vector<Vertex> svertex;			/*!< Vertex array in scene coordinates */
 
-	vector<Normal> FNormal;	/*!< Normal to face */
+	vector<vector<Normal>> sourceNormal;	/*!< Normal to each vertex after modification */
+	vector<vector<Normal>> VNormal;			/*!< Normal to each vertex before modification */
+	vector<vector<Normal>> sVNormal;		/*!< Normal to each vertex in scene coordinates*/
 
-	vector<Face> faces;			/*!< Faces array */
+	vector<Normal> FNormal;	/*!< Normals from object file */
+
+	vector<Face> faces;		/*!< Faces array */
 
 	COLORREF color;
 };

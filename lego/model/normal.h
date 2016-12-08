@@ -41,5 +41,7 @@ public:
 	const double& operator[](const size_t index) const;
 	Normal operator*(GMatrix matrix);
 
-	virtual void modificate(Modification* modification, Vertex* center) override;
+	virtual BaseObject* modificate(Modification* modification, Vertex* center) override;
+
+	virtual void applyModification() override {};
 };

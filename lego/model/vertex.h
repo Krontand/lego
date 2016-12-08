@@ -77,7 +77,9 @@ public:
 	Modificate coordinates (rotate/zoom etc)
 	\param[in] modification Modification object
 	*/
-	virtual void modificate(Modification* modification, Vertex* center) override;
+	virtual BaseObject* modificate(Modification* modification, Vertex* center) override;
+
+	virtual void applyModification() override {};
 
 	/*!
 	In modification methods we need to know

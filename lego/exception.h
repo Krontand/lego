@@ -33,3 +33,12 @@ public:
 		return "Choose brick to modifiate from bottom select field!";
 	}
 };
+
+class AddBrickCollisionError : public BaseException
+{
+public:
+	virtual const char* what() const
+	{
+		return "Can't add brick on this coordinates:\n another brick blocks place!";
+	}
+};

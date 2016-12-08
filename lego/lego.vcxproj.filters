@@ -150,6 +150,9 @@
     <ClInclude Include="model\modification\movement.h">
       <Filter>Заголовочные файлы\Model\Modification</Filter>
     </ClInclude>
+    <ClInclude Include="geometry\stereometry.h">
+      <Filter>Заголовочные файлы\geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -229,6 +232,9 @@
     </ClCompile>
     <ClCompile Include="model\modification\movement.cpp">
       <Filter>Файлы исходного кода\Model\Modification</Filter>
+    </ClCompile>
+    <ClCompile Include="geometry\stereometry.cpp">
+      <Filter>Файлы исходного кода\geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
