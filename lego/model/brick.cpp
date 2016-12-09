@@ -6,6 +6,7 @@
 Brick::Brick()
 {
 	this->color = RGB(255, 255, 255);
+	this->t = 0.7;
 }
 
 Brick::Brick(const Brick& brick)
