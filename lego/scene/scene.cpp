@@ -258,7 +258,7 @@ bool Scene::checkFaceVisibility(Brick* nbrick, int faceIndex, GMatrix nresult)
 			minZ = nbrick->svertex[nbrick->faces[faceIndex].Vertices[i]-1].Z;
 		}
 	}
-	if (/*don't work as good as we want: check[2] <= 0 || */minZ > this->cam->cposition.length())
+	if (check[2] <= 0 || minZ > this->cam->cposition.length())
 	{
 		nbrick->faces[faceIndex].visible = false;
 		return false;

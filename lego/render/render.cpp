@@ -8,13 +8,21 @@ Render::Render(unsigned long* pixels, int height, int width)
 	this->height = height;
 	this->width = width;
 	this->zbuffer = new int[this->width * this->height];
-	if (!zbuffer)
+	this->c_buf = new float[this->width * this->height];
+	this->itransparent = new unsigned long[this->width * this->height];
+	this->isolid = new unsigned long[this->width * this->height];
+
+	if (!zbuffer || !c_buf || !itransparent || !isolid)
 	{
 		throw AllocationMemoryError();
 	}
+
 #pragma omp parallel
 	for (int i = 0; i<this->width * this->height; i++) {
 		this->zbuffer[i] = -9999999;
+		this->c_buf[i] = 0;
+		this->itransparent[i] = 0x0;
+		this->isolid[i] = 0x00586bab;
 	}
 
 	this->activeIntencity = 0;
@@ -28,6 +36,13 @@ Render::~Render()
 
 void Render::run(Composite* bricks, Camera cam, Vertex light, int activeBrick)
 {
+#pragma omp parallel
+	for (int i = 0; i<this->width * this->height; i++) {
+		this->c_buf[i] = 0;
+		this->itransparent[i] = 0;
+		this->isolid[i] = 0x00586bab;
+	}
+
 	double intencityCoeffitient = 0;
 	for (int brickIndex = 0; brickIndex < bricks->objects.size(); brickIndex++)
 	{
@@ -54,11 +69,18 @@ void Render::run(Composite* bricks, Camera cam, Vertex light, int activeBrick)
 				Normal nB = brick->sVNormal[faceIndex][1];
 				Normal nC = brick->sVNormal[faceIndex][2];
 
-				this->fillFaces(A, B, C, nA, nB, nC, color, light, cam);
+				this->fillFaces(A, B, C, nA, nB, nC, color, light, cam, 0.7);
 			}
 		}
 	}
 
+//#pragma omp parallel
+	for (int i = 0; i<this->width * this->height; i++) {
+		this->pixels[i] = RGB(
+				GetRValue(this->itransparent[i]) * this->c_buf[i] + (1 - this->c_buf[i]) * GetRValue(this->isolid[i]),
+				GetGValue(this->itransparent[i]) * this->c_buf[i] + (1 - this->c_buf[i]) * GetGValue(this->isolid[i]),
+				GetBValue(this->itransparent[i]) * this->c_buf[i] + (1 - this->c_buf[i]) * GetBValue(this->isolid[i]));
+	}
 	this->sun(light.X, light.Y, 5, light.Z);
 
 #pragma omp parallel
@@ -191,7 +213,7 @@ void Render::sun(int x0, int y0, int r, int z)
 	}
 }
 
-void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB, Normal normC, COLORREF color, Vertex light, Camera cam)
+void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB, Normal normC, COLORREF color, Vertex light, Camera cam, float t)
 {
 	if (A.Y == B.Y && A.Y == C.Y) return;
 	if (A.Y > B.Y) { std::swap(A, B); std::swap(normA, normB); }
@@ -300,10 +322,16 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 				if (this->zbuffer[pix] < z)
 				{
 					double I = this->intencity(xCoord, yCoord, z, normP, light, cam);
-					if (this->zbuffer[pix] < z)
+					if (t == 1)
 					{
 						this->zbuffer[pix] = z;
-						this->pixels[pix] = RGB(GetBValue(color) * I, GetGValue(color) * I, GetRValue(color) * I);
+						this->isolid[pix] = RGB(GetBValue(color) * I, GetGValue(color) * I, GetRValue(color) * I);
+					}
+					else
+					{
+						this->itransparent[pix] = RGB(GetBValue(this->itransparent[pix]) * (1-t) + GetBValue(color) * I * t, GetGValue(this->itransparent[pix]) * (1 - t) + GetGValue(color) * I * t, GetRValue(this->itransparent[pix]) * (1 - t) + GetRValue(color) * I * t);
+						this->c_buf[pix] = t + this->c_buf[pix] - t*this->c_buf[pix];
+						
 					}
 				}
 			}
@@ -317,7 +345,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 			wz1 += dz13;
 			wz2 += dz12;
 			wn1 = wn1 + dn13;
-			wn2 = wn1 + dn12;
+			wn2 = wn2 + dn12;
 		}
 		else
 		{
@@ -326,7 +354,7 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 			wz1 += _dz13;
 			wz2 += dz23;
 			wn1 = wn1 + _dn13;
-			wn2 = wn1 + dn23;
+			wn2 = wn2 + dn23;
 		}
 	}
 }

@@ -108,4 +108,6 @@ public:
 	vector<Face> faces;		/*!< Faces array */
 
 	COLORREF color;
+
+	float t;
 };
