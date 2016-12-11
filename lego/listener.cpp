@@ -82,7 +82,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				->SetWeight(200)
 				->SetHeight(22)
 				->SetSymbolWidth(8)
-				->display(20, 335, 0, 0, TEXT("Color"));
+				->display(20, 335, 0, 0, TEXT("Color:"));
 
 			drawUI->rectangle(RCT_COLOR)
 				->SetBorderColor(RGB(255, 255, 255))
@@ -92,6 +92,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			UI->button(BTN_CHCOLOR)->create(164, 330, 33, 70, TEXT("Change!"));
 			UI->button(BTN_CHCOLOR)->setImage(BTN_COLOR);
+
+			drawUI->text(TXT_TRANSPARENCY)
+				->SetColor(RGB(211, 220, 236))
+				->SetWeight(200)
+				->SetHeight(22)
+				->SetSymbolWidth(8)
+				->display(20, 375, 0, 0, TEXT("Transparency:"));
+
+			UI->editfield(EDIT_TRANSPARENCY)->create(164, 375, 28, 70, TEXT("100"));
 
 			UI->button(BTN_OK)->create(10, 500, 33, 223, TEXT("Add Brick!"));
 			UI->button(BTN_OK)->setImage(BTN_ADDBRICK);
@@ -190,7 +199,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				int Y = UI->editfield(EDIT_Y)->getInt();
 				int Z = UI->editfield(EDIT_Z)->getInt();
 
-				ActionAddbrick* addBrick = new ActionAddbrick(X,Y,Z, brickColor);
+				float transparency = (float)UI->editfield(EDIT_TRANSPARENCY)->getInt() / 100;
+
+				ActionAddbrick* addBrick = new ActionAddbrick(X,Y,Z, brickColor, transparency);
 				if (!addBrick)
 				{
 					throw AllocationMemoryError();

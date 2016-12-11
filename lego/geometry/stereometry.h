@@ -5,7 +5,7 @@
 if |dv|<EPSILON then dv=0.0;
 else no check is done (which is less robust)
 */
-#define USE_EPSILON_TEST TRUE  
+#define USE_EPSILON_TEST FALSE  
 #define EPSILON 0.000001
 
 

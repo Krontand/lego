@@ -59,7 +59,7 @@ public:
 	Add brick into scene bricks array. Set model in (0,0,0) monitor coordinates
 	\param[in] brick Brick to add
 	*/
-	bool AddBrick(Brick brick, int X, int Y, int Z, COLORREF color);
+	bool AddBrick(Brick brick, int X, int Y, int Z, COLORREF color, float transparency);
 
 	/*!
 	Transfer vertices from world to camera coordinates
@@ -94,11 +94,6 @@ private:
 	Fills floor array with vertices coordinates
 	*/
 	void initFloor();
-	
-	/*!
-	Fill background with blue color
-	*/
-	void drawBG();
 
 	/*!
 	Draw floor lines from array

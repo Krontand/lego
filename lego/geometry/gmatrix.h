@@ -58,14 +58,14 @@ public:
 	\param[in] index Index of choosen row
 	\return Row defined by GVector
 	*/
-	GVector& operator[](const unsigned long index);
+	GVector& operator[](const size_t index);
 
 	/*!
 	Const method. Chooses row by index
 	\param[in] index Index of choosen row
 	\return Row defined by GVector
 	*/
-	const GVector& operator[](const unsigned long index) const;
+	const GVector& operator[](const size_t index) const;
 
 	/*!
 	Multiply each item of matrix by (-1)

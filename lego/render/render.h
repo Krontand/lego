@@ -15,6 +15,7 @@ public:
 	void sun(int x0, int y0, int r, int z);
 
 private:
+	void clear();
 	void fillFaces(Vertex A, Vertex B, Vertex C, Normal nA, Normal nB, Normal nC, COLORREF color, Vertex light, Camera cam, float t);
 	void actBrickIntencity();
 	double intencity(double X, double Y, double Z, GVector N, Vertex light, Camera cam);

@@ -51,3 +51,5 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #define CB_CHOOSEACTIVE	899
 #define TXT_MODORDELETE 900
 #define BTN_DELETE 901
+#define TXT_TRANSPARENCY 902
+#define EDIT_TRANSPARENCY 903

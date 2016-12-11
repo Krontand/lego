@@ -94,6 +94,7 @@ public:
 
 	Vertex sourceCenter;	/*!< Brick center after modification */
 	Vertex center;			/*!< Brick center */
+	Vertex scenter;			/*!< Brick center in scene coordinates */
 
 	vector<Vertex> sourceVertex;	/*!< Vertex array after modification */
 	vector<Vertex> vertex;			/*!< Vertex array before modification (rotation, move) */
@@ -108,6 +109,5 @@ public:
 	vector<Face> faces;		/*!< Faces array */
 
 	COLORREF color;
-
-	float t;
+	float transparency;
 };

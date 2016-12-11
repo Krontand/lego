@@ -45,6 +45,8 @@ public:
 	*/
 	void remove(int ID);
 
+	Brick* get(int ID);
+
 	/*!
 	Modificate brick in array
 	\param[in] modiffication Modification object

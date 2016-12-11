@@ -17,13 +17,7 @@ Render::Render(unsigned long* pixels, int height, int width)
 		throw AllocationMemoryError();
 	}
 
-#pragma omp parallel
-	for (int i = 0; i<this->width * this->height; i++) {
-		this->zbuffer[i] = -9999999;
-		this->c_buf[i] = 0;
-		this->itransparent[i] = 0x0;
-		this->isolid[i] = 0x00586bab;
-	}
+	this->clear();
 
 	this->activeIntencity = 0;
 	this->activeGrow = true;
@@ -34,22 +28,46 @@ Render::~Render()
 {
 }
 
-void Render::run(Composite* bricks, Camera cam, Vertex light, int activeBrick)
+void Render::clear()
 {
 #pragma omp parallel
 	for (int i = 0; i<this->width * this->height; i++) {
+		this->zbuffer[i] = -9999999;
 		this->c_buf[i] = 0;
-		this->itransparent[i] = 0;
-		this->isolid[i] = 0x00586bab;
+		this->itransparent[i] = 0x0;
+		this->isolid[i] = 0x00586bab; // background color
 	}
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < this->height; j++)
+		{
+			this->isolid[j*this->width + i] = 0x00a0aacf; // line between menu and scene
+		}
+	}
+}
 
+void Render::run(Composite* bricks, Camera cam, Vertex light, int activeBrick)
+{
+	// Sorting bricks in order of distance from camera (need for transparent bricks)
+	for (int brickIndex = 0; brickIndex < bricks->objects.size(); brickIndex++)
+	{
+		for (int sbrickIndex = brickIndex; sbrickIndex < bricks->objects.size() - 1; sbrickIndex++)
+		{
+			if (bricks->objects[sbrickIndex]->transparency < 1 && bricks->objects[sbrickIndex]->scenter.Z > bricks->objects[sbrickIndex+1]->scenter.Z)
+			{
+				std::swap(bricks->objects[sbrickIndex], bricks->objects[sbrickIndex + 1]);
+			}
+		}
+	}
+	
 	double intencityCoeffitient = 0;
 	for (int brickIndex = 0; brickIndex < bricks->objects.size(); brickIndex++)
 	{
 		Brick* brick = bricks->objects[brickIndex];
 		COLORREF color = brick->color;
+		float transparency = brick->transparency;
 
-		this->activeBrick = (brickIndex == activeBrick);
+		this->activeBrick = (brick->ID == activeBrick);
 		if(this->activeBrick)
 		{
 			this->actBrickIntencity();
@@ -69,24 +87,21 @@ void Render::run(Composite* bricks, Camera cam, Vertex light, int activeBrick)
 				Normal nB = brick->sVNormal[faceIndex][1];
 				Normal nC = brick->sVNormal[faceIndex][2];
 
-				this->fillFaces(A, B, C, nA, nB, nC, color, light, cam, 0.7);
+				this->fillFaces(A, B, C, nA, nB, nC, color, light, cam, transparency);
 			}
 		}
 	}
 
-//#pragma omp parallel
+	this->sun(light.X, light.Y, 5, light.Z);
+
 	for (int i = 0; i<this->width * this->height; i++) {
 		this->pixels[i] = RGB(
 				GetRValue(this->itransparent[i]) * this->c_buf[i] + (1 - this->c_buf[i]) * GetRValue(this->isolid[i]),
 				GetGValue(this->itransparent[i]) * this->c_buf[i] + (1 - this->c_buf[i]) * GetGValue(this->isolid[i]),
 				GetBValue(this->itransparent[i]) * this->c_buf[i] + (1 - this->c_buf[i]) * GetBValue(this->isolid[i]));
 	}
-	this->sun(light.X, light.Y, 5, light.Z);
 
-#pragma omp parallel
-	for (int i = 0; i<this->width * this->height; i++) {
-		this->zbuffer[i] = -9999999;
-	}
+	this->clear();
 }
 
 void Render::line(int x0, int y0, int x1, int y1, int z0, int z1)
@@ -121,7 +136,7 @@ void Render::line(int x0, int y0, int x1, int y1, int z0, int z1)
 			{
 				if (this->zbuffer[x*this->width + y] < z)
 				{
-					this->pixels[x*this->width + y] = 0x00a0aacf;
+					this->isolid[x*this->width + y] = 0x00a0aacf;
 					this->zbuffer[x*this->width + y] = z;
 				}
 				started = true;
@@ -137,7 +152,7 @@ void Render::line(int x0, int y0, int x1, int y1, int z0, int z1)
 			{
 				if (this->zbuffer[y*this->width + x] < z)
 				{
-					this->pixels[y*this->width + x] = 0x00a0aacf;
+					this->isolid[y*this->width + x] = 0x00a0aacf;
 					this->zbuffer[y*this->width + x] = z;
 				}
 				started = true;
@@ -166,14 +181,14 @@ void Render::sun(int x0, int y0, int r, int z)
 		if (x0 < this->width && x0 > 0 && y0 + y > 0 && y0 + y < this->height)
 			if (this->zbuffer[(y0 + y)*this->width + x0] < z)
 			{
-				this->pixels[(y0 + y)*this->width + x0] = c;
+				this->isolid[(y0 + y)*this->width + x0] = c;
 				this->zbuffer[(y0 + y)*this->width + x0] = z;
 			}
 		if (x0 < this->width && x0 > 0 && y0 - y > 0 && y0 - y < this->height)
 			
 			if (this->zbuffer[(y0 - y)*this->width + x0] < z)
 			{
-				this->pixels[(y0 - y)*this->width + x0] = c;
+				this->isolid[(y0 - y)*this->width + x0] = c;
 				this->zbuffer[(y0 - y)*this->width + x0] = z;
 			}
 		while (y >= 0)
@@ -186,25 +201,25 @@ void Render::sun(int x0, int y0, int r, int z)
 			if (x0 + x < this->width && x0 + x > 0 && y0 + y > 0 && y0 + y < this->height)
 				if (this->zbuffer[(y0 + y)*this->width + x0 + x] < z)
 				{
-					this->pixels[(y0 + y)*this->width + x0 + x] = c;
+					this->isolid[(y0 + y)*this->width + x0 + x] = c;
 					this->zbuffer[(y0 + y)*this->width + x0 + x] = z;
 				}
 			if (x0 - x < this->width && x0 - x > 0 && y0 + y > 0 && y0 + y < this->height)
 				if (this->zbuffer[(y0 + y)*this->width + x0 - x] < z)
 				{
-					this->pixels[(y0 + y)*this->width + x0 - x] = c;
+					this->isolid[(y0 + y)*this->width + x0 - x] = c;
 					this->zbuffer[(y0 + y)*this->width + x0 - x] = z;
 				}
 			if (x0 + x < this->width && x0 + x > 0 && y0 - y > 0 && y0 - y < this->height)
 				if (this->zbuffer[(y0 - y)*this->width + x0 + x] < z)
 				{
-					this->pixels[(y0 - y)*this->width + x0 + x] = c;
+					this->isolid[(y0 - y)*this->width + x0 + x] = c;
 					this->zbuffer[(y0 - y)*this->width + x0 + x] = z;
 				}
 			if (x0 - x < this->width && x0 - x > 0 && y0 - y > 0 && y0 - y < this->height)
 				if (this->zbuffer[(y0 - y)*this->width + x0 - x] < z)
 				{
-					this->pixels[(y0 - y)*this->width + x0 - x] = c;
+					this->isolid[(y0 - y)*this->width + x0 - x] = c;
 					this->zbuffer[(y0 - y)*this->width + x0 - x] = z;
 				}
 		}
@@ -329,8 +344,12 @@ void Render::fillFaces(Vertex A, Vertex B, Vertex C, Normal normA, Normal normB,
 					}
 					else
 					{
-						this->itransparent[pix] = RGB(GetBValue(this->itransparent[pix]) * (1-t) + GetBValue(color) * I * t, GetGValue(this->itransparent[pix]) * (1 - t) + GetGValue(color) * I * t, GetRValue(this->itransparent[pix]) * (1 - t) + GetRValue(color) * I * t);
 						this->c_buf[pix] = t + this->c_buf[pix] - t*this->c_buf[pix];
+						this->itransparent[pix] = RGB(
+							GetBValue(this->itransparent[pix]) * (1 - this->c_buf[pix]) + GetBValue(color) * I * t,
+							GetGValue(this->itransparent[pix]) * (1 - this->c_buf[pix]) + GetGValue(color) * I * t,
+							GetRValue(this->itransparent[pix]) * (1 - this->c_buf[pix]) + GetRValue(color) * I * t);
+						
 						
 					}
 				}
