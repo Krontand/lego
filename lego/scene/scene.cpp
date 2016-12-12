@@ -138,27 +138,6 @@ void Scene::initFloor()
 	}
 }
 
-void Scene::drawBG()
-{
-#pragma omp parallel for
-	for (int i = 0; i < this->width; i++)
-	{
-		for (int j = 0; j < this->height; j++)
-		{
-			this->pixels[j*this->width + i] = 0x00586bab;
-		}
-	}
-
-#pragma omp parallel for
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < this->height; j++)
-		{
-			this->pixels[j*this->width + i] = 0x00a0aacf;
-		}
-	}
-}
-
 void Scene::drawFloor()
 {
 	for (int i = 0; i < this->floorXSC.size(); i += 2)
@@ -196,7 +175,6 @@ void Scene::DrawScene(int ActiveBrick)
 	//
 	// Draw scene
 	//
-	this->drawBG();
 	this->drawFloor();
 
 	this->render->run(bricks, *this->cam, this->slight, ActiveBrick);
@@ -217,10 +195,11 @@ void Scene::DrawScene(int ActiveBrick)
 	TextOut(this->hdc, this->X + 25, this->height - 50, (LPCWSTR)fps_buf, 11);
 }
 
-bool Scene::AddBrick(Brick brick, int X, int Y, int Z, COLORREF color)
+bool Scene::AddBrick(Brick brick, int X, int Y, int Z, COLORREF color, float transparency)
 {
 	Brick* nbrick = new Brick(brick);
 	nbrick->color = color;
+	nbrick->transparency = transparency;
 
 	GMatrix movetoorigin = matrixMove(-nbrick->center.X + X, -nbrick->center.Y + Y, -nbrick->center.Z + Z);
 
@@ -322,6 +301,8 @@ void Scene::toCam()
 
 			nbrick->svertex[vertexIndex] = tmpVertex;
 		}
+
+		nbrick->scenter = nbrick->center * result;
 
 #pragma omp parallel for
 		for (int faceIndex = 0; faceIndex < nbrick->facesCount(); faceIndex++)

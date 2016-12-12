@@ -43,12 +43,12 @@ GMatrix& GMatrix::operator=(GMatrix other)
 	return (*this);
 }
 
-GVector& GMatrix::operator[](const unsigned long index)
+GVector& GMatrix::operator[](const size_t index)
 {
 	return this->matrix[index];
 }
 
-const GVector& GMatrix::operator[](const unsigned long index) const
+const GVector& GMatrix::operator[](const size_t index) const
 {
 	return this->matrix[index];
 }

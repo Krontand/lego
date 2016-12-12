@@ -36,12 +36,13 @@ private:
 class ActionAddbrick : public Action
 {
 public:
-	ActionAddbrick(int X, int Y, int Z, COLORREF color)
+	ActionAddbrick(int X, int Y, int Z, COLORREF color, float trancparency)
 	{
 		this->X = X;
 		this->Y = Y;
 		this->Z = Z;
 		this->color = color;
+		this->trancparency = trancparency;
 	}
 
 	~ActionAddbrick()
@@ -51,7 +52,7 @@ public:
 	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
 	{
 		Brick brick = *(loadedBricks->objects[ID]);
-		if (!scene->AddBrick(brick, this->X, this->Y, this->Z, this->color))
+		if (!scene->AddBrick(brick, this->X, this->Y, this->Z, this->color, this->trancparency))
 		{
 			throw AddBrickCollisionError();
 		}
@@ -60,6 +61,7 @@ public:
 private:
 	int X, Y, Z;
 	COLORREF color;
+	float trancparency;
 };
 
 class ActionDeletebrick : public Action
@@ -77,7 +79,7 @@ public:
 	virtual void Execute(Scene* scene, Composite* loadedBricks, int ID) override
 	{
 		delete scene->bricks->objects[this->ID];
-		scene->bricks->objects.erase(scene->bricks->objects.begin() + this->ID);
+		scene->bricks->remove(this->ID);
 	}
 
 private:
@@ -120,7 +122,7 @@ public:
 		if (ID >= 0)
 		{
 			Composite* bricks = (Composite*)brick;
-			brick = bricks->objects[ID];
+			brick = bricks->get(ID);
 		}
 		brick->modificate(modification);
 		Brick* currentBrick = (Brick*)brick;
@@ -172,7 +174,7 @@ public:
 		if (ID >= 0)
 		{
 			Composite* bricks = (Composite*)brick;
-			brick = bricks->objects[ID];
+			brick = bricks->get(ID);
 		}
 		brick->modificate(modification);
 		Brick* currentBrick = (Brick*)brick;
@@ -224,7 +226,7 @@ public:
 		if (ID >= 0)
 		{
 			Composite* bricks = (Composite*)brick;
-			brick = bricks->objects[ID];
+			brick = bricks->get(ID);
 		}
 		brick->modificate(modification);
 		Brick* currentBrick = (Brick*)brick;
@@ -276,7 +278,7 @@ public:
 		if (ID >= 0)
 		{
 			Composite* bricks = (Composite*)brick;
-			brick = bricks->objects[ID];
+			brick = bricks->get(ID);
 		}
 		brick->modificate(modification);
 		Brick* currentBrick = (Brick*)brick;
@@ -328,7 +330,7 @@ public:
 		if (ID >= 0)
 		{
 			Composite* bricks = (Composite*)brick;
-			brick = bricks->objects[ID];
+			brick = bricks->get(ID);
 		}
 		brick->modificate(modification);
 		Brick* currentBrick = (Brick*)brick;
@@ -380,7 +382,7 @@ public:
 		if (ID >= 0)
 		{
 			Composite* bricks = (Composite*)brick;
-			brick = bricks->objects[ID];
+			brick = bricks->get(ID);
 		}
 		brick->modificate(modification);
 		Brick* currentBrick = (Brick*)brick;
